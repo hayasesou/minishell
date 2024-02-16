@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:50:29 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/02/16 17:07:56 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:20:55 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,20 @@
 typedef struct s_token {
 	struct s_token	*next;
 	struct s_token	*prev;
-	int				type;
+	t_token_type	type;
 	char			*data;
 }				t_token;
 
 //next, prevで前後のトークン、タイプは後々int型ではなく新たな構造体か何かを宣言する。
-//typeにはword, semicoron, pipeなどが入る、マクロかなんかで設定してもいいかもしれない
-// #define PIPE 1 など
 //dataには入力値をのままを格納する
+
+//enum列挙型
+typedef enum e_token_type {
+	PIPE,
+	STRING,
+	SEMICORON
+}			t_token_type;
+//今後足していく
+
 
 #endif
