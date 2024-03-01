@@ -20,6 +20,7 @@ int main(int ac, char **av)
 
     fd1 = open(av[1], O_RDWR | O_CREAT, S_IRUSR|S_IWUSR);
     write(fd1, fd1_text, strlen(fd1_text));
+    // 1を標準しゅつ力から新しいファイルにする
     dup2(fd1, 1);
     close(fd1);
     

@@ -2,3 +2,11 @@ a.out
 *.o
 minishell
 *.txt
+exe
+exe2
+get_num.h
+out
+ss
+tlpi_hdr.h
+cmp
+error_functions.h
