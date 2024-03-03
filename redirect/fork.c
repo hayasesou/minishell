@@ -26,7 +26,7 @@ int main(void)
     }
     else
     {
-        wait(NULL);
+        // wait(NULL);
         printf("fork func return value [%d]\n", fork_pid);
         printf("my_pid [%d]\n", my_pid);
         printf("parent process\n\n");
