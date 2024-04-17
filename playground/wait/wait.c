@@ -7,6 +7,7 @@ int main(void)
     pid_t fork_pid;
     pid_t my_pid;
     pid_t parent_pid;
+    pid_t child_pid;
 
     fork_pid = fork();
     if (fork_pid == -1)
@@ -18,19 +19,22 @@ int main(void)
     parent_pid = getppid();
     if(fork_pid == 0)
     {
-        printf("fork func return value [%d]\n", fork_pid);
-        printf("my_pid [%d]\n", my_pid);
+		//child process
         printf("parent_pid [%d]\n", parent_pid);
+        printf("my_pid [%d]\n", my_pid);
         printf("child process\n\n");
-        sleep(40);
+        sleep(3);
     }
     else
     {
-        // wait(NULL);
-        printf("fork func return value [%d]\n", fork_pid);
+		//parents process
+	    
+		//using wait(), parents process wait child process finish
+        child_pid = wait(NULL);
+        printf("child_pid [%d]\n", child_pid);
+        //
         printf("my_pid [%d]\n", my_pid);
         printf("parent process\n\n");
-        sleep(40);
     }
 
     return 0;
