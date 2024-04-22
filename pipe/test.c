@@ -22,7 +22,6 @@ int main(int argc, char **argv, char **envp)
     t_pipex pipex;
     pid_t pid1;
     // pid_t pid2;
-
     (void)argc;
     (void)argv;
     (void)envp;
