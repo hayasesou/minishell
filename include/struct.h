@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:50:29 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/05/23 15:53:54 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:01:19 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 # include <unistd.h>
 # include <ctype.h>
 # include <stdbool.h>
-
-#define bool _Bool
-#define true 1
-#define false 0
 
 //enum列挙型
 //typedef enum e_token_type {
