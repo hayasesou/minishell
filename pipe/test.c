@@ -32,28 +32,35 @@ int main(int argc, char **argv, char **envp)
     
     char *file_path1 = "/usr/bin/ls";
     char *args1[] = {"ls", "-l", NULL};
-    char *file_path2 = "/usr/bin/grep";
-    char *args2[] = {"grep", "out", NULL};
+    char *file_path2 = "/usr/bin/wc";
+    char *args2[] = {"wc", "-l", NULL};
 
     pid1 = fork();
+    if(pid1 == -1)
+    {
+      printf("fork error\n"); 
+      exit(1); 
+    }
+    //child process
     if(pid1 == 0)
     {
+        printf("child process\n");
         dup2(pipex.pipefd[WRITE], STDOUT_FILENO);
         close(pipex.pipefd[READ]);
         execve(file_path1, args1, envp);
-    
         printf("execv failed\n");
     }
-    // pid2 = fork();
-    // if(pid2 == 0)
-    // {
+    else
+    {
+      //parent process
+        waitpid(pid1, NULL, 0);
+        printf("parent process\n");
         close(pipex.pipefd[WRITE]);
         dup2(pipex.pipefd[READ], STDIN_FILENO);
         execve(file_path2, args2, envp);
-        
-    // }
-    // waitpid(pid1, NULL, 0);
-    // write(1, "parent process\n", 16);
+    }
 
     return 0;
 }
+
+
