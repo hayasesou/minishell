@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:50:29 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/06/29 20:50:48 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:46:35 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include <string.h>
 
 // 前方宣言
-typedef struct s_token t_token;
-typedef struct s_ast t_ast;
-typedef struct s_env t_env;
+typedef struct s_token	t_token;
+typedef struct s_ast	t_ast;
+typedef struct s_env	t_env;
 
 //enum列挙型
 //typedef enum e_token_type {

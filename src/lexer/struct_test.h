@@ -1,3 +1,4 @@
+
 #ifndef STRUCT_TEST_H
 # define STRUCT_TEST_H
 
@@ -11,9 +12,9 @@
 # include <readline/history.h>
 
 // 前方宣言
-typedef struct s_token t_token;
-typedef struct s_ast t_ast;
-typedef struct s_env t_env;
+typedef struct s_token	t_token;
+typedef struct s_ast	t_ast;
+typedef struct s_env	t_env;
 
 //enum列挙型
 //typedef enum e_token_type {
