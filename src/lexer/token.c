@@ -1,4 +1,25 @@
-#include "../../include/lexer.h"
+//#include "../../include/lexer.h"
+#include "struct_test.h"
+
+void	fatal_error(const char *msg)
+{
+	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
+	exit(1);
+}
+
+t_token	*add_token(char *data, t_token_type type)
+{
+	t_token	*token;
+
+	token = calloc(1, sizeof(*token));
+	if (token == NULL)
+		fatal_error("tokenize: add token calloc error");
+	token->type = type;
+	token->data = strdup(data);
+	if (!token->data)
+		perror("tokenize: add token strdup error");
+	return (token);
+}
 
 bool	is_blank(char c)
 {
@@ -20,7 +41,7 @@ bool	consume_blank(char **line_ptr, char *line)
 
 bool	start_with_operator(const char *s, const char *operator)
 {
-	return (memcmp(s, operator, srlen(operator)) == 0);
+	return (memcmp(s, operator, strlen(operator)) == 0);
 }
 
 bool	is_operator(const char *s)
@@ -53,11 +74,12 @@ t_token	*operator(char **line_ptr, char *line)
 			if (op == NULL)
 				fatal_error("tokenize: operator, strdup error");
 			*line_ptr = line + strlen(op);
-			return (new_token(op, TK_OP));
+			return (add_token(op, TK_OP));
 		}
 		i++;
 	}
-	assert_error("tokenize: operator, unexpected operator");
+	//assert_error("tokenize: operator, unexpected operator");
+	return (NULL); // errorにしておわらせる, 一時的にreturnを書かないと動かないからnull返している
 }
 
 bool	is_metacharacter(char c)
@@ -84,5 +106,3 @@ t_token	*word(char **line_ptr, char *line)
 	*line_ptr = line;
 	return (add_token(word, TK_WORD));
 }
-
-

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 15:37:33 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/06/29 21:17:55 by hakobaya         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 //#include "../../include/lexer.h"
 #include "struct_test.h"
 
@@ -26,19 +14,6 @@ t_token	*token_init(void)
 	return (head);
 }
 
-t_token	*add_token(char *data, t_token_type type)
-{
-	t_token	*token;
-
-	token = calloc(1, sizeof(*token));
-	if (token == NULL)
-		fatal_error("tokenize: add token calloc error");
-	token->type = type;
-	token->data = strdup(data);
-	if (!token->data)
-		perror("tokenize: add token strdup error");
-	return (token);
-}
 
 t_token	*tokenize(char *line)
 {
@@ -63,7 +38,8 @@ t_token	*tokenize(char *line)
 			token = word(&line, line);
 		}
 		else
-			assert_error("tokenize: unexpected token");
+			printf("tokenize: unexpected token");
+		//	assert_error("tokenize: unexpected token");
 	}
 	token->next = add_token(NULL, TK_EOF);
 	return (head.next);
@@ -89,28 +65,45 @@ void	free_tokens(t_token *token)
 	}
 }
 
+//int	main(void)
+//{
+//	char	*line;
+//	t_token	*tokens;
+
+//	rl_outstream = stderr;
+//	while (1)
+//	{
+//		line = readline("minishell$ ");
+//		if (line == NULL)
+//			break ;
+//		if (*line)
+//		{
+//			tokens = tokenize(line);
+//			// トークン処理のデバッグ出力
+//			for (t_token *token = tokens; token; token = token->next)
+//			{
+//				printf("Token type: %d, data: %s\n", token->type, token->data);
+//			}
+//			free_tokens(tokens);
+//		}
+//		free(line);
+//	}
+//	exit(0);
+//}
+
 int	main(void)
 {
 	char	*line;
-	t_token	*tokens;
 
 	rl_outstream = stderr;
-	printf("a\n");
 	while (1)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
 		if (*line)
-		{
-			tokens = tokenize(line);
-			// トークン処理のデバッグ出力
-			for (t_token *token = tokens; token; token = token->next)
-			{
-				printf("Token type: %d, data: %s\n", token->type, token->data);
-			}
-			free_tokens(tokens);
-		}
+			add_history(line);
+		// TODO: intepret line as a command
 		free(line);
 	}
 	exit(0);
