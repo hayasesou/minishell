@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:50:29 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/06/20 23:21:30 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/06/29 20:50:48 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <ctype.h>
 # include <stdbool.h>
+# include <string.h>
 
 // 前方宣言
 typedef struct s_token t_token;
@@ -49,6 +50,7 @@ typedef enum e_token_type {
 	TK_REDIR_OUT = 1,
 	TK_REDIR_APPEND = 2,
 	TK_REDIR_HEREDOC = 3,
+	TK_OP, // 演算子
 	TK_WORD,
 	TK_PIPE,
 	TK_EOF,
