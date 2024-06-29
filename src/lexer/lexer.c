@@ -6,11 +6,12 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:37:33 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/06/20 23:50:51 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:17:55 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lexer.h"
+//#include "../../include/lexer.h"
+#include "struct_test.h"
 
 t_token	*token_init(void)
 {
@@ -25,40 +26,47 @@ t_token	*token_init(void)
 	return (head);
 }
 
+t_token	*add_token(char *data, t_token_type type)
+{
+	t_token	*token;
+
+	token = calloc(1, sizeof(*token));
+	if (token == NULL)
+		fatal_error("tokenize: add token calloc error");
+	token->type = type;
+	token->data = strdup(data);
+	if (!token->data)
+		perror("tokenize: add token strdup error");
+	return (token);
+}
+
 t_token	*tokenize(char *line)
 {
-	t_token	*head;
-	t_token	*cur;
+	t_token	head;
+	t_token	*token;
 
-	head = token_init();
-	cur = &head;
-
-	while (*line++)
+	//head = token_init();
+	head.next = NULL;
+	token = &head;
+	while (*line)
 	{
-		if (*line == ' ' || *line == '\t')
+		if (consume_blank(&line, line))
 			continue ;
-		else if (*line == '<' && *(line + 1) == ' ')
-			cur = add_token(TK_REDIR_IN, cur, line++);
-		else if (*line == '>' && *(line + 1) == ' ')
-			cur = add_token(TK_REDIR_OUT, cur, line++);
-		else if (*line == '>' && *(line + 1) == '>')
+		else if (is_operator(line))
 		{
-			cur = add_token(TK_REDIR_APPEND, cur, line++);
-			line++;
+			token = token->next;
+			token = operator(&line, line);
 		}
-		else if (*line == '<' && *(line + 1) == '<')
+		else if (is_word(line))
 		{
-			cur = add_token(TK_REDIR_HEREDOC, cur, line++);
-			line++;
+			token = token->next;
+			token = word(&line, line);
 		}
-		else if (*line == '|')
-			cur = add_token(TK_PIPE, cur, line++);
 		else
-			cur = add_token(TK_WORD, cur, line++);
-		// 多分この単語の部分をどうにかしないとダメ、'や"も含むのと、スペースまで読み続けるべきかもしれない
+			assert_error("tokenize: unexpected token");
 	}
-	add_token(TK_EOF, cur, line);
-	return (head->next);
+	token->next = add_token(NULL, TK_EOF);
+	return (head.next);
 }
 
 
