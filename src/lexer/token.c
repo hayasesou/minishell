@@ -97,6 +97,8 @@ bool	is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
+void	append_ch
+
 void	quote_removal(t_token *token)
 {
 	char	*removed_token;
@@ -115,7 +117,7 @@ void	quote_removal(t_token *token)
 			{
 				if (*p == '\0')
 					printf("Unclosed quote");
-				
+
 			}
 		}
 	}

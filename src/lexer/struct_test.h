@@ -86,12 +86,13 @@ typedef struct s_ast {
 }	t_ast;
 
 typedef struct s_env {
-	char	**line;
+	char	*env_name;
+	char	*env_val;
 	t_env	*next;
 	t_env	*prev;
 }	t_env;
 
-struct s_context {
+typedef struct s_context {
 	// 構造体の総まとめをこの構造体にまとめる
 	t_token	*token;
 	t_ast	*ast;
@@ -115,6 +116,5 @@ t_token	*word(char **line_ptr, char *line);
 t_token	*token_init(void);
 t_token	*tokenize(char *line);
 void	free_tokens(t_token *token);
-
 
 #endif
