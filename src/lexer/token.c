@@ -92,6 +92,35 @@ bool	is_word(const char *s)
 	return (*s && !is_metacharacter(*s));
 }
 
+bool	is_quote(char c)
+{
+	return (c == '\'' || c == '\"');
+}
+
+void	quote_removal(t_token *token)
+{
+	char	*removed_token;
+	char	*p;
+
+	if (token == NULL || token->type != TK_WORD || token->data == NULL)
+		return ;
+	p = token->data;
+	removed_token = NULL;
+	while (*p && !is_metacharacter(*p))
+	{
+		if (is_quote(*p))
+		{
+			p++;
+			while (*p != is_quote(*p))
+			{
+				if (*p == '\0')
+					printf("Unclosed quote");
+				
+			}
+		}
+	}
+}
+
 t_token	*word(char **line_ptr, char *line)
 {
 	const char	*start;
@@ -99,7 +128,19 @@ t_token	*word(char **line_ptr, char *line)
 
 	start = line;
 	while (*line && !is_metacharacter(*line))
-		line++;
+	{
+		if (*line && is_quote(*line))
+		{
+			line++; // シングルクオート一つ分進める
+			while (*line && !is_quote(*line))
+				line++;
+			if (*line == '\0')
+				printf("Unclosed single quote"); // ここをどうにか処理する（多分入力を待ち続ける？）
+			else
+				line++; // 閉じた分のシングルクオートを進める
+		}
+		line++; // 普通の文字の時
+	}
 	word = strndup(start, line - start);
 	if (word == NULL)
 		fatal_error("tokenize: word strndup error");

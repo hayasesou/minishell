@@ -1,6 +1,8 @@
 //#include "../../include/lexer.h"
 #include "struct_test.h"
 
+//gcc lexer.c token.c -lreadline
+
 t_token	*token_init(void)
 {
 	t_token	*head;
@@ -13,7 +15,6 @@ t_token	*token_init(void)
 	}
 	return (head);
 }
-
 
 t_token	*tokenize(char *line)
 {
@@ -45,8 +46,6 @@ t_token	*tokenize(char *line)
 	return (head.next);
 }
 
-
-//gcc main.c -lreadline
 
 // static void	shell_loop(char *line)
 // {
@@ -102,7 +101,10 @@ int	main(void)
 		if (line == NULL)
 			break ;
 		if (*line)
+		{
 			add_history(line);
+			tokenize(line);
+		}
 		// TODO: intepret line as a command
 		free(line);
 	}
