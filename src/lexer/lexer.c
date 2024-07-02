@@ -13,17 +13,20 @@ t_token	*token_init(void)
 		perror("calloc error in tokenize : token_init ");
 		exit (1); // 後でちゃんとしたエラーに修正
 	}
+	head->data = NULL;
+	head->type = NULL;
+	head->next = head;
+	head->prev = head;
 	return (head);
 }
 
 t_token	*tokenize(char *line)
 {
-	t_token	head;
+	t_token	*head;
 	t_token	*token;
 
-	//head = token_init();
-	head.next = NULL;
-	token = &head;
+	head = token_init();
+	token = head;
 	while (*line)
 	{
 		if (consume_blank(&line, line))
@@ -43,14 +46,8 @@ t_token	*tokenize(char *line)
 		//	assert_error("tokenize: unexpected token");
 	}
 	token->next = add_token(NULL, TK_EOF);
-	return (head.next);
+	return (head->next);
 }
-
-
-// static void	shell_loop(char *line)
-// {
-// 	add_history(line);
-// }
 
 void	free_tokens(t_token *token)
 {
@@ -92,7 +89,14 @@ void	free_tokens(t_token *token)
 
 t_env	*node_new_set(t_env *env_node, char *str)
 {
-	// 環境変数のリストを作成する
+	// dupする部分調べる
+	env_node->env_name = strdup(str);
+	if (env_node->env_name == NULL)
+		return (NULL);
+	env_node->env_val = strdup(str);
+	if (env_node->env_val == NULL)
+		return (NULL);
+	return (env_node);
 }
 
 t_env	*node_new(char *str)

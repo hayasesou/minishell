@@ -97,30 +97,61 @@ bool	is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
-void	append_ch
-
-void	quote_removal(t_token *token)
+bool	is_single_quote(char c)
 {
-	char	*removed_token;
-	char	*p;
+	return (c == '\'');
+}
 
-	if (token == NULL || token->type != TK_WORD || token->data == NULL)
-		return ;
-	p = token->data;
-	removed_token = NULL;
-	while (*p && !is_metacharacter(*p))
+bool	is_double_quote(char c)
+{
+	return (c == '\"');
+}
+
+t_token	*single_quote_removal(char **line_ptr, char *line)
+{
+	char	*start;
+	t_token	*token;
+
+	start = line;
+	if (is_single_quote(*line))
 	{
-		if (is_quote(*p))
-		{
-			p++;
-			while (*p != is_quote(*p))
-			{
-				if (*p == '\0')
-					printf("Unclosed quote");
-
-			}
-		}
+		start++;
+		line++;
 	}
+	while (*line && !(is_single_quote(*line)))
+		line++;
+	if (is_single_quote(*line))
+	{
+		line++;
+		line_ptr = line;
+		return (strndup(start, line - start));
+	}
+	else
+		return (NULL);
+}
+
+t_token	*double_quote_expansion(char **line_ptr, char *line)
+{
+	//  パラメータ展開について処理を追加する
+	char	*start;
+	t_token	*token;
+
+	start = line;
+	if (is_double_quote(*line))
+	{
+		start++;
+		line++;
+	}
+	while (*line && !(is_double_quote(*line)))
+		line++;
+	if (is_double_quote(*line))
+	{
+		line++;
+		line_ptr = line;
+		return (strndup(start, line - start));
+	}
+	else
+		return (NULL);
 }
 
 t_token	*word(char **line_ptr, char *line)
@@ -129,20 +160,17 @@ t_token	*word(char **line_ptr, char *line)
 	char		*word;
 
 	start = line;
-	while (*line && !is_metacharacter(*line))
+	if (*line && is_single_quote(*line))
 	{
-		if (*line && is_quote(*line))
-		{
-			line++; // シングルクオート一つ分進める
-			while (*line && !is_quote(*line))
-				line++;
-			if (*line == '\0')
-				printf("Unclosed single quote"); // ここをどうにか処理する（多分入力を待ち続ける？）
-			else
-				line++; // 閉じた分のシングルクオートを進める
-		}
-		line++; // 普通の文字の時
+		word = quote_removal(&line, line);
+		if (word == NULL)
+			printf("Unclosed single quote");
+		return (add_token(word, TK_WORD));
 	}
+	else if (*line && is_double_quote(*line))
+		double_quote_expansion(&line, line);
+	while (*line && !is_metacharacter(*line))
+		line++; // 普通の文字の時
 	word = strndup(start, line - start);
 	if (word == NULL)
 		fatal_error("tokenize: word strndup error");
