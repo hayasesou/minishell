@@ -46,7 +46,7 @@ bool	start_with_operator(const char *s, const char *operator)
 
 bool	is_operator(const char *s)
 {
-	static char *const	operators[] = {"|", "||", "&", "&&", ";", ";;", "(", ")", "\n"};
+	static char *const	operators[] = {"|", "&", "(", ")", "\n"};
 	size_t				i;
 
 	i = 0;
@@ -61,7 +61,7 @@ bool	is_operator(const char *s)
 
 t_token	*operator(char **line_ptr, char *line)
 {
-	static char *const	operators[] = {"|", "||", "&", "&&", ";", ";;", "(", ")", "\n"};
+	static char *const	operators[] = {"|", "&", "(", ")", "\n"};
 	size_t				i;
 	char				*op;
 
