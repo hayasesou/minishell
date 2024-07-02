@@ -15,6 +15,7 @@ t_token	*token_init(void)
 	}
 	head->data = NULL;
 	head->type = NULL;
+	head->state = GENERAL;
 	head->next = head;
 	head->prev = head;
 	return (head);
@@ -45,7 +46,7 @@ t_token	*tokenize(char *line)
 			printf("tokenize: unexpected token");
 		//	assert_error("tokenize: unexpected token");
 	}
-	token->next = add_token(NULL, TK_EOF);
+	token->next = add_token(NULL, TK_EOF, GENERAL);
 	return (head->next);
 }
 

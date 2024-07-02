@@ -7,7 +7,7 @@ void	fatal_error(const char *msg)
 	exit(1);
 }
 
-t_token	*add_token(char *data, t_token_type type)
+t_token	*add_token(char *data, t_token_type type, t_token_state state)
 {
 	t_token	*token;
 
@@ -16,6 +16,7 @@ t_token	*add_token(char *data, t_token_type type)
 		fatal_error("tokenize: add token calloc error");
 	token->type = type;
 	token->data = strdup(data);
+	token->state = state;
 	if (!token->data)
 		perror("tokenize: add token strdup error");
 	return (token);
@@ -165,15 +166,20 @@ t_token	*word(char **line_ptr, char *line)
 		word = quote_removal(&line, line);
 		if (word == NULL)
 			printf("Unclosed single quote");
-		return (add_token(word, TK_WORD));
+		return (add_token(word, TK_WORD, SINGLE_QUOTE));
 	}
 	else if (*line && is_double_quote(*line))
-		double_quote_expansion(&line, line);
+	{
+		word = double_quote_expansion(&line, line);
+		if (word == NULL)
+			printf("Unclosed double quote");
+		return (add_token(word, TK_WORD, DOUBLE_QUOTE));
+	}
 	while (*line && !is_metacharacter(*line))
 		line++; // 普通の文字の時
 	word = strndup(start, line - start);
 	if (word == NULL)
 		fatal_error("tokenize: word strndup error");
 	*line_ptr = line;
-	return (add_token(word, TK_WORD));
+	return (add_token(word, TK_WORD, GENERAL));
 }

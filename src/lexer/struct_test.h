@@ -53,12 +53,19 @@ typedef enum e_token_type {
 //	GENERAL
 //}			t_token_state;
 
+typedef struct e_token_state {
+	GENERAL,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE
+}	t_token_state;
 
 typedef struct s_token {
 	char			*data;
 	t_token_type	type;
+	t_token_state	state;
 	t_token			*next;
 	t_token			*prev;
+
 }	t_token;
 
 typedef enum e_node_type {
