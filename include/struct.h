@@ -47,13 +47,7 @@ typedef enum e_token_type {
 	TK_EOF,
 }	t_token_type;
 
-//typedef enum e_token_state {
-//	IN_D_QUOTE,
-//	IN_QUOTE,
-//	GENERAL
-//}			t_token_state;
-
-typedef struct e_token_state {
+typedef enum e_token_state {
 	GENERAL,
 	SINGLE_QUOTE,
 	DOUBLE_QUOTE

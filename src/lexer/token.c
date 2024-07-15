@@ -1,5 +1,6 @@
-//#include "../../include/lexer.h"
-#include "struct_test.h"
+
+#include "../include/struct.h"
+#include "../include/lexer.h"
 
 void	fatal_error(const char *msg)
 {

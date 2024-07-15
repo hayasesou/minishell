@@ -1,5 +1,6 @@
 
 #include "../include/struct.h"
+#include "../include/lexer.h"
 
 //gcc lexer.c token.c -lreadline
 
