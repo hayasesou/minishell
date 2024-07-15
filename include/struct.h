@@ -1,17 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/16 16:50:29 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/06/29 21:46:35 by hakobaya         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#ifndef STRUCT_TEST_H
+# define STRUCT_TEST_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -19,6 +8,8 @@
 # include <ctype.h>
 # include <stdbool.h>
 # include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 // 前方宣言
 typedef struct s_token	t_token;
@@ -50,7 +41,7 @@ typedef enum e_token_type {
 	TK_REDIR_OUT = 1,
 	TK_REDIR_APPEND = 2,
 	TK_REDIR_HEREDOC = 3,
-	TK_OP, // 演算子
+	TK_OP,
 	TK_WORD,
 	TK_PIPE,
 	TK_EOF,
@@ -62,12 +53,19 @@ typedef enum e_token_type {
 //	GENERAL
 //}			t_token_state;
 
+typedef struct e_token_state {
+	GENERAL,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE
+}	t_token_state;
 
 typedef struct s_token {
 	char			*data;
 	t_token_type	type;
+	t_token_state	state;
 	t_token			*next;
 	t_token			*prev;
+
 }	t_token;
 
 typedef enum e_node_type {
@@ -95,12 +93,13 @@ typedef struct s_ast {
 }	t_ast;
 
 typedef struct s_env {
-	char	**line;
+	char	*env_name;
+	char	*env_val;
 	t_env	*next;
 	t_env	*prev;
 }	t_env;
 
-struct s_context {
+typedef struct s_context {
 	// 構造体の総まとめをこの構造体にまとめる
 	t_token	*token;
 	t_ast	*ast;
@@ -109,5 +108,20 @@ struct s_context {
 	bool	sys_error;
 	bool	include_quote;
 }	t_context;
+
+
+void	fatal_error(const char *msg);
+t_token	*add_token(char *data, t_token_type type);
+bool	is_blank(char c);
+bool	consume_blank(char **line_ptr, char *line);
+bool	start_with_operator(const char *s, const char *operator);
+bool	is_operator(const char *s);
+t_token	*operator(char **line_ptr, char *line);
+bool	is_metacharacter(char c);
+bool	is_word(const char *s);
+t_token	*word(char **line_ptr, char *line);
+t_token	*token_init(void);
+t_token	*tokenize(char *line);
+void	free_tokens(t_token *token);
 
 #endif
