@@ -3,7 +3,7 @@ CC = cc
 C_FLAGS = -Wall -Wextra -Werror
 #F_FLAGS =
 H_FLAGS = -lreadline
-FLAGS = $(C_FLAGS) $(H_FLAGS)
+FLAGS = $(C_FLAGS)	#$(H_FLAGS)
 
 SRCDIR = ./src
 OBJDIR = ./obj
@@ -16,7 +16,7 @@ FILES = main.c
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $@
+	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
 
 .c.o:
 	$(CC) $(C_FLAGS) -c $< -o $@
