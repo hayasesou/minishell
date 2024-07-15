@@ -181,7 +181,7 @@ int	main(int ac, char **av, char **envp)
 	char	*line;
 
 	rl_outstream = stderr;
-	minishell_init(envp);
+	minishell_init(ac, av, envp);
 	while (1)
 	{
 		line = readline("minishell$ ");

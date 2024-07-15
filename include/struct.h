@@ -72,19 +72,35 @@ typedef struct s_redirect {
 	t_token_type	type;
 }	t_redirect;
 
+typedef enum e_redirect_type
+{
+	UNKNOWN,
+	QUOTE_HEREDOC,
+	HEREDOC,
+	IN_FILE,
+	OUT_FILE,
+	APPEND
+}						t_redirect_type;
+
 typedef struct s_list {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
 
-typedef struct s_ast {
-	t_node_type	type;
-	t_token		*argv;
-	t_list		*redir_lst;
-	t_ast		*left;
-	t_ast		*right;
-	t_token		*lst;
-}	t_ast;
+typedef struct s_file
+{
+	char				*file_name;
+	t_redirect_type		type;
+	t_file				*next;
+}						t_file;
+
+typedef struct s_parser
+{
+	char				**cmd; // execve のような実装にするため
+	t_file				*file;
+	t_parser			*next;
+	t_parser			*prev;
+}						t_parser;
 
 typedef struct s_env {
 	char	*env_name;
@@ -95,12 +111,10 @@ typedef struct s_env {
 
 typedef struct s_context {
 	// 構造体の総まとめをこの構造体にまとめる
-	t_token	*token;
-	t_ast	*ast;
-	t_env	*env;
-	int		status;
-	bool	sys_error;
-	bool	include_quote;
+	t_token	*token_head;
+	t_env	*env_head;
+	int		exit_status;
+	bool	sys_error; // 一応
 }	t_context;
 
 
