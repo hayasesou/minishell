@@ -2,10 +2,6 @@
 #include "../include/struct.h"
 #include "../include/lexer.h"
 
-
-
-
-
 t_token	*add_token(char *data, t_token_type type, t_token_state state)
 {
 	t_token	*token;

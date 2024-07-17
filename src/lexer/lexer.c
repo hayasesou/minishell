@@ -4,6 +4,8 @@
 
 //gcc lexer.c token.c -lreadline
 
+
+
 t_token	*token_init(void)
 {
 	t_token	*head;
@@ -44,8 +46,7 @@ t_token	*tokenize(char *line)
 			token = word(&line, line);
 		}
 		else
-			printf("tokenize: unexpected token");
-		//	assert_error("tokenize: unexpected token");
+			tokenize_error("Unexpected Token", &line, line);
 	}
 	token->next = add_token(NULL, TK_EOF, GENERAL);
 	return (head->next);
@@ -53,7 +54,8 @@ t_token	*tokenize(char *line)
 
 void	free_tokens(t_token *token)
 {
-	t_token *tmp;
+	t_token	*tmp;
+
 	while (token)
 	{
 		tmp = token;
@@ -62,32 +64,6 @@ void	free_tokens(t_token *token)
 		free(tmp);
 	}
 }
-
-//int	main(void)
-//{
-//	char	*line;
-//	t_token	*tokens;
-
-//	rl_outstream = stderr;
-//	while (1)
-//	{
-//		line = readline("minishell$ ");
-//		if (line == NULL)
-//			break ;
-//		if (*line)
-//		{
-//			tokens = tokenize(line);
-//			// トークン処理のデバッグ出力
-//			for (t_token *token = tokens; token; token = token->next)
-//			{
-//				printf("Token type: %d, data: %s\n", token->type, token->data);
-//			}
-//			free_tokens(tokens);
-//		}
-//		free(line);
-//	}
-//	exit(0);
-//}
 
 t_env	*node_new_set(t_env *env_node, char *str)
 {
@@ -171,31 +147,8 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 	ctx = (t_context *)malloc(sizeof(t_context));
 	if (ctx == NULL)
 		return (NULL);
-	ctx->env = env_head;
-	ctx->status = 0;
+	ctx->env_head = env_head;
+	ctx->exit_status = 0;
 	return (ctx);
 }
 
-int	main(int ac, char **av, char **envp)
-{
-	int		status;
-	char	*line;
-
-	rl_outstream = stderr;
-	status = 0;
-	minishell_init(ac, av, envp);
-	while (1)
-	{
-		line = readline("minishell$ ");
-		if (line == NULL)
-			break ;
-		if (*line)
-		{
-			add_history(line);
-			tokenize(line);
-		}
-		status = interpret(line);
-		free(line);
-	}
-	exit(status);
-}
