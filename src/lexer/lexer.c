@@ -178,9 +178,11 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
+	int		status;
 	char	*line;
 
 	rl_outstream = stderr;
+	status = 0;
 	minishell_init(ac, av, envp);
 	while (1)
 	{
@@ -192,8 +194,8 @@ int	main(int ac, char **av, char **envp)
 			add_history(line);
 			tokenize(line);
 		}
-		// TODO: intepret line as a command
+		status = interpret(line);
 		free(line);
 	}
-	exit(0);
+	exit(status);
 }

@@ -36,7 +36,7 @@ assert() {
 
 # Empty line (EOF)
 assert ''
-assert '/bin/ped'
+assert '/bin/pwd'
 assert '/bin/echo'
 assert '/bin/ls'
 
