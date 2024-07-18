@@ -4,8 +4,6 @@
 
 //gcc lexer.c token.c -lreadline
 
-
-
 t_token	*token_init(t_context *ctx)
 {
 	t_token	*head;
