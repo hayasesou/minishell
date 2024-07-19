@@ -15,7 +15,7 @@ bool	consume_blank(char **line_ptr, char *line)
 	return (false);
 }
 
-void	*word(char **line_ptr, char *line)
+void	*word(char **line_ptr, char *line, t_token *token)
 {
 	const char	*start;
 	char		*word;
@@ -27,5 +27,5 @@ void	*word(char **line_ptr, char *line)
 	if (word == NULL)
 		fatal_error("tokenize: word strndup error");
 	*line_ptr = line;
-	token_node_add(start, token_node_create(word, TK_WORD, GENERAL));
+	token_node_add(token, token_node_create(word, TK_WORD, GENERAL));
 }

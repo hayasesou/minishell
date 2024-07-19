@@ -65,21 +65,19 @@ t_token_type	*select_op_type(char *op)
 	return (NULL); // ここ変えた方がいいかも
 }
 
-t_token	*operator(char **line_ptr, char *line)
+t_token	*operator(char **line_ptr, char *line, t_token *token)
 {
 	char			*op;
-	char			*token;
 	t_token_type	type;
 
 	if (is_available_operator(*line))
 	{
 		op = select_op(line);
-		token = strndup(op, strlen(op));
 		type = select_op_type(op);	
 	}
 	else
 		return ; // errorにしておわらせる
-	token_node_add(op, token_node_create(token, type, GENERAL));
+	token_node_add(token, token_node_create(op, type, GENERAL));
 	//assert_error("tokenize: operator, unexpected operator");
 	*line_ptr += strlen(op);
 }

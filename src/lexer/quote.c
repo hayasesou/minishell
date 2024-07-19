@@ -56,7 +56,7 @@ t_token	*double_quote_removal(char *str)
 		return (NULL);
 }
 
-void	quote(char **line_ptr, char *line)
+void	quote(char **line_ptr, char *line, t_token *token)
 {
 	char			*word;
 	t_token_type	type;
@@ -79,6 +79,6 @@ void	quote(char **line_ptr, char *line)
 	}
 	if (word == NULL)
 		fatal_error("tokenize: word strndup error");
-	token_node_add(line + 1, token_node_create(word, TK_WORD, type));
+	token_node_add(token, token_node_create(word, TK_WORD, type));
     *line_ptr += strlen(word) + 2; // +2はクオーテーション2個分
 }

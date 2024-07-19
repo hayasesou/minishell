@@ -5,29 +5,29 @@
 void	*lexer(t_context *ctx, char *line)
 {
 	t_token	*token;
+	t_token	*token_head;
 
 	token = token_init(ctx);
+	token_head = token;
 	while (*line)
 	{
-		if (is_blank(*line))
-			consume_blank(&line, line);
+		if (consume_blank(&line, line))
+			continue ;
 		else if (is_operator(*line))
-		{
-			operator(&line, line);
-			token = token->next;
-		}
+			operator(&line, line, token);
 		else if (is_quote(*line))
-		{
-			quote(&line, line);
-			token = token->next;
-		}
+			quote(&line, line, token);
 		else if (is_word(*line))
-		{
-			word(&line, line);
-			token = token->next;
-		}
+			word(&line, line, token);
 		else
+		{
 			tokenize_error("Unexpected Token", &line, line);
+			return ; // これでいいのか？
+		}
+		token = token->next;
 	}
 	token_node_add(token, token_node_create(NULL, TK_EOF, GENERAL)); // EOFの時のデータはNULLで合ってるか
+	// expansion(token_head); // typeがDOUBLE_QUOTEのときにexpansionする
 }
+
+// このループにexpansion入れるか、double_quote_removalのところでexpansionするか迷い中
