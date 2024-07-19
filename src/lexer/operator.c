@@ -1,6 +1,4 @@
 #include "../../include/minishell.h"
-#include "../../include/lexer.h"
-#include "../../include/struct.h"
 
 bool	is_operator(char c)
 {
@@ -21,8 +19,7 @@ bool	is_available_operator(char *line)
 		if (!is_operator(line[1]) || (line[1] == '>' && !is_operator(line[2])))
 			return (true);
 	}
-	else
-		return (false);
+	return (false);
 }
 
 char	*select_op(char *line)
@@ -50,7 +47,7 @@ char	*select_op(char *line)
 	return (op);
 }
 
-t_token_type	*select_op_type(char *op)
+t_token_type	select_op_type(char *op)
 {
 	if (strcmp(op, "|") == 0)
 		return (TK_PIPE);
@@ -62,21 +59,21 @@ t_token_type	*select_op_type(char *op)
 		return (TK_REDIR_HEREDOC);
 	if (strcmp(op, ">>") == 0)
 		return (TK_REDIR_APPEND);
-	return (NULL); // ここ変えた方がいいかも
+	return (TK_EMPTY); // errorの場合どうすればいい
 }
 
-t_token	*operator(char **line_ptr, char *line, t_token *token)
+void	operator(char **line_ptr, char *line, t_token *token)
 {
 	char			*op;
 	t_token_type	type;
 
-	if (is_available_operator(*line))
+	if (is_available_operator(line))
 	{
 		op = select_op(line);
 		type = select_op_type(op);	
 	}
 	else
-		return ; // errorにしておわらせる
+		err_exit(line, "operatorが有効じゃありません", 0) ; // error変更した方がいい
 	token_node_add(token, token_node_create(op, type, GENERAL));
 	//assert_error("tokenize: operator, unexpected operator");
 	*line_ptr += strlen(op);

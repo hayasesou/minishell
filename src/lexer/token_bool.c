@@ -7,9 +7,9 @@ bool	is_blank(char c)
 	return (c == ' ' || c == '\t' || c == '\n');
 }
 
-bool	is_word(const char *s)
+bool	is_word(char c)
 {
-	return (*s && !is_operator(*s) && !is_quote(*s));
+	return (c && !is_operator(c) && !is_quote(c));
 }
 
 bool	is_quote(char c)

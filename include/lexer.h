@@ -12,7 +12,7 @@
 // bool
 
 bool	        is_blank(char c);
-bool	        is_word(const char *s);
+bool	        is_word(char c);
 bool	        is_quote(char c);
 bool	        is_single_quote(char c);
 bool	        is_double_quote(char c);
@@ -25,9 +25,9 @@ bool        	consume_blank(char **line_ptr, char *line);
 void        	*word(char **line_ptr, char *line, t_token *token);
 
 // operator
-t_token	       *operator(char **line_ptr, char *line, t_token *token);
+void            operator(char **line_ptr, char *line, t_token *token);
 char	        *select_op(char *line);
-t_token_type	*select_op_type(char *op);
+t_token_type	select_op_type(char *op);
 
 // quote
 void	        quote(char **line_ptr, char *line, t_token *token);
@@ -41,6 +41,7 @@ t_token     	*token_init(t_context *ctx);
 void        	free_tokens(t_token *token);
 
 // main
-void        	*lexer(t_context *ctx, char *line);
+void        	lexer(t_context *ctx, char *line);
+void	        print_lexer(t_token *token_head);
 
 #endif

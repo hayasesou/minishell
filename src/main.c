@@ -1,6 +1,4 @@
 #include "../include/minishell.h"
-#include "../include/lexer.h"
-#include "../include/struct.h"
 
 char	*search_path(const char *filename)
 {
@@ -45,10 +43,11 @@ void	validate_access(const char *path, const char *filename)
 int	exec(char argv[])
 {
 	extern char	**environ;
-	const char	*path = argv[0];
+	const char	*path;
 	pid_t		pid;
 	int			wstatus;
 
+	path = &argv[0];
 	pid = fork();
 	if (pid < 0)
 		fatal_error("fork");
@@ -56,8 +55,8 @@ int	exec(char argv[])
 	{
 		if (strchr(path, '/') == NULL)
 			path = search_path(path);
-		validate_access(path, argv[0]);
-		rxecve(path, argv, environ);
+		validate_access(path, &argv[0]);
+		// rxecve(path, argv, environ);
 		fatal_error("execve");
 	}
 	else
@@ -85,25 +84,25 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 	return (ctx);
 }
 
-int	interpret(t_context *ctx, char *line)
-{
-	t_token	*token;
-	char	**argv;
+// int	interpret(t_context *ctx, char *line)
+// {
+// 	t_token	*token;
+// 	char	**argv;
 
-	token = tokenize(line);
-	if (token->type == TK_EOF)
-		;
-	else if (syntax_error)
-		ctx->exit_status = ERROR_TOKENIZE;
-	else
-	{
-		expand(token);
-		argv = token_list_to_argv(token);
-		ctx->exit_status = exec(argv);
-		free_argv(argv);
-	}
-	free(token);
-}
+// 	token = tokenize(line);
+// 	if (token->type == TK_EOF)
+// 		;
+// 	else if (syntax_error)
+// 		ctx->exit_status = ERROR_TOKENIZE;
+// 	else
+// 	{
+// 		expand(token);
+// 		argv = token_list_to_argv(token);
+// 		ctx->exit_status = exec(argv);
+// 		free_argv(argv);
+// 	}
+// 	free(token);
+// }
 
 void	main_loop(t_context *ctx, char *line)
 {
@@ -112,7 +111,7 @@ void	main_loop(t_context *ctx, char *line)
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
-		if (ft_strlen(line) == 0)
+		if (strlen(line) == 0)
 		{
 			free(line);
 			continue ;
@@ -141,5 +140,5 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	line = NULL;
 	main_loop(ctx, line);
-	exit(ctx->exit_status);
+	exit(status);
 }

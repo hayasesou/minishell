@@ -2,7 +2,7 @@
 #include "../../include/lexer.h"
 #include "../../include/struct.h"
 
-void	*lexer(t_context *ctx, char *line)
+void	lexer(t_context *ctx, char *line)
 {
 	t_token	*token;
 	t_token	*token_head;
@@ -20,14 +20,12 @@ void	*lexer(t_context *ctx, char *line)
 		else if (is_word(*line))
 			word(&line, line, token);
 		else
-		{
 			tokenize_error("Unexpected Token", &line, line);
-			return ; // これでいいのか？
-		}
 		token = token->next;
 	}
+	print_lexer(token_head);
 	token_node_add(token, token_node_create(NULL, TK_EOF, GENERAL)); // EOFの時のデータはNULLで合ってるか
-	// expansion(token_head); // typeがDOUBLE_QUOTEのときにexpansionする
 }
 
+	// expansion(token_head); // typeがDOUBLE_QUOTEのときにexpansionする
 // このループにexpansion入れるか、double_quote_removalのところでexpansionするか迷い中

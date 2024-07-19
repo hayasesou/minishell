@@ -14,6 +14,8 @@
 // 前方宣言
 typedef struct s_token	t_token;
 typedef struct s_env	t_env;
+typedef struct s_file	t_file;
+typedef struct s_parser	t_parser;
 
 
 //enum列挙型

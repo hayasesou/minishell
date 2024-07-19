@@ -1,10 +1,10 @@
-#include "minishell.h"
-#include "lexer.h"
+#include "../include/minishell.h"
 
 bool	syntax_error = false;
 
 void	fatal_error(const char *msg) __attribute__((noreturn));
 
+void	assert_error(const char *msg) __attribute__((noreturn));
 // attributeを関数につけると、「この関数はreturnしない（≒この関数が呼ばれたときはプログラムが終了する）」ということをコンパイラに知らせる
 
 void	err_exit(const char *location, const char *msg, int status) __attribute__((noreturn));
@@ -29,7 +29,7 @@ void	err_exit(const char *location, const char *msg, int status)
 
 void	todo(const char *msg)
 {
-	dprintf(STDERR_FILENO, "TODO: %s: %s\n", msg);
+	dprintf(STDERR_FILENO, "TODO: %s\n", msg);
 	exit(255);
 }
 
