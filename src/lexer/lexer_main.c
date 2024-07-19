@@ -7,11 +7,6 @@ void	*lexer(t_context *ctx, char *line)
 	t_token	*token;
 
 	token = token_init(ctx);
-	if (ctx->token_head == NULL)
-	{
-		free(line);
-		return (NULL);
-	}
 	while (*line)
 	{
 		if (is_blank(*line))
@@ -19,6 +14,11 @@ void	*lexer(t_context *ctx, char *line)
 		else if (is_operator(*line))
 		{
 			operator(&line, line);
+			token = token->next;
+		}
+		else if (is_quote(*line))
+		{
+			quote(&line, line);
 			token = token->next;
 		}
 		else if (is_word(*line))
