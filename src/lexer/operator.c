@@ -2,47 +2,84 @@
 #include "../../include/lexer.h"
 #include "../../include/struct.h"
 
-bool	is_operator(const char *s)
+bool	is_operator(char c)
 {
-	static char *const	operators[] = {"|", ">", "<", "\n"};
-	size_t				i;
+	return (c && strchr("|<>", c)); // \n\tは必要かどうか
+}
 
-	i = 0;
-	while (i < sizeof(operators) / sizeof(*operators))
+bool	is_available_operator(char *line)
+{
+	if (line[0] == '|' && !is_operator(line[1]))
+		return (true);
+	else if (line[0] == '<')
 	{
-		if (start_with_operator(s, operators[i]))
+		if (!is_operator(line[1]) || (line[1] == '<' && !is_operator(line[2])))
 			return (true);
-		i++;
 	}
-	return (false);
+	else if (line[0] == '>')
+	{
+		if (!is_operator(line[1]) || (line[1] == '>' && !is_operator(line[2])))
+			return (true);
+	}
+	else
+		return (false);
+}
+
+char	*select_op(char *line)
+{
+	char	*op;
+
+	if (line[0] == '|' && !is_operator(line[1]))
+		op = "|";
+	else if (line[0] == '<')
+	{
+		if (!is_operator(line[1]))
+			op = "<";
+		if (line[1] == '<' && !is_operator(line[2]))
+			op = "<<";
+	}
+	else if (line[0] == '>')
+	{
+		if (!is_operator(line[1]))
+			op = ">";
+		if (line[1] == '>' && !is_operator(line[2]))
+			op = ">>";
+	}
+	else
+		return (NULL); // どうする
+	return (op);
+}
+
+t_token_type	*select_op_type(char *op)
+{
+	if (strcmp(op, "|") == 0)
+		return (TK_PIPE);
+	if (strcmp(op, "<") == 0)
+		return (TK_REDIR_IN);
+	if (strcmp(op, ">") == 0)
+		return (TK_REDIR_OUT);
+	if (strcmp(op, "<<") == 0)
+		return (TK_REDIR_HEREDOC);
+	if (strcmp(op, ">>") == 0)
+		return (TK_REDIR_APPEND);
+	return (NULL); // ここ変えた方がいいかも
 }
 
 t_token	*operator(char **line_ptr, char *line)
 {
-	static char *const	operators[] = {"|", "&", "(", ")", "\n"};
-	size_t				i;
-	char				*op;
-	char				*start;
+	char			*op;
+	char			*token;
+	t_token_type	type;
 
-	i = 0;
-	start = line;
-	while (i < sizeof(operators) / sizeof(*operators))
+	if (is_available_operator(*line))
 	{
-		if (start_with_operator(line, operators[i]))
-		{
-			op = strdup(operators[i]);
-			if (op == NULL)
-				fatal_error("tokenize: operator, strdup error");
-			*line_ptr = line + strlen(op);
-			return (token_node_add(start, token_node_create(op, TK_OP, GENERAL)));
-		}
-		i++;
+		op = select_op(line);
+		token = strndup(op, strlen(op));
+		type = select_op_type(op);	
 	}
+	else
+		return ; // errorにしておわらせる
+	token_node_add(op, token_node_create(token, type, GENERAL));
 	//assert_error("tokenize: operator, unexpected operator");
-	return (NULL); // errorにしておわらせる, 一時的にreturnを書かないと動かないからnull返している
-}
-
-bool	start_with_operator(const char *s, const char *operator)
-{
-	return (memcmp(s, operator, strlen(operator)) == 0);
+	*line_ptr += strlen(op);
 }

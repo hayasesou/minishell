@@ -49,6 +49,9 @@ typedef enum e_token_type {
 	TK_WORD,
 	TK_PIPE,
 	TK_EOF,
+	TK_EMPTY,
+	TK_SINGLE_QUOTE,
+	TK_DOUBLE_QUOTE
 }	t_token_type;
 
 typedef enum e_token_state {

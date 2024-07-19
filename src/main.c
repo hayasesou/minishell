@@ -120,7 +120,7 @@ void	main_loop(t_context *ctx, char *line)
 		if (*line)
 		{
 			add_history(line);
-			tokenize(line);
+			lexer(ctx, line);
 			// perser(ctx, line);
 		}
 		// ctx->exit_status = interpret(ctx, line); // interpretはtokenizeと被ってる
