@@ -21,8 +21,10 @@ void	lexer(t_context *ctx, char *line)
 			tokenize_error("Unexpected Token", &line, line);
 		token = token->next;
 	}
+	token_node_add(token, token_node_create("", TK_EOF, GENERAL)); // EOFの時のデータはNULLで合ってるか
+	printf("\n----------- lexer start-------------\n");
 	print_lexer(token_head);
-	token_node_add(token, token_node_create(NULL, TK_EOF, GENERAL)); // EOFの時のデータはNULLで合ってるか
+	printf("----------- lexer end --------------\n\n");
 }
 
 	// expansion(token_head); // typeがDOUBLE_QUOTEのときにexpansionする

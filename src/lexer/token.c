@@ -31,13 +31,8 @@ t_token	*token_node_create(char *data, t_token_type type, t_token_state state)
 
 void	token_node_add(t_token *token, t_token *new_token)
 {
-	// printf("enter token node add\n");
-	if (new_token == NULL)
-		printf("new token null\n");
-	if (token == NULL)
-		printf("head null\n");
-	// if (head == NULL || new_token == NULL)
-		// return ;
+	if (token == NULL || new_token == NULL)
+		return ;
 	new_token->prev = token;
 	new_token->next = NULL;
 	token->next = new_token;
