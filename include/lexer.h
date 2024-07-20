@@ -22,7 +22,7 @@ bool        	is_operator(char c);
 
 // word
 bool        	consume_blank(char **line_ptr, char *line);
-void        	*word(char **line_ptr, char *line, t_token *token);
+void        	word(char **line_ptr, char *line, t_token *token);
 
 // operator
 void            operator(char **line_ptr, char *line, t_token *token);

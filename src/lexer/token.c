@@ -31,8 +31,13 @@ t_token	*token_node_create(char *data, t_token_type type, t_token_state state)
 
 void	token_node_add(t_token *head, t_token *new_token)
 {
-	if (head == NULL || new_token == NULL)
-		return ;
+	// printf("enter token node add\n");
+	if (new_token == NULL)
+		printf("new token null\n");
+	if (head == NULL)
+		printf("head null\n");
+	// if (head == NULL || new_token == NULL)
+		// return ;
 	new_token->next = head;
 	new_token->prev = head->prev;
 	head->prev->next = new_token;
@@ -50,8 +55,7 @@ t_token	*token_init(t_context *ctx)
 		exit (1); // 後でちゃんとしたエラーに修正
 	}
 	head->data = NULL;
-	head->type = NULL;
-	head->state = GENERAL;
+	head->type = TK_EMPTY;
 	head->next = head;
 	head->prev = head;
 	ctx->token_head = head;

@@ -1,6 +1,4 @@
 #include "../../include/minishell.h"
-#include "../../include/lexer.h"
-#include "../../include/struct.h"
 
 void	lexer(t_context *ctx, char *line)
 {
@@ -9,6 +7,7 @@ void	lexer(t_context *ctx, char *line)
 
 	token = token_init(ctx);
 	token_head = token;
+	printf("🩷\n");
 	while (*line)
 	{
 		if (consume_blank(&line, line))

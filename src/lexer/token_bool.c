@@ -9,7 +9,7 @@ bool	is_blank(char c)
 
 bool	is_word(char c)
 {
-	return (c && !is_operator(c) && !is_quote(c));
+	return (c && !is_operator(c) && !is_quote(c) && !is_blank(c));
 }
 
 bool	is_quote(char c)

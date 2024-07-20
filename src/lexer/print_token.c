@@ -20,14 +20,14 @@ void	print_enum(t_token *node)
 		printf(" %s\n", "APPEND");
 	else
 		// print_enum_utils(node);
-		printf("else\n");
+		printf("word\n");
 }
 
 void	print_lexer(t_token *token_head)
 {
 	t_token	*tmp;
 
-	tmp = token_head;
+	tmp = token_head->next;
 	while (tmp != token_head)
 	{
 		printf("%s:", tmp->data);

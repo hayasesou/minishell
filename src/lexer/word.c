@@ -15,13 +15,13 @@ bool	consume_blank(char **line_ptr, char *line)
 	return (false);
 }
 
-void	*word(char **line_ptr, char *line, t_token *token)
+void	word(char **line_ptr, char *line, t_token *token)
 {
 	const char	*start;
 	char		*word;
 
 	start = line;
-	while (*line && !is_metacharacter(*line) && !is_quote(*line))
+	while (*line && is_word(*line))
 		line++;
 	word = strndup(start, line - start);
 	if (word == NULL)
