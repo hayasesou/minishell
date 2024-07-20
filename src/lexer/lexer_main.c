@@ -7,7 +7,6 @@ void	lexer(t_context *ctx, char *line)
 
 	token = token_init(ctx);
 	token_head = token;
-	printf("🩷\n");
 	while (*line)
 	{
 		if (consume_blank(&line, line))
