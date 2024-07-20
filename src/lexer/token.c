@@ -1,6 +1,4 @@
 #include "../../include/minishell.h"
-#include "../../include/lexer.h"
-#include "../../include/struct.h"
 
 //gcc lexer.c token.c -lreadline
 
@@ -8,7 +6,7 @@ t_token	*token_node_create(char *data, t_token_type type, t_token_state state)
 {
 	t_token	*new_token;
 
-	if (data == NULL)
+	if (data == NULL && type != TK_EOF)
 		return (NULL);
 	new_token = (t_token *)calloc(1, sizeof(t_token));
 	if (new_token == NULL)
@@ -21,7 +19,6 @@ t_token	*token_node_create(char *data, t_token_type type, t_token_state state)
 		if (new_token->data == NULL)
 			perror("tokenize: add token strdup error");
 	}
-	// set_token_type(new_token);
 	new_token->type = type;
 	new_token->state = state;
 	new_token->next = NULL;
