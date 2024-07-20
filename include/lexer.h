@@ -31,8 +31,8 @@ t_token_type	select_op_type(char *op);
 
 // quote
 void	        quote(char **line_ptr, char *line, t_token *token);
-t_token         *single_quote_removal(char *str);
-t_token	        *double_quote_removal(char *str);
+char            *single_quote_removal(char *str);
+char            *double_quote_removal(char *str);
 
 // token
 t_token     	*token_node_create(char *data, t_token_type type, t_token_state state);

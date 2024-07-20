@@ -26,10 +26,9 @@ bool	is_double_quote_closed(char *line)
 	return (false);
 }
 
-t_token	*single_quote_removal(char *str)
+char	*single_quote_removal(char *str)
 {
 	char	*start;
-	t_token	*token;
 
 	str++;
 	start = str;
@@ -41,10 +40,9 @@ t_token	*single_quote_removal(char *str)
 		return (NULL);
 }
 
-t_token	*double_quote_removal(char *str)
+char	*double_quote_removal(char *str)
 {
 	char	*start;
-	t_token	*token;
 
 	str++;
 	start = str;
@@ -59,24 +57,26 @@ t_token	*double_quote_removal(char *str)
 void	quote(char **line_ptr, char *line, t_token *token)
 {
 	char			*word;
-	t_token_type	type;
+	t_token_state	type;
 
 	if (*line && is_single_quote(*line))
 	{
-        if (is_single_puote_closed(line))
-    		word = quote_removal(line);
+        if (is_single_quote_closed(line))
+    		word = single_quote_removal(line);
 		else
 			err_exit(line, "Unclosed single quote", 1); // locationとstatusの確認
 		type = SINGLE_QUOTE;
 	}
 	else if (*line && is_double_quote(*line))
 	{
-		if (is_double_puote_closed(*line))
-			word = double_quote_expansion(line);
+		if (is_double_quote_closed(line))
+			word = double_quote_removal(line);
 		else
 			err_exit(line, "Unclosed single quote", 1); // locationとstatusの確認
 		type = DOUBLE_QUOTE;
 	}
+	else
+		err_exit(line, "not quote", 0); // errorの種類あとで変える
 	if (word == NULL)
 		fatal_error("tokenize: word strndup error");
 	token_node_add(token, token_node_create(word, TK_WORD, type));
