@@ -43,6 +43,7 @@ typedef enum e_token_type {
 	TK_REDIR_OUT,
 	TK_REDIR_APPEND,
 	TK_REDIR_HEREDOC,
+
 	TK_OP,
 	TK_WORD,
 	TK_PIPE,
@@ -121,5 +122,20 @@ typedef struct s_context {
 	int		exit_status;
 	bool	sys_error; // 一応
 }	t_context;
+
+
+void	fatal_error(const char *msg);
+t_token	*add_token(char *data, t_token_type type);
+bool	is_blank(char c);
+bool	consume_blank(char **line_ptr, char *line);
+bool	start_with_operator(const char *s, const char *operator);
+bool	is_operator(const char *s);
+t_token	*operator(char **line_ptr, char *line);
+bool	is_metacharacter(char c);
+bool	is_word(const char *s);
+t_token	*word(char **line_ptr, char *line);
+t_token	*token_init(void);
+t_token	*tokenize(char *line);
+void	free_tokens(t_token *token);
 
 #endif

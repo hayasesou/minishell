@@ -3,7 +3,9 @@ CC = cc
 C_FLAGS = -Wall -Wextra -Werror
 I_FLAGS = -Iinclude/
 H_FLAGS = -lreadline
+
 FLAGS = $(C_FLAGS) $(I_FLAGS) #$(H_FLAGS)
+
 
 SRCDIR = ./src
 LEXERDIR = ./src/lexer
@@ -27,6 +29,7 @@ all: $(NAME)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(FLAGS) -c $< -o $@
+
 
 $(OBJDIR)/%.o: $(LEXERDIR)/%.c
 	@mkdir -p $(OBJDIR)
