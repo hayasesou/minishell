@@ -13,8 +13,10 @@
 
 // 前方宣言
 typedef struct s_token	t_token;
-typedef struct s_ast	t_ast;
 typedef struct s_env	t_env;
+typedef struct s_file	t_file;
+typedef struct s_parser	t_parser;
+
 
 //enum列挙型
 //typedef enum e_token_type {
@@ -37,14 +39,18 @@ typedef struct s_env	t_env;
 //}			t_token_type;
 
 typedef enum e_token_type {
-	TK_REDIR_IN = 0,
-	TK_REDIR_OUT = 1,
-	TK_REDIR_APPEND = 2,
-	TK_REDIR_HEREDOC = 3,
+	TK_REDIR_IN,
+	TK_REDIR_OUT,
+	TK_REDIR_APPEND,
+	TK_REDIR_HEREDOC,
+
 	TK_OP,
 	TK_WORD,
 	TK_PIPE,
 	TK_EOF,
+	TK_EMPTY,
+	TK_SINGLE_QUOTE,
+	TK_DOUBLE_QUOTE
 }	t_token_type;
 
 typedef enum e_token_state {
