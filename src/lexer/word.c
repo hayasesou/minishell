@@ -1,6 +1,4 @@
-#include "../../include/minishell.h"
-#include "../../include/lexer.h"
-#include "../../include/struct.h"
+#include "minishell.h"
 
 bool	consume_blank(char **line_ptr, char *line)
 {

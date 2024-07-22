@@ -1,6 +1,4 @@
-#include "../../include/minishell.h"
-#include "../../include/lexer.h"
-#include "../../include/struct.h"
+#include "minishell.h"
 
 bool	is_blank(char c)
 {

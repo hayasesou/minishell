@@ -39,10 +39,10 @@ typedef struct s_parser	t_parser;
 //}			t_token_type;
 
 typedef enum e_token_type {
-	TK_REDIR_IN = 0,
-	TK_REDIR_OUT = 1,
-	TK_REDIR_APPEND = 2,
-	TK_REDIR_HEREDOC = 3,
+	TK_REDIR_IN,
+	TK_REDIR_OUT,
+	TK_REDIR_APPEND,
+	TK_REDIR_HEREDOC,
 	TK_OP,
 	TK_WORD,
 	TK_PIPE,

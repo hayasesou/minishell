@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	lexer(t_context *ctx, char *line)
 {

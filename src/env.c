@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_env	*node_new_set(t_env *env_node, char *str)
 {

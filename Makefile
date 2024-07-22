@@ -1,9 +1,9 @@
 NAME = minishell
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror
-#F_FLAGS =
+I_FLAGS = -Iinclude/
 H_FLAGS = -lreadline
-FLAGS = $(C_FLAGS)	#$(H_FLAGS)
+FLAGS = $(C_FLAGS) $(I_FLAGS) #$(H_FLAGS)
 
 SRCDIR = ./src
 LEXERDIR = ./src/lexer
@@ -26,14 +26,14 @@ all: $(NAME)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	$(CC) $(C_FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJDIR)/%.o: $(LEXERDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	$(CC) $(C_FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(C_FLAGS) $(OBJS) -o $@ $(H_FLAGS)
+	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
 
 clean:
 	$(RM) $(OBJS)
@@ -45,3 +45,4 @@ re: fclean all
 
 debug: re
 debug: C_FLAGS = -g -fsanitize=address
+debug: FLAGS = $(C_FLAGS) $(I_FLAGS) $(H_FLAGS)

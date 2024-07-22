@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 //gcc lexer.c token.c -lreadline
 
