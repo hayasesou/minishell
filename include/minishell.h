@@ -12,8 +12,9 @@
 # include <stdbool.h>
 
 # include "struct.h"
+# include "error.h"
 # include "lexer.h"
-
+# include "parser.h"
 
 # define ERROR_TOKENIZE 258
 extern bool	syntax_error;
