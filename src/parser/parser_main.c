@@ -45,7 +45,7 @@ void    arg_node_create(t_parser **args, t_token *token)
     
 }
 
-void    arg_node_add(t_parser **args, t_token *token)
+void    arg_node_add(t_parser *args, t_token *token)
 {
     t_parser    *node;
 
@@ -60,6 +60,41 @@ void    arg_node_add(t_parser **args, t_token *token)
         arg_node_add(args, token);
     else
         err_exit(token, "parser: arg_node_add invalid token type", 0);
+}
+
+void    file_node_add(char *filename, int type)
+{
+    t_parser    *node;
+
+    node = malloc(sizeof(t_file));
+    node->filename = strdup(filename);
+    node->type = type;
+    node->next = NULL;
+}
+
+void    create_command(t_parser *args_head, t_token *token)
+{
+    t_token *tmp;
+
+    tmp = token;
+    while (tmp->type != TK_EOF)
+    {
+        if (is_redirect(tmp))
+            parse_redirect();
+        else if (is_pipe(tmp))
+            parse_pipe();
+        else
+            parse_cmd();
+        tmp = tmp->next;
+    }
+}
+
+void    command_init(t_parser *parser)
+{
+    parser->cmd = malloc(sizeof(char *) * 2);
+    if (parser->cmd == NULL)
+        return (fatal_error("parser: command init malloc error"));
+        
 }
 
 void    parser(t_context *ctx)
