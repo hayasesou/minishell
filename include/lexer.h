@@ -8,7 +8,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
 // bool
 
 bool	        is_blank(char c);
