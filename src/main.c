@@ -32,13 +32,13 @@
 // 	return (NULL);
 // }
 
-void	validate_access(const char *path, const char *filename)
-{
-	if (path == NULL)
-		err_exit(filename, "command not found", 127);
-	if (access(path, F_OK) < 0)
-		err_exit(filename, "command not found", 127);
-}
+// void	validate_access(const char *path, const char *filename)
+// {
+// 	if (path == NULL)
+// 		err_exit(filename, "command not found", 127);
+// 	if (access(path, F_OK) < 0)
+// 		err_exit(filename, "command not found", 127);
+// }
 
 // int	exec(char argv[])
 // {
@@ -120,7 +120,7 @@ void	main_loop(t_context *ctx, char *line)
 		{
 			add_history(line);
 			lexer(ctx, line);
-			// perser(ctx, line);
+			parser(ctx);
 		}
 		// ctx->exit_status = interpret(ctx, line); // interpretはtokenizeと被ってる
 		free(line);
