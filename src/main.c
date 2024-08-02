@@ -1,70 +1,70 @@
 #include "minishell.h"
 
-char	*search_path(const char *filename)
-{
-	char	path[PATH_MAX];
-	char	*value;
-	char	*end;
-	char	*dup;
+//char	*search_path(const char *filename)
+//{
+//	char	path[PATH_MAX];
+//	char	*value;
+//	char	*end;
+//	char	*dup;
+//
+//	value = getenv("PATH");
+//	while (*value)
+//	{
+//		bzero(path, PATH_MAX);
+//		end = strchr(value, ':');
+//		if (end)
+//			strncpy(path, value, end - value);
+//		else
+//			strlcpy(path, value, PATH_MAX);
+//		strlcat(path, "/", PATH_MAX);
+//		strlcat(path, filename, PATH_MAX);
+//		if (access(path, X_OK) == 0)
+//		{
+//			dup = strdup(path);
+//			if (dup == NULL)
+//				fatal_error("strdup");
+//			return (dup);
+//		}
+//		if (end == NULL)
+//			return (NULL);
+//		value = end + 1;
+//	}
+//	return (NULL);
+//}
 
-	value = getenv("PATH");
-	while (*value)
-	{
-		bzero(path, PATH_MAX);
-		end = strchr(value, ':');
-		if (end)
-			strncpy(path, value, end - value);
-		else
-			strlcpy(path, value, PATH_MAX);
-		strlcat(path, "/", PATH_MAX);
-		strlcat(path, filename, PATH_MAX);
-		if (access(path, X_OK) == 0)
-		{
-			dup = strdup(path);
-			if (dup == NULL)
-				fatal_error("strdup");
-			return (dup);
-		}
-		if (end == NULL)
-			return (NULL);
-		value = end + 1;
-	}
-	return (NULL);
-}
+//void	validate_access(const char *path, const char *filename)
+//{
+//	if (path == NULL)
+//		err_exit(filename, "command not found", 127);
+//	if (access(path, F_OK) < 0)
+//		err_exit(filename, "command not found", 127);
+//}
 
-void	validate_access(const char *path, const char *filename)
-{
-	if (path == NULL)
-		err_exit(filename, "command not found", 127);
-	if (access(path, F_OK) < 0)
-		err_exit(filename, "command not found", 127);
-}
-
-int	exec(char argv[])
-{
-	extern char	**environ;
-	const char	*path;
-	pid_t		pid;
-	int			wstatus;
-
-	path = &argv[0];
-	pid = fork();
-	if (pid < 0)
-		fatal_error("fork");
-	else if (pid == 0)
-	{
-		if (strchr(path, '/') == NULL)
-			path = search_path(path);
-		validate_access(path, &argv[0]);
-		// rxecve(path, argv, environ);
-		fatal_error("execve");
-	}
-	else
-	{
-		wait(&wstatus);
-		return (WEXITSTATUS(wstatus));
-	}
-}
+//int	exec(char argv[])
+//{
+//	extern char	**environ;
+//	const char	*path;
+//	pid_t		pid;
+//	int			wstatus;
+//
+//	path = &argv[0];
+//	pid = fork();
+//	if (pid < 0)
+//		fatal_error("fork");
+//	else if (pid == 0)
+//	{
+//		if (strchr(path, '/') == NULL)
+//			path = search_path(path);
+//		validate_access(path, &argv[0]);
+//		// rxecve(path, argv, environ);
+//		fatal_error("execve");
+//	}
+//	else
+//	{
+//		wait(&wstatus);
+//		return (WEXITSTATUS(wstatus));
+//	}
+//}
 
 t_context	*minishell_init(int ac, char **av, char **envp)
 {
