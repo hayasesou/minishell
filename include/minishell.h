@@ -11,6 +11,7 @@
 # include <stddef.h>
 # include <stdbool.h>
 
+# include "libft.h"
 # include "struct.h"
 # include "lexer.h"
 

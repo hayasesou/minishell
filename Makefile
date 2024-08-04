@@ -1,10 +1,13 @@
 NAME = minishell
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror
-I_FLAGS = -Iinclude/
+I_FLAGS = -Iinclude/ -Ilibft/
 H_FLAGS = -lreadline
+L_FLAGS = -Llibft -lft
 
-FLAGS = $(C_FLAGS) $(I_FLAGS) #$(H_FLAGS)
+LIBFT = libft/libft.a
+
+FLAGS = $(C_FLAGS) $(I_FLAGS) $(L_FLAGS) #$(H_FLAGS)
 
 
 SRCDIR = ./src
@@ -20,11 +23,13 @@ LEXER_FILES = lexer_main.c operator.c print_token.c quote.c token_bool.c token.c
 
 all: $(NAME)
 
-# $(NAME): $(OBJS)
-# 	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
 
-# .c.o:
-# 	$(CC) $(C_FLAGS) -c $< -o $@
+$(NAME): $(LIBFT) $(OBJS)  
+	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
+
+$(LIBFT):
+	make -C libft/
+
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
@@ -35,14 +40,13 @@ $(OBJDIR)/%.o: $(LEXERDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
-$(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
-
 clean:
 	$(RM) $(OBJS)
+	make -C libft/ clean
 
 fclean: clean
 	$(RM) $(NAME)
+	make -C libft/ fclean
 
 re: fclean all
 

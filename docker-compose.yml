@@ -1,0 +1,9 @@
+services:
+  bash_5_1_16:
+    platform: ${DOCKER_PLATFORM} 
+    build: 
+      context: .
+    volumes: 
+      - ${PWD}:/app
+    working_dir: /app
+    tty: true
