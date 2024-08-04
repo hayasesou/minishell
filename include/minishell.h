@@ -14,6 +14,7 @@
 # include "libft.h"
 # include "struct.h"
 # include "lexer.h"
+# include "redirect.h"
 
 
 # define ERROR_TOKENIZE 258
