@@ -1,0 +1,7 @@
+*.o
+a.out
+.vscode
+*.code-workspace
+libft.a
+.DS_Store
+a.out.dSYM
