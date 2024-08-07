@@ -38,19 +38,19 @@ void	print_parser(t_parser *parser_head)
 	parser_tmp = parser_head;
 	while (parser_tmp != NULL)
 	{
-		ft_printf("---------- pipe result ---------\n");
+		printf("---------- pipe result ---------\n");
 		i = 0;
 		if (parser_tmp->cmd != NULL)
 		{
 			while (parser_tmp->cmd[i] != NULL)
 			{
-				ft_printf("cmd[%d] = %s\n", i, parser_tmp->cmd[i]);
+				printf("cmd[%d] = %s\n", i, parser_tmp->cmd[i]);
 				i++;
 			}
 		}
-		ft_printf("files\n");
+		printf("files\n");
 		// print_parser_file(parser_tmp->file);
 		parser_tmp = parser_tmp->next;
-		ft_printf("---------- pipe end ---------\n");
+		printf("---------- pipe end ---------\n");
 	}
 }

@@ -17,7 +17,6 @@ typedef struct s_env	t_env;
 typedef struct s_file	t_file;
 typedef struct s_parser	t_parser;
 
-
 //enum列挙型
 //typedef enum e_token_type {
 //	CHAR,
@@ -95,7 +94,7 @@ typedef struct s_list {
 
 typedef struct s_file
 {
-	char				*file_name;
+	char				*filename;
 	t_redirect_type		type;
 	t_file				*next;
 }						t_file;
