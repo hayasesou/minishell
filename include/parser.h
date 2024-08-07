@@ -29,6 +29,4 @@ void	print_parser(t_parser *parser_head);
 char *ft_strjoin(const char *str1, const char *str2);
 t_redirect_type get_redirect_type(t_token_type type);
 
-
-
 #endif

@@ -1,34 +1,34 @@
 
 #include "minishell.h"
 
-// static void	print_parser_type(t_redirect_type type)
-// {
-// 	if (type == QUOTE_HEREDOC)
-// 		ft_printf("type = QUOTE_HEREDOC	:");
-// 	else if (type == HEREDOC)
-// 		ft_printf("type = HEREDOC	:");
-// 	else if (type == IN_FILE)
-// 		ft_printf("type = IN_FILE		:");
-// 	else if (type == OUT_FILE)
-// 		ft_printf("type = OUT_FILE		:");
-// 	else if (type == APPEND)
-// 		ft_printf("type = APPEND	:");
-// 	else
-// 		ft_printf("type = ERROR	:");
-// }
+static void	print_parser_type(t_redirect_type type)
+{
+	if (type == QUOTE_HEREDOC)
+		printf("type = QUOTE_HEREDOC	:");
+	else if (type == HEREDOC)
+		printf("type = HEREDOC	:");
+	else if (type == IN_FILE)
+		printf("type = IN_FILE		:");
+	else if (type == OUT_FILE)
+		printf("type = OUT_FILE		:");
+	else if (type == APPEND)
+		printf("type = APPEND	:");
+	else
+		printf("type = ERROR	:");
+}
 
-// static void	print_parser_file(t_file *file)
-// {
-// 	t_file	*file_tmp;
+static void	print_parser_file(t_file *file)
+{
+	t_file	*file_tmp;
 
-// 	file_tmp = file;
-// 	while (file_tmp != NULL)
-// 	{
-// 		print_parser_type(file_tmp->type);
-// 		ft_printf("%s\n", file_tmp->file_name);
-// 		file_tmp = file_tmp->next;
-// 	}
-// }
+	file_tmp = file;
+	while (file_tmp != NULL)
+	{
+		print_parser_type(file_tmp->type);
+		printf("%s\n", file_tmp->filename);
+		file_tmp = file_tmp->next;
+	}
+}
 
 void	print_parser(t_parser *parser_head)
 {
@@ -49,7 +49,7 @@ void	print_parser(t_parser *parser_head)
 			}
 		}
 		printf("files\n");
-		// print_parser_file(parser_tmp->file);
+		print_parser_file(parser_tmp->file);
 		parser_tmp = parser_tmp->next;
 		printf("---------- pipe end ---------\n");
 	}

@@ -9,7 +9,7 @@ t_token    *cat_token(t_token *token)
 
     new_token = token;
     tmp = token;
-    while (token->next->type != TK_EOF && is_string(token))
+    while (token->next != NULL && is_string(token))
     {
         if (is_cat_token(token))
         {
@@ -58,24 +58,25 @@ void append_token(t_parser **args, t_token *token)
 
         (*args)->cmd[0] = strdup(token->data);
         (*args)->cmd[1] = NULL;
-        return;
+    } else {
+        // Count the number of existing commands
+        for (i = 0; (*args)->cmd[i] != NULL; i++);
+
+        new_cmd = malloc(sizeof(char *) * (i + 2));
+        if (new_cmd == NULL)
+            fatal_error("parser: append_token malloc error");
+
+        for (int j = 0; j < i; j++)
+            new_cmd[j] = (*args)->cmd[j];
+
+        new_cmd[i] = strdup(token->data);
+        new_cmd[i + 1] = NULL;
+
+        free((*args)->cmd);
+        (*args)->cmd = new_cmd;
     }
-
-    for (i = 0; (*args)->cmd[i] != NULL; i++);
-
-    new_cmd = malloc(sizeof(char *) * (i + 2));
-    if (new_cmd == NULL)
-        fatal_error("parser: append_token malloc error");
-
-    for (int j = 0; j < i; j++)
-        new_cmd[j] = (*args)->cmd[j];
-
-    new_cmd[i] = strdup(token->data);
-    new_cmd[i + 1] = NULL;
-
-    free((*args)->cmd);
-    (*args)->cmd = new_cmd;
 }
+
 
 
 void    arg_node_create(t_parser **args, t_token *token)
@@ -158,7 +159,6 @@ t_parser *arg_node_add(t_parser *args)
     return new_node;
 }
 
-
 void create_command(t_parser *args, t_token *token)
 {
     t_token *tmp;
@@ -166,18 +166,21 @@ void create_command(t_parser *args, t_token *token)
 
     tmp = token;
     cur_arg = args;
+
     while (tmp->type != TK_EOF && tmp->type != TK_PIPE)
     {
         if (is_redirect(tmp))
             file_node_add(cur_arg, tmp->data, get_redirect_type(tmp->type));
         else
         {
-            cur_arg = arg_node_add(cur_arg); // ノードを追加して、次のノードを返す
+            if (cur_arg->cmd != NULL && cur_arg->cmd[0] != NULL)
+                cur_arg = arg_node_add(cur_arg); // ノードを追加して、次のノードを返す
             append_token(&cur_arg, tmp); // トークンを追加
         }
         tmp = tmp->next;
     }
 }
+
 
 void    command_init(t_parser *args)
 {
@@ -211,7 +214,7 @@ void    parser(t_context *ctx)
     args_head = args;
     token = ctx->token_head->next; // token head用のtoken_type作成するかTK_EMPTYのままにするかあとで考える
     command_init(args);
-    while (token->type != TK_EOF)
+    while (token->next != NULL)
     {
         create_command(args, token);
         if (token->type == TK_PIPE)
