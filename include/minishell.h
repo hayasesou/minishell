@@ -10,6 +10,7 @@
 # include <readline/history.h>
 # include <stddef.h>
 # include <stdbool.h>
+# include <errno.h>
 
 # include "libft.h"
 # include "struct.h"
