@@ -53,11 +53,18 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
             {
                 tmp_input_fd = redirect_input(file, context,  redirect_status);
             }
+            else if (file->type == HEREDOC)
+            {
+                tmp_input_fd = heredoc(file, context,  redirect_status);
+            }
         }
        file = file->next;
     }
-    dup2_fd(tmp_output_fd, STDOUT_FILENO);
-    dup2_fd(tmp_input_fd, STDIN_FILENO);
+
+    if (tmp_output_fd != -1)
+        dup2_fd(tmp_output_fd, STDOUT_FILENO);
+    if (tmp_input_fd != -1)
+        dup2_fd(tmp_input_fd, STDIN_FILENO);
 }
 
 
@@ -125,23 +132,69 @@ int main(void)
     // f3.type = IN_FILE;
     // f3.next = NULL;
 
-    //  cat >> test1 >> test2 < test3
+    // //  cat >> test1 >> test2 < test3
+    // f1.file_name = "test1";
+    // f1.type = APPEND;
+    // f1.next = &f2;
+    // f2.file_name = "test2";
+    // f2.type = APPEND;
+    // f2.next = &f3;
+    // f3.file_name = "test3";
+    // f3.type = IN_FILE;
+    // f3.next = NULL;
+
+    // //cat << eof
+    // f1.file_name = "eof";
+    // f1.type = HEREDOC;
+    // f1.next = NULL;
+    // (void)f3;
+    // (void)f2;
+
+    // // cat << eof1 << eof2
+    // f1.file_name = "eof1";
+    // f1.type = HEREDOC;
+    // f1.next = &f2;
+    // f2.file_name = "eof2";
+    // f2.type = HEREDOC;
+    // f2.next = NULL;
+    // (void)f3;
+
+
+    // //cat << eof >test1
+    // f1.file_name = "eof";
+    // f1.type = HEREDOC;
+    // f1.next = &f2;
+    // f2.file_name = "test1";
+    // f2.type = OUT_FILE;
+    // f2.next = NULL;
+    // (void)f3;
+
+    //cat > test1 << eof
     f1.file_name = "test1";
-    f1.type = APPEND;
+    f1.type = OUT_FILE;
     f1.next = &f2;
-    f2.file_name = "test2";
-    f2.type = APPEND;
-    f2.next = &f3;
-    f3.file_name = "test3";
-    f3.type = IN_FILE;
-    f3.next = NULL;
+    f2.file_name = "eof";
+    f2.type = HEREDOC;
+    f2.next = NULL;
+    (void)f3;
 
     parser.file = &f1;
-    redirect(&parser, &context, &status);
-
-    char *cmd[] = {"cat", NULL};
-    execve("/usr/bin/cat", cmd, NULL);
-    printf("execve error");   
+    pid_t pid;
+    pid = fork();
+    if(pid == -1)
+    {
+        fatal_error("fork error");
+    }
+    if(pid == 0)
+    {
+        redirect(&parser, &context, &status);
+        char *cmd[] = {"cat", NULL};
+        execve("/usr/bin/cat", cmd, NULL);
+        printf("execve error");
+    }
+    waitpid(pid, &status, 0);
+    
+    printf("success\n");
 
     return 0;
 }

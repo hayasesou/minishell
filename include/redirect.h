@@ -18,4 +18,7 @@ bool is_input(t_file *file);
 void error_message(char *file_name);
 void unexisted_env_error(char *env);
 
+//heredoc.c
+int heredoc(t_file *file, t_context *context, int *status);
+
 #endif

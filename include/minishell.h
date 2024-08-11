@@ -11,6 +11,7 @@
 # include <stddef.h>
 # include <stdbool.h>
 # include <errno.h>
+#include <sys/wait.h>
 
 # include "libft.h"
 # include "struct.h"
