@@ -2,22 +2,24 @@
 
 
 
-void close_fd(int fd)
+void close_fd(int fd, t_context *context)
 {
     if(close(fd) == -1)
     {
+        context->exit_status = 1;
         fatal_error("close error");
     }
 }
 
 
-void dup2_fd(int old_fd, int new_fd)
+void dup2_fd(int old_fd, int new_fd, t_context *context)
 {
     if(dup2(old_fd, new_fd) == -1)
     {
+        context->exit_status = 1;
         fatal_error("dup2 error");
     }
-    close_fd(old_fd);
+    close_fd(old_fd, context);
 }
 
 
@@ -37,7 +39,7 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
         if (is_output(file))
         {
             if (tmp_output_fd != -1)
-                close_fd(tmp_output_fd);
+                close_fd(tmp_output_fd, context);
             if(file->type == OUT_FILE)
             {
                 tmp_output_fd = redirect_output(file, context,  redirect_status);
@@ -48,7 +50,7 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
         else if (is_input(file))
         {
             if(tmp_input_fd != -1)
-                close_fd(tmp_input_fd);
+                close_fd(tmp_input_fd, context);
             if(file->type == IN_FILE)
             {
                 tmp_input_fd = redirect_input(file, context,  redirect_status);
@@ -218,20 +220,29 @@ int main(int ac, char **av, char **envp)
     // (void)f3;
 
 
-    // // //cat << eof1
+    // //cat << eof1
     // f1.file_name = "eof1";
     // f1.type = HEREDOC;
     // f1.next = NULL;
     // (void)f3;
     // (void)f2;
 
-    //heredoc quote test
-    // cat << " "
-    f1.file_name = " ";
-    f1.type = QUOTE_HEREDOC;
-    f1.next = NULL;
-    (void)f2;
-    (void)f3;
+    // //heredoc quote test
+    // // cat << " "
+    // f1.file_name = " ";
+    // f1.type = QUOTE_HEREDOC;
+    // f1.next = NULL;
+    // (void)f2;
+    // (void)f3;
+
+    // // //cat << " " > test1
+    // f1.file_name = " ";
+    // f1.type = QUOTE_HEREDOC;
+    // f1.next = &f2;
+    // f2.file_name = "test1";
+    // f2.type = OUT_FILE;
+    // f2.next = NULL;
+    // (void)f3;
 
     parser.file = &f1;
     pid_t pid;
@@ -249,7 +260,16 @@ int main(int ac, char **av, char **envp)
     }
     waitpid(pid, &status, 0);
     delete_tmpfile();
-    
+
+    t_env *tmp = env_head->next;
+    while(tmp != env_head)
+    {
+        free(tmp->env_name);
+        free(tmp->env_val);
+        tmp = tmp->next;
+        free(tmp->prev);
+    }
+    free(env_head);
     printf("success\n");
 
     return 0;
