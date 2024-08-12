@@ -20,5 +20,6 @@ void unexisted_env_error(char *env);
 
 //heredoc.c
 int heredoc(t_file *file, t_context *context, int *status);
+void delete_tmpfile(void);
 
 #endif

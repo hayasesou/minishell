@@ -1,6 +1,9 @@
 #include "minishell.h"
 
 
+
+#define HEREDOCTMP ".heredoctmp"
+
 typedef struct s_heredoc
 {
     char *deliminater;
@@ -27,15 +30,15 @@ void create_tmpfile(t_heredoc *heredoc)
     i = 0;
     while(1)
     {
-        //malloc
+        //malloc tmp_num
         tmp_num = ft_itoa(i);
-        //malloc
-        tmpfile = ft_strjoin("heredoctmp", tmp_num);
-        //free 
+        //malloc tmpfile
+        tmpfile = ft_strjoin(HEREDOCTMP, tmp_num);
+        //free tmp_num
         free(tmp_num);
         if (check_file_existence(tmpfile) == false)
             break;
-        //free
+        //free tmpfile
         free(tmpfile);
         i++;
     }
@@ -47,8 +50,40 @@ void create_tmpfile(t_heredoc *heredoc)
     }
     heredoc->tmpfile = tmpfile;
     heredoc->tmpfile_fd = fd;
+    //If there is no error, the allocated memory area is assigned to tmpfile
+    //if there is no error, opened file descriptor is assigned to tmpfile_fd
+    //if there is no error, tmp file is created
 }
 
+void delete_tmpfile(void)
+{
+    char *tmp_num;
+    char *tmpfile;
+    int i;
+
+    i = 0;
+    //malloc tmp_num
+    tmp_num = ft_itoa(i);
+    //maloc tmpfile
+    tmpfile = ft_strjoin(HEREDOCTMP, tmp_num);
+    //free tmp_num
+    free(tmp_num);
+    while(access(tmpfile, F_OK) != -1)
+    {
+        //delete tmpfile
+        unlink(tmpfile);
+        //free tmpfile
+        free(tmpfile);
+        i++;
+        tmp_num = ft_itoa(i);
+        tmpfile = ft_strjoin(HEREDOCTMP, tmp_num);
+        free(tmp_num);
+        if (tmpfile == NULL)
+            fatal_error("malloc error");
+    }
+    //free tmpfile
+    free(tmpfile);
+}
 
 int heredoc(t_file *file, t_context *context, int *redirect_status)
 {
@@ -72,13 +107,12 @@ int heredoc(t_file *file, t_context *context, int *redirect_status)
     // read from stdin and write to tmpfile
     char *line;
     char *new_line;
-    // printf("%d",heredoc.tmpfile_fd);
     while(1)
     {
+        //malloc line
         line = readline(">");
         if (line == NULL)
             break;
-        // blank line
         if(ft_strlen(line) == 0)
         {
             free(line);
@@ -90,16 +124,19 @@ int heredoc(t_file *file, t_context *context, int *redirect_status)
             free(line);
             break;
         }
+        //malloc new_line
         new_line = ft_strjoin(line, "\n");
+        //free line
         free(line);
         write(heredoc.tmpfile_fd, new_line, ft_strlen(new_line));
+        //free new_line
         free(new_line);
     }
-    //tmpfilefd is WRITE ONLY so we need to close it and reopen it as READ ONLY
     close(heredoc.tmpfile_fd);
     heredoc.tmpfile_fd = open(heredoc.tmpfile, O_RDONLY);
     //free
-    // free(heredoc.tmpfile);
-    // printf("%d",heredoc.tmpfile_fd);
+    free(heredoc.tmpfile);
+
     return heredoc.tmpfile_fd;
+    //if there is no error, opend file descriptor is returned 
 }

@@ -68,6 +68,11 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
 }
 
 
+
+__attribute__((destructor))
+static void destructor() {
+    system("leaks -q redirect");
+}
 int main(void)
 {
     t_parser parser;
@@ -169,14 +174,27 @@ int main(void)
     // f2.next = NULL;
     // (void)f3;
 
-    //cat > test1 << eof
-    f1.file_name = "test1";
-    f1.type = OUT_FILE;
+    // //cat > test1 << eof
+    // f1.file_name = "test1";
+    // f1.type = OUT_FILE;
+    // f1.next = &f2;
+    // f2.file_name = "eof";
+    // f2.type = HEREDOC;
+    // f2.next = NULL;
+    // (void)f3;
+
+    //cat << eof1 << eof2 << eof3
+    f1.file_name = "eof1";
+    f1.type = HEREDOC;
     f1.next = &f2;
-    f2.file_name = "eof";
+    f2.file_name = "eof2";
     f2.type = HEREDOC;
-    f2.next = NULL;
-    (void)f3;
+    f2.next = &f3;
+    f3.file_name = "eof3";
+    f3.type = HEREDOC;
+    f3.next = NULL;
+
+
 
     parser.file = &f1;
     pid_t pid;
@@ -193,6 +211,7 @@ int main(void)
         printf("execve error");
     }
     waitpid(pid, &status, 0);
+    delete_tmpfile();
     
     printf("success\n");
 
