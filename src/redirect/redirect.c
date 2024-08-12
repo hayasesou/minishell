@@ -183,17 +183,24 @@ int main(void)
     // f2.next = NULL;
     // (void)f3;
 
-    //cat << eof1 << eof2 << eof3
-    f1.file_name = "eof1";
+    // //cat << eof1 << eof2 << eof3
+    // f1.file_name = "eof1";
+    // f1.type = HEREDOC;
+    // f1.next = &f2;
+    // f2.file_name = "eof2";
+    // f2.type = HEREDOC;
+    // f2.next = &f3;
+    // f3.file_name = "eof3";
+    // f3.type = HEREDOC;
+    // f3.next = NULL;
+    
+    //cat << eof1
+    //adapt to env_variable
+    f1.file_name = "eof";
     f1.type = HEREDOC;
-    f1.next = &f2;
-    f2.file_name = "eof2";
-    f2.type = HEREDOC;
-    f2.next = &f3;
-    f3.file_name = "eof3";
-    f3.type = HEREDOC;
-    f3.next = NULL;
-
+    f1.next = NULL;
+    (void)f2;
+    (void)f3;
 
 
     parser.file = &f1;
