@@ -30,6 +30,7 @@ void unexisted_env_error(char *env);
 
 //heredoc.c
 int heredoc(t_file *file, t_context *context, int *status);
+int quote_heredoc(t_file *file, t_context *context, int *redirect_status);
 void create_tmpfile(t_heredoc *heredoc);
 void delete_tmpfile(void);
 

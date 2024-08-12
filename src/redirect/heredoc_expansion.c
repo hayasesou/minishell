@@ -1,13 +1,27 @@
 #include "minishell.h"
 
 
-char  *get_env_value(char *env_name, t_context *context)
+char  *get_env_value(char *env_name, t_env *env_head)
 {
-    //tentative implementation
     char *env_value;
+    t_env *tmp_env;
 
-    env_value = ft_strdup("value");
-    return (env_value);
+    if (env_head == NULL)
+        return (NULL);
+    tmp_env = env_head->next;
+    while(tmp_env != env_head)
+    {
+        if(ft_strncmp(env_name, tmp_env->env_name, ft_strlen(env_name)) == 0 
+            && ft_strlen(env_name) == ft_strlen(tmp_env->env_name))
+        {
+            env_value = ft_strdup(tmp_env->env_val);
+            if(env_value == NULL)
+                fatal_error("malloc error");
+            return (env_value);
+        }
+        tmp_env = tmp_env->next;
+    }
+    return (NULL);
 }
 
 
@@ -62,7 +76,7 @@ char *make_heredoc_newline(char *line, size_t *i, t_context *context)
         fatal_error("malloc error");
     }
     //malloc env_value
-    char *env_value = ft_strdup(get_env_value(env_name, context));
+    char *env_value = ft_strdup(get_env_value(env_name, context->env_head));
     //free env_name
     free(env_name);
     if(env_value == NULL)

@@ -5,10 +5,10 @@ redirect_files=$(ls *.c)
 Include="-I../../include -I../../libft"
 LFALGS="-L../../libft -lft"
 H_FLAGS="-lreadline"
-C_FLAGS="-g -fsanitize=address"
+# C_FLAGS="-g -fsanitize=address"
 
 # コンパイル
-cc $C_FLAGS $redirect_files ../error.c $Include $LFALGS -Wall -o redirect $H_FLAGS
+cc $C_FLAGS $redirect_files ../error.c ../env.c $Include $LFALGS -Wall -o redirect $H_FLAGS
 
 # コンパイルが成功した場合のみ実行
 if [ $? -eq 0 ]; then

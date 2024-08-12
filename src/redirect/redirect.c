@@ -57,6 +57,10 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
             {
                 tmp_input_fd = heredoc(file, context,  redirect_status);
             }
+            else if (file->type == QUOTE_HEREDOC)
+            {
+                tmp_input_fd = quote_heredoc(file, context,  redirect_status);
+            }
         }
        file = file->next;
     }
@@ -73,11 +77,20 @@ __attribute__((destructor))
 static void destructor() {
     system("leaks -q redirect");
 }
-int main(void)
+int main(int ac, char **av, char **envp)
 {
     t_parser parser;
     t_context context;
     int status;
+    t_env *env_head = env_init(envp);
+    // t_env *tmp = env_head->next;
+    // while(tmp != env_head)
+    // {
+    //     printf("env_name: %s\n", tmp->env_name);
+    //     printf("env_val: %s\n", tmp->env_val);
+    //     tmp = tmp->next;
+    // }
+    context.env_head = env_head;
 
     t_file f1, f2, f3;
     //redirect output    ls > test1 > test2 > test3
@@ -194,14 +207,31 @@ int main(void)
     // f3.type = HEREDOC;
     // f3.next = NULL;
     
-    //cat << eof1
-    //adapt to env_variable
-    f1.file_name = "eof";
-    f1.type = HEREDOC;
+    // //cat << eof1 > test2
+    // //adapt to env_variable
+    // f1.file_name = "eof1";
+    // f1.type = HEREDOC;
+    // f1.next = &f2;
+    // f2.file_name = "test2";
+    // f2.type = OUT_FILE;
+    // f2.next = NULL;
+    // (void)f3;
+
+
+    // // //cat << eof1
+    // f1.file_name = "eof1";
+    // f1.type = HEREDOC;
+    // f1.next = NULL;
+    // (void)f3;
+    // (void)f2;
+
+    //heredoc quote test
+    // cat << " "
+    f1.file_name = " ";
+    f1.type = QUOTE_HEREDOC;
     f1.next = NULL;
     (void)f2;
     (void)f3;
-
 
     parser.file = &f1;
     pid_t pid;
