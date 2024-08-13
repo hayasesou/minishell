@@ -1,29 +1,6 @@
 #include "minishell.h"
 
 
-
-void close_fd(int fd, t_context *context)
-{
-    if(close(fd) == -1)
-    {
-        context->exit_status = 1;
-        fatal_error("close error");
-    }
-}
-
-
-void dup2_fd(int old_fd, int new_fd, t_context *context)
-{
-    if(dup2(old_fd, new_fd) == -1)
-    {
-        context->exit_status = 1;
-        fatal_error("dup2 error");
-    }
-    close_fd(old_fd, context);
-}
-
-
-
 void redirect(t_parser *parser, t_context *context, int *redirect_status)
 {
     int tmp_input_fd;
@@ -68,9 +45,9 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
     }
 
     if (tmp_output_fd != -1)
-        dup2_fd(tmp_output_fd, STDOUT_FILENO);
+        dup2_fd(tmp_output_fd, STDOUT_FILENO, context);
     if (tmp_input_fd != -1)
-        dup2_fd(tmp_input_fd, STDIN_FILENO);
+        dup2_fd(tmp_input_fd, STDIN_FILENO, context);
 }
 
 
@@ -227,13 +204,13 @@ int main(int ac, char **av, char **envp)
     // (void)f3;
     // (void)f2;
 
-    // //heredoc quote test
-    // // cat << " "
-    // f1.file_name = " ";
-    // f1.type = QUOTE_HEREDOC;
-    // f1.next = NULL;
-    // (void)f2;
-    // (void)f3;
+    //heredoc quote test
+    // cat << " "
+    f1.file_name = " ";
+    f1.type = QUOTE_HEREDOC;
+    f1.next = NULL;
+    (void)f2;
+    (void)f3;
 
     // // //cat << " " > test1
     // f1.file_name = " ";
