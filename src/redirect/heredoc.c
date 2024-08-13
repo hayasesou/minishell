@@ -3,6 +3,7 @@
 int heredoc(t_file *file, t_context *context, int *redirect_status)
 {
     t_heredoc heredoc;
+    (void)redirect_status;
 
     heredoc.deliminater = file->file_name;
     create_tmpfile(&heredoc);
@@ -59,6 +60,7 @@ int heredoc(t_file *file, t_context *context, int *redirect_status)
 int quote_heredoc(t_file *file, t_context *context, int *redirect_status)
 {
     t_heredoc heredoc;
+    (void)redirect_status;
 
     heredoc.deliminater = file->file_name;
     create_tmpfile(&heredoc);

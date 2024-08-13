@@ -52,26 +52,26 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
 
 
 
-__attribute__((destructor))
-static void destructor() {
-    system("leaks -q redirect");
-}
-int main(int ac, char **av, char **envp)
-{
-    t_parser parser;
-    t_context context;
-    int status;
-    t_env *env_head = env_init(envp);
-    // t_env *tmp = env_head->next;
-    // while(tmp != env_head)
-    // {
-    //     printf("env_name: %s\n", tmp->env_name);
-    //     printf("env_val: %s\n", tmp->env_val);
-    //     tmp = tmp->next;
-    // }
-    context.env_head = env_head;
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q redirect");
+// }
+// int main(int ac, char **av, char **envp)
+// {
+//     t_parser parser;
+//     t_context context;
+//     int status;
+//     t_env *env_head = env_init(envp);
+//     // t_env *tmp = env_head->next;
+//     // while(tmp != env_head)
+//     // {
+//     //     printf("env_name: %s\n", tmp->env_name);
+//     //     printf("env_val: %s\n", tmp->env_val);
+//     //     tmp = tmp->next;
+//     // }
+//     context.env_head = env_head;
 
-    t_file f1, f2, f3;
+//     t_file f1, f2, f3;
     //redirect output    ls > test1 > test2 > test3
     // f1.file_name = "test1";
     // f1.type = OUT_FILE;
@@ -124,130 +124,130 @@ int main(int ac, char **av, char **envp)
     // f1.next = &f2;
     // f2.file_name = "test2";
     // f2.type = OUT_FILE;
-    // f2.next = &f3;
-    // f3.file_name = "test3";
-    // f3.type = IN_FILE;
-    // f3.next = NULL;
+//     // f2.next = &f3;
+//     // f3.file_name = "test3";
+//     // f3.type = IN_FILE;
+//     // f3.next = NULL;
 
-    // //  cat >> test1 >> test2 < test3
-    // f1.file_name = "test1";
-    // f1.type = APPEND;
-    // f1.next = &f2;
-    // f2.file_name = "test2";
-    // f2.type = APPEND;
-    // f2.next = &f3;
-    // f3.file_name = "test3";
-    // f3.type = IN_FILE;
-    // f3.next = NULL;
+//     // //  cat >> test1 >> test2 < test3
+//     // f1.file_name = "test1";
+//     // f1.type = APPEND;
+//     // f1.next = &f2;
+//     // f2.file_name = "test2";
+//     // f2.type = APPEND;
+//     // f2.next = &f3;
+//     // f3.file_name = "test3";
+//     // f3.type = IN_FILE;
+//     // f3.next = NULL;
 
-    // //cat << eof
-    // f1.file_name = "eof";
-    // f1.type = HEREDOC;
-    // f1.next = NULL;
-    // (void)f3;
-    // (void)f2;
+//     // //cat << eof
+//     // f1.file_name = "eof";
+//     // f1.type = HEREDOC;
+//     // f1.next = NULL;
+//     // (void)f3;
+//     // (void)f2;
 
-    // // cat << eof1 << eof2
-    // f1.file_name = "eof1";
-    // f1.type = HEREDOC;
-    // f1.next = &f2;
-    // f2.file_name = "eof2";
-    // f2.type = HEREDOC;
-    // f2.next = NULL;
-    // (void)f3;
+//     // // cat << eof1 << eof2
+//     // f1.file_name = "eof1";
+//     // f1.type = HEREDOC;
+//     // f1.next = &f2;
+//     // f2.file_name = "eof2";
+//     // f2.type = HEREDOC;
+//     // f2.next = NULL;
+//     // (void)f3;
 
 
-    // //cat << eof >test1
-    // f1.file_name = "eof";
-    // f1.type = HEREDOC;
-    // f1.next = &f2;
-    // f2.file_name = "test1";
-    // f2.type = OUT_FILE;
-    // f2.next = NULL;
-    // (void)f3;
+//     // //cat << eof >test1
+//     // f1.file_name = "eof";
+//     // f1.type = HEREDOC;
+//     // f1.next = &f2;
+//     // f2.file_name = "test1";
+//     // f2.type = OUT_FILE;
+//     // f2.next = NULL;
+//     // (void)f3;
 
-    // //cat > test1 << eof
-    // f1.file_name = "test1";
-    // f1.type = OUT_FILE;
-    // f1.next = &f2;
-    // f2.file_name = "eof";
-    // f2.type = HEREDOC;
-    // f2.next = NULL;
-    // (void)f3;
+//     // //cat > test1 << eof
+//     // f1.file_name = "test1";
+//     // f1.type = OUT_FILE;
+//     // f1.next = &f2;
+//     // f2.file_name = "eof";
+//     // f2.type = HEREDOC;
+//     // f2.next = NULL;
+//     // (void)f3;
 
-    // //cat << eof1 << eof2 << eof3
-    // f1.file_name = "eof1";
-    // f1.type = HEREDOC;
-    // f1.next = &f2;
-    // f2.file_name = "eof2";
-    // f2.type = HEREDOC;
-    // f2.next = &f3;
-    // f3.file_name = "eof3";
-    // f3.type = HEREDOC;
-    // f3.next = NULL;
+//     // //cat << eof1 << eof2 << eof3
+//     // f1.file_name = "eof1";
+//     // f1.type = HEREDOC;
+//     // f1.next = &f2;
+//     // f2.file_name = "eof2";
+//     // f2.type = HEREDOC;
+//     // f2.next = &f3;
+//     // f3.file_name = "eof3";
+//     // f3.type = HEREDOC;
+//     // f3.next = NULL;
     
-    // //cat << eof1 > test2
-    // //adapt to env_variable
-    // f1.file_name = "eof1";
-    // f1.type = HEREDOC;
-    // f1.next = &f2;
-    // f2.file_name = "test2";
-    // f2.type = OUT_FILE;
-    // f2.next = NULL;
-    // (void)f3;
+//     // //cat << eof1 > test2
+//     // //adapt to env_variable
+//     // f1.file_name = "eof1";
+//     // f1.type = HEREDOC;
+//     // f1.next = &f2;
+//     // f2.file_name = "test2";
+//     // f2.type = OUT_FILE;
+//     // f2.next = NULL;
+//     // (void)f3;
 
 
-    // //cat << eof1
-    // f1.file_name = "eof1";
-    // f1.type = HEREDOC;
-    // f1.next = NULL;
-    // (void)f3;
-    // (void)f2;
+//     // //cat << eof1
+//     // f1.file_name = "eof1";
+//     // f1.type = HEREDOC;
+//     // f1.next = NULL;
+//     // (void)f3;
+//     // (void)f2;
 
-    //heredoc quote test
-    // cat << " "
-    f1.file_name = " ";
-    f1.type = QUOTE_HEREDOC;
-    f1.next = NULL;
-    (void)f2;
-    (void)f3;
+//     //heredoc quote test
+//     // cat << " "
+//     f1.file_name = " ";
+//     f1.type = QUOTE_HEREDOC;
+//     f1.next = NULL;
+//     (void)f2;
+//     (void)f3;
 
-    // // //cat << " " > test1
-    // f1.file_name = " ";
-    // f1.type = QUOTE_HEREDOC;
-    // f1.next = &f2;
-    // f2.file_name = "test1";
-    // f2.type = OUT_FILE;
-    // f2.next = NULL;
-    // (void)f3;
+//     // // //cat << " " > test1
+//     // f1.file_name = " ";
+//     // f1.type = QUOTE_HEREDOC;
+//     // f1.next = &f2;
+//     // f2.file_name = "test1";
+//     // f2.type = OUT_FILE;
+//     // f2.next = NULL;
+//     // (void)f3;
 
-    parser.file = &f1;
-    pid_t pid;
-    pid = fork();
-    if(pid == -1)
-    {
-        fatal_error("fork error");
-    }
-    if(pid == 0)
-    {
-        redirect(&parser, &context, &status);
-        char *cmd[] = {"cat", NULL};
-        execve("/usr/bin/cat", cmd, NULL);
-        printf("execve error");
-    }
-    waitpid(pid, &status, 0);
-    delete_tmpfile();
+//     parser.file = &f1;
+//     pid_t pid;
+//     pid = fork();
+//     if(pid == -1)
+//     {
+//         fatal_error("fork error");
+//     }
+//     if(pid == 0)
+//     {
+//         redirect(&parser, &context, &status);
+//         char *cmd[] = {"cat", NULL};
+//         execve("/usr/bin/cat", cmd, NULL);
+//         printf("execve error");
+//     }
+//     waitpid(pid, &status, 0);
+//     delete_tmpfile();
 
-    t_env *tmp = env_head->next;
-    while(tmp != env_head)
-    {
-        free(tmp->env_name);
-        free(tmp->env_val);
-        tmp = tmp->next;
-        free(tmp->prev);
-    }
-    free(env_head);
-    printf("success\n");
+//     t_env *tmp = env_head->next;
+//     while(tmp != env_head)
+//     {
+//         free(tmp->env_name);
+//         free(tmp->env_val);
+//         tmp = tmp->next;
+//         free(tmp->prev);
+//     }
+//     free(env_head);
+//     printf("success\n");
 
-    return 0;
-}
+//     return 0;
+// }
