@@ -89,6 +89,28 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
 
     init_pipex(tmp_parser, &pipe_x);
     // Here you can add the actual process handling logic
+    int cmd_num;
+    cmd_num = 0;
+    while(tmp_parser != NULL)
+    {
+        pipe_x.pids[cmd_num] = fork();
+        if (pipe_x.pids[cmd_num] == 0)
+        {
+            //9 is the length of "/usr/bin/"
+            char *cmd = ft_substr(tmp_parser->cmd[0], 9, ft_strlen(tmp_parser->cmd[0] - 9));
+            char *args[] = {cmd, NULL};
+            execve(tmp_parser->cmd[0], args, NULL);
+            printf("execve error\n");
+        }
+        cmd_num++;
+        tmp_parser = tmp_parser->next;
+    }
+    int i = 0;
+    while(i < cmd_num)
+    {
+        waitpid(pipe_x.pids[i], NULL, 0);
+        i++;
+    }
     tmp_parser = parser_head;
     free_pipex(tmp_parser, &pipe_x);
 }
