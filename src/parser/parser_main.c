@@ -99,24 +99,6 @@ void    arg_node_create(t_parser **args, t_token *token)
         err_exit(token->data, "parser: arg_node_add invalid token type", 0);
 }
 
-t_redirect_type get_redirect_type(t_token_type type)
-{
-    switch (type)
-    {
-        case TK_REDIR_IN:
-            return IN_FILE;
-        case TK_REDIR_OUT:
-            return OUT_FILE;
-        case TK_REDIR_APPEND:
-            return APPEND;
-        case TK_REDIR_HEREDOC:
-            return HEREDOC;
-        // case TK_REDIR_HEREDOC:
-        //     return QUOTE_HEREDOC;
-        default:
-            return UNKNOWN;
-    }
-}
 
 
 // ファイルリダイレクトノードを追加する
@@ -167,20 +149,62 @@ void create_command(t_parser *args, t_token *token)
     tmp = token;
     cur_arg = args;
 
-    while (tmp->type != TK_EOF && tmp->type != TK_PIPE)
+    while (tmp != NULL && tmp->type != TK_EOF && tmp->type != TK_PIPE)
     {
-        if (is_redirect(tmp))
-            file_node_add(cur_arg, tmp->data, get_redirect_type(tmp->type));
-        else
+        if (tmp->type == TK_REDIR_IN || tmp->type == TK_REDIR_OUT || 
+            tmp->type == TK_REDIR_APPEND || tmp->type == TK_REDIR_HEREDOC)
         {
-            if (cur_arg->cmd != NULL && cur_arg->cmd[0] != NULL)
-                cur_arg = arg_node_add(cur_arg); // ノードを追加して、次のノードを返す
-            append_token(&cur_arg, tmp); // トークンを追加
+            if (tmp->next == NULL)
+            {
+                fprintf(stderr, "Syntax error near unexpected token `newline'\n");
+                return;
+            }
+            t_file *new_file = malloc(sizeof(t_file));
+            if (new_file == NULL)
+            {
+                fprintf(stderr, "Memory allocation error\n");
+                return;
+            }
+            new_file->filename = strdup(tmp->next->data);
+            new_file->type = get_redirect_type(tmp->type);
+            new_file->next = cur_arg->file;
+            cur_arg->file = new_file;
+            tmp = tmp->next;  // ファイル名またはデリミタをスキップ
+        }
+        else if (tmp->type == TK_WORD || tmp->type == TK_SINGLE_QUOTE || tmp->type == TK_DOUBLE_QUOTE)
+        {
+            // コマンドとその引数を追加
+            int i;
+            for (i = 0; cur_arg->cmd && cur_arg->cmd[i]; i++);
+            cur_arg->cmd = realloc(cur_arg->cmd, sizeof(char *) * (i + 2));
+            if (cur_arg->cmd == NULL)
+            {
+                fprintf(stderr, "Memory allocation error\n");
+                return;
+            }
+            cur_arg->cmd[i] = strdup(tmp->data);
+            cur_arg->cmd[i + 1] = NULL;
         }
         tmp = tmp->next;
     }
 }
 
+t_redirect_type get_redirect_type(t_token_type type)
+{
+    switch (type)
+    {
+        case TK_REDIR_IN:
+            return IN_FILE;
+        case TK_REDIR_OUT:
+            return OUT_FILE;
+        case TK_REDIR_APPEND:
+            return APPEND;
+        case TK_REDIR_HEREDOC:
+            return HEREDOC;
+        default:
+            return UNKNOWN;
+    }
+}
 
 void    command_init(t_parser *args)
 {
@@ -202,26 +226,45 @@ void    parser_pipe(t_parser **args)
     *args = next_arg;
 }
 
-void    parser(t_context *ctx)
+void parser(t_context *ctx)
 {
-    t_parser    *args;
-    t_parser    *args_head;
-    t_token     *token;
+    t_parser *args;
+    t_parser *args_head;
+    t_token *token;
 
     args = args_init();
     if (args == NULL)
-        fatal_error("parser: parser is NULL"); // 合ってる？
+    {
+        fprintf(stderr, "Parser initialization error\n");
+        return;
+    }
     args_head = args;
-    token = ctx->token_head->next; // token head用のtoken_type作成するかTK_EMPTYのままにするかあとで考える
-    command_init(args);
-    while (token->next != NULL)
+    token = ctx->token_head->next;
+    
+    while (token != NULL && token->type != TK_EOF)
     {
         create_command(args, token);
-        if (token->type == TK_PIPE)
-            parser_pipe(&args);
-        token = token->next;
+        while (token != NULL && token->type != TK_PIPE && token->type != TK_EOF)
+            token = token->next;
+        if (token != NULL && token->type == TK_PIPE)
+        {
+            t_parser *new_args = args_init();
+            if (new_args == NULL)
+            {
+                fprintf(stderr, "Parser initialization error\n");
+                // ここでメモリ解放処理を行うべきです
+                return;
+            }
+            args->next = new_args;
+            new_args->prev = args;
+            args = new_args;
+            token = token->next;
+        }
     }
-    create_command(args, token);
+
+    // ここでprint_parserを呼び出す（実装は省略）
     print_parser(args_head);
+
+    // メモリ解放（実際の実装では必要）
     // free_parser(args_head);
 }

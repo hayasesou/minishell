@@ -38,7 +38,7 @@ void	print_parser(t_parser *parser_head)
 	parser_tmp = parser_head;
 	while (parser_tmp != NULL)
 	{
-		printf("---------- pipe result ---------\n");
+		printf("---------- parser result ---------\n");
 		i = 0;
 		if (parser_tmp->cmd != NULL)
 		{
@@ -48,9 +48,9 @@ void	print_parser(t_parser *parser_head)
 				i++;
 			}
 		}
-		printf("files\n");
+		// printf("files\n");
 		print_parser_file(parser_tmp->file);
 		parser_tmp = parser_tmp->next;
-		printf("---------- pipe end ---------\n");
+		printf("---------- parser end ---------\n");
 	}
 }
