@@ -37,3 +37,9 @@ void free_pipex(t_parser *parser_head,  t_pipex *pipe_x)
     free(pipe_x->pipe_fd);
     free(pipe_x->pids);
 }
+
+void close_pipe_fd(t_pipex *pipe_x)
+{
+    close(pipe_x->pipe_fd[pipe_x->current_cmd_num - 1][READ]);
+    close(pipe_x->pipe_fd[pipe_x->current_cmd_num - 1][WRITE]);
+}

@@ -61,6 +61,7 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status);
 void prev_pipe(t_pipex *pipe_x, int cmd_num);
 void next_pipe(t_pipex *pipe_x, int cmd_num);
 void free_pipex(t_parser *parser_head,  t_pipex *pipe_x);
+void close_pipe_fd(t_pipex *pipe_x);
 
 //pipe_struct_init.c
 void init_pipex(t_parser *parserm, t_pipex *pipe_x, t_context *context, int  *heredoc_status);
