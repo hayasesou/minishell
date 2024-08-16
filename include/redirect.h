@@ -43,11 +43,11 @@ void unexisted_env_error(char *env);
 //heredoc.c
 int heredoc(t_file *file, t_context *context, int *status);
 int quote_heredoc(t_file *file, t_context *context, int *redirect_status);
-void create_tmpfile(t_heredoc *heredoc);
+void create_tmpfile(t_heredoc *heredoc, t_context *context, int *heredoc_status);
 void delete_tmpfile(void);
 
 //heredoc_expansion.c
-char *heredoc_expantion(char *line, t_context *context);
+char *heredoc_expantion(char *line, t_context *context, int *heredoc_status);
 
 //redirect_utils.c
 void close_fd(int fd, t_context *context);
@@ -62,6 +62,15 @@ void next_pipe(t_pipex *pipe_x, int cmd_num);
 void free_pipex(t_parser *parser_head,  t_pipex *pipe_x);
 
 //pipe_struct_init.c
-void init_pipex(t_parser *parserm, t_pipex *pipe_x);
+void init_pipex(t_parser *parserm, t_pipex *pipe_x, t_context *context, int  *heredoc_status);
+
+//pipe_heredoc.c
+void process_heredoc(t_parser *parser, t_context *context, int *heredoc_status);
+void setup_heredoc_fd(t_parser *parser);
+void close_heredoc_fds(t_parser *parser);
+
+//pipe_error.c
+void pipe_check(t_pipex *pipex, t_context *context, int *status, int cmd_num);
+int fork_check(t_context *context, int *status);
 
 #endif

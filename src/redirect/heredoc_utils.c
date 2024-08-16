@@ -9,7 +9,7 @@ static bool check_file_existence(char *file_name)
     return true;
 }
 
-void create_tmpfile(t_heredoc *heredoc)
+void create_tmpfile(t_heredoc *heredoc, t_context *context, int *heredoc_status)
 {
     int fd;
     char *tmpfile;
@@ -21,10 +21,22 @@ void create_tmpfile(t_heredoc *heredoc)
     {
         //malloc tmp_num
         tmp_num = ft_itoa(i);
+        if(tmp_num == NULL)
+        {
+            context->exit_status = 1;
+            *heredoc_status = 1;
+            fatal_error("malloc error");
+        }
         //malloc tmpfile
         tmpfile = ft_strjoin(HEREDOCTMP, tmp_num);
         //free tmp_num
         free(tmp_num);
+        if(tmpfile == NULL)
+        {
+            context->exit_status = 1;
+            *heredoc_status = 1;
+            fatal_error("malloc error");
+        }
         if (check_file_existence(tmpfile) == false)
             break;
         //free tmpfile
@@ -34,6 +46,8 @@ void create_tmpfile(t_heredoc *heredoc)
     fd = open(tmpfile, O_WRONLY | O_CREAT | O_APPEND , 0644);
     if(fd == -1)
     {
+        context->exit_status = 1;
+        *heredoc_status = 1;
         error_message("tmpfile");
         free(tmpfile);
     }

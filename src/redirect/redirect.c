@@ -18,9 +18,7 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
             if (tmp_output_fd != -1)
                 close_fd(tmp_output_fd, context);
             if(file->type == OUT_FILE)
-            {
                 tmp_output_fd = redirect_output(file, context,  redirect_status);
-            }
             else if(file->type == APPEND)
                 tmp_output_fd = append_output(file, context,  redirect_status);
         }
@@ -29,19 +27,17 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
             if(tmp_input_fd != -1)
                 close_fd(tmp_input_fd, context);
             if(file->type == IN_FILE)
-            {
                 tmp_input_fd = redirect_input(file, context,  redirect_status);
-            }
             else if (file->type == HEREDOC)
-            {
-                // tmp_input_fd = heredoc(file, context,  redirect_status);
                 tmp_input_fd = file->heredoc_fd; 
-            }
             else if (file->type == QUOTE_HEREDOC)
-            {
-                // tmp_input_fd = quote_heredoc(file, context,  redirect_status);
                 tmp_input_fd = file->heredoc_fd; 
-            }
+        }
+        else
+        {
+            context->exit_status = 1;
+            *redirect_status = 1;
+            fatal_error("redirect error");
         }
        file = file->next;
     }
