@@ -93,4 +93,5 @@ void init_pipex(t_parser *parser_head, t_pipex *pipe_x, t_context *context, int 
     malloc_for_pipe_fd(pipe_x, count, context, heredoc_status);
     stash_stdin_stdout(pipe_x, parser_head, context, heredoc_status);
     pipe_x->last_cmd_pid = LAST_CMD_PID;
+    pipe_x->current_cmd_num = 0;
 }

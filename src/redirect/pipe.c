@@ -4,63 +4,63 @@
 
 #define SUCESS 1
 
+
+static void child_process(t_parser *tmp_parser, t_pipex *pipe_x, t_context *context, int *status)
+{
+    if (tmp_parser->prev != NULL)
+        prev_pipe(pipe_x, pipe_x->current_cmd_num);
+    if(tmp_parser->next != NULL)
+        next_pipe(pipe_x, pipe_x->current_cmd_num);
+    redirect(tmp_parser, context, status);
+    setup_heredoc_fd(tmp_parser);
+
+    // // 9 is the length of "/usr/bin/"
+    char *cmd_path = ft_strjoin("/usr/bin/", tmp_parser->cmd[0]);
+    execve(cmd_path, tmp_parser->cmd, NULL);
+    free(cmd_path);
+    printf("execve error\n");
+    close(pipe_x->stdin_fd);
+    close(pipe_x->stdout_fd);
+    exit(1);
+}
+
+
+
 // Implementation of the minishell_pipe function
 void minishell_pipe(t_parser *parser_head, t_context *context)
 {
     t_pipex pipe_x;
     t_parser *tmp_parser;
     int status;
-    int cmd_num;
 
     tmp_parser = parser_head;
     status = SUCESS;
     init_pipex(tmp_parser, &pipe_x, context, &status);
     process_heredoc(tmp_parser, context, &status);
 
-    cmd_num = 0;
     while(tmp_parser != NULL)
     {
         if (tmp_parser->next != NULL)
-            pipe_check(&pipe_x, context, &status, cmd_num);
-        pipe_x.pids[cmd_num] = fork_check(context, &status);
-        pipe_x.last_cmd_pid = pipe_x.pids[cmd_num];
+            pipe_check(&pipe_x, context, &status, pipe_x.current_cmd_num);
+        pipe_x.pids[pipe_x.current_cmd_num] = fork_check(context, &status);
+        pipe_x.last_cmd_pid = pipe_x.pids[pipe_x.current_cmd_num];
 
-        if (pipe_x.pids[cmd_num] == 0)
-        {
-            if (tmp_parser->prev != NULL)
-                prev_pipe(&pipe_x, cmd_num);
-            if(tmp_parser->next != NULL)
-                next_pipe(&pipe_x, cmd_num);
-            redirect(tmp_parser, context, &status);
-            setup_heredoc_fd(tmp_parser);
-
-            // // 9 is the length of "/usr/bin/"
-            char *cmd_path = ft_strjoin("/usr/bin/", tmp_parser->cmd[0]);
-            execve(cmd_path, tmp_parser->cmd, NULL);
-            free(cmd_path);
-            printf("execve error\n");
-            close(pipe_x.stdin_fd);
-            close(pipe_x.stdout_fd);
-            exit(1);
-        }
+        if (pipe_x.pids[pipe_x.current_cmd_num] == 0)
+            child_process(tmp_parser, &pipe_x, context, &status);
         // Parent process
-        if (cmd_num > 0)
+        if (pipe_x.current_cmd_num > 0)
         {
-            close(pipe_x.pipe_fd[cmd_num - 1][READ]);
-            close(pipe_x.pipe_fd[cmd_num - 1][WRITE]);
+            close(pipe_x.pipe_fd[pipe_x.current_cmd_num - 1][READ]);
+            close(pipe_x.pipe_fd[pipe_x.current_cmd_num - 1][WRITE]);
         }
-
         close_heredoc_fds(tmp_parser);
-
-        cmd_num++;
+        pipe_x.current_cmd_num++;
         tmp_parser = tmp_parser->next;
     }
 
 
-    // // Wait for the last command to finish
-    // waitpid(pipe_x.last_cmd_pid, &status, 0);
     int i = 0;
-    while(i < cmd_num)
+    while(i < pipe_x.current_cmd_num)
     {
         waitpid(pipe_x.pids[i], NULL, 0);
         i++;
@@ -106,24 +106,24 @@ int main(int ac, char **av)
     }
 
     // << eof > test2 > test3
-    t_file f11;
-    t_file f12;
-    t_file f13;
-    f11.file_name = "test1";
-    f11.type = HEREDOC;
-    f11.heredoc_fd = -1;
-    f11.next = &f12;
-    f12.file_name = "test2";
-    f12.type = HEREDOC;
-    f12.heredoc_fd = -1;
-    f12.next = &f13;
-    f13.file_name = "test3";
-    f13.type = HEREDOC;
-    f13.heredoc_fd = -1;
-    f13.next = NULL;
+    // t_file f11;
+    // t_file f12;
+    // t_file f13;
+    // f11.file_name = "test1";
+    // f11.type = HEREDOC;
+    // f11.heredoc_fd = -1;
+    // f11.next = &f12;
+    // f12.file_name = "test2";
+    // f12.type = HEREDOC;
+    // f12.heredoc_fd = -1;
+    // f12.next = &f13;
+    // f13.file_name = "test3";
+    // f13.type = HEREDOC;
+    // f13.heredoc_fd = -1;
+    // f13.next = NULL;
 
 
-    parser_head[0].file = &f11;
+    // parser_head[0].file = &f11;
     
     minishell_pipe(parser_head, &ctx);
 

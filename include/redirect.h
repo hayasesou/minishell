@@ -24,6 +24,7 @@ typedef struct s_pipex
     pid_t last_cmd_pid; //bash is execute multiple command by parallel. so, we only need to wait the last command pid
     int stdin_fd;
     int stdout_fd;
+    int current_cmd_num;
 } t_pipex;
 
 
