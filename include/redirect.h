@@ -7,6 +7,8 @@
 
 // #define HEREDOCTMP "/tmp/.heredoctmp"
 #define HEREDOCTMP ".heredoctmp"
+#define READ 0
+#define WRITE 1
 
 typedef struct s_heredoc
 {
@@ -14,6 +16,16 @@ typedef struct s_heredoc
     char *tmpfile;
     int tmpfile_fd;
 }   t_heredoc;
+
+typedef struct s_pipex
+{
+    pid_t *pids; // array of pid. the count of pid is equal to cmd count
+    int **pipe_fd;  // array of pipe_fd. the count of pipe_fd is equal to cmd count - 1
+    pid_t last_cmd_pid; //bash is execute multiple command by parallel. so, we only need to wait the last command pid
+    int stdin_fd;
+    int stdout_fd;
+} t_pipex;
+
 
 //redirect_output.c
 int redirect_output(t_file *file, t_context *context,  int *status);
@@ -40,5 +52,16 @@ char *heredoc_expantion(char *line, t_context *context);
 //redirect_utils.c
 void close_fd(int fd, t_context *context);
 void dup2_fd(int old_fd, int new_fd, t_context *context);
+
+//redirect.c
+void redirect(t_parser *parser, t_context *context, int *redirect_status);
+
+//pipe_utils.c
+void prev_pipe(t_pipex *pipe_x, int cmd_num);
+void next_pipe(t_pipex *pipe_x, int cmd_num);
+void free_pipex(t_parser *parser_head,  t_pipex *pipe_x);
+
+//pipe_struct_init.c
+void init_pipex(t_parser *parserm, t_pipex *pipe_x);
 
 #endif

@@ -34,11 +34,13 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
             }
             else if (file->type == HEREDOC)
             {
-                tmp_input_fd = heredoc(file, context,  redirect_status);
+                // tmp_input_fd = heredoc(file, context,  redirect_status);
+                tmp_input_fd = file->heredoc_fd; 
             }
             else if (file->type == QUOTE_HEREDOC)
             {
-                tmp_input_fd = quote_heredoc(file, context,  redirect_status);
+                // tmp_input_fd = quote_heredoc(file, context,  redirect_status);
+                tmp_input_fd = file->heredoc_fd; 
             }
         }
        file = file->next;

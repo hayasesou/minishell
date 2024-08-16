@@ -57,5 +57,7 @@ int append_output(t_file *file, t_context *context,int *status)
 
 bool is_output(t_file *file)
 {
+    if (file == NULL)
+        return false;
     return (file->type == OUT_FILE || file->type == APPEND);
 }

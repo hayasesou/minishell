@@ -2,81 +2,67 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-typedef struct s_pipex
-{
-    pid_t *pids; // array of pid. the count of pid is equal to cmd count
-    int **pipe_fd;  // array of pipe_fd. the count of pipe_fd is equal to cmd count - 1
-} t_pipex;
 
-// Initialize process and pipe_fd arrays
-void init_pipex(t_parser *parser_head, t_pipex *pipe_x)
+
+
+
+#define SUCESS 0
+
+
+void process_heredoc(t_parser *parser_head, t_context *context)
 {
     t_parser *tmp_parser;
-    int count;
-    int i;
+    int status;
+    t_file *file;
 
-    count = 0;
     tmp_parser = parser_head;
-    while (tmp_parser != NULL)
-    {
-        count++;
-        tmp_parser = tmp_parser->next;
-    }
-
-    pipe_x->pids = (pid_t *)malloc(sizeof(pid_t) * count);
-    if (pipe_x->pids == NULL)
-        fatal_error("malloc error\n");
-
-    pipe_x->pipe_fd = (int **)malloc(sizeof(int *) * (count - 1));
-    if (pipe_x->pipe_fd == NULL)
-    {
-        free(pipe_x->pids);
-        fatal_error("malloc error\n");
-    }
-
-    i = 0;
-    tmp_parser = parser_head;
-    while (i < count - 1)
-    {
-        pipe_x->pipe_fd[i] = (int *)malloc(sizeof(int) * 2);
-        if (pipe_x->pipe_fd[i] == NULL)
-        {
-            while (i > 0)
-            {
-                i--;
-                free(pipe_x->pipe_fd[i]);
-            }
-            free(pipe_x->pipe_fd);
-            free(pipe_x->pids);
-            fatal_error("malloc error\n");
-        }
-        i++;
-    }
-}
-
-// Free allocated memory for pipe_fd and pids
-void free_pipex(t_parser *parser_head,  t_pipex *pipe_x)
-{
-    int i;
-    int count;
-    t_parser *tmp_parser;
-
-    i = 0;
-    tmp_parser = parser_head;
+    status = SUCESS;
     while(tmp_parser != NULL)
     {
+       file = tmp_parser->file;
+       while(file != NULL)
+       {
+           if (file->type == HEREDOC)
+           {
+                file->heredoc_fd = heredoc(file, context, &status);
+           }
+           else if(file->type == QUOTE_HEREDOC)
+           {
+                file->heredoc_fd = quote_heredoc(file, context, &status);
+           }
+           file = file->next;
+       }
         tmp_parser = tmp_parser->next;
-        i++;
     }
-    count = 0;
-    while(count < i - 1)
-    {
-        free(pipe_x->pipe_fd[count]);
-        count++;
-    }
-    free(pipe_x->pipe_fd);
-    free(pipe_x->pids);
 }
+
+void setup_heredoc_fd(t_parser *parser)
+{
+    t_file *file = parser->file;
+    while(file != NULL)
+    {
+        if (file->type == HEREDOC || file->type == QUOTE_HEREDOC)
+        {
+            dup2(file->heredoc_fd, STDIN_FILENO);
+            close(file->heredoc_fd);
+        }
+        file = file->next;
+    }
+}
+
+void close_heredoc_fds(t_parser *parser)
+{
+    t_file *file = parser->file;
+    while(file != NULL)
+    {
+        if (file->type == HEREDOC || file->type == QUOTE_HEREDOC)
+        {
+            close(file->heredoc_fd);
+        }
+        file = file->next;
+    }
+}
+
 
 // Implementation of the minishell_pipe function
 void minishell_pipe(t_parser *parser_head, t_context *context)
@@ -84,73 +70,144 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
     (void)context;
     t_pipex pipe_x;
     t_parser *tmp_parser;
+    int status;
 
     tmp_parser = parser_head;
-
+    status = SUCESS;
     init_pipex(tmp_parser, &pipe_x);
     // Here you can add the actual process handling logic
+
+    process_heredoc(tmp_parser, context);
+
     int cmd_num;
     cmd_num = 0;
     while(tmp_parser != NULL)
     {
+        if (tmp_parser->next != NULL)
+            pipe(pipe_x.pipe_fd[cmd_num]);
+        
         pipe_x.pids[cmd_num] = fork();
+        pipe_x.last_cmd_pid = pipe_x.pids[cmd_num];
+
         if (pipe_x.pids[cmd_num] == 0)
         {
-            //9 is the length of "/usr/bin/"
-            char *cmd = ft_substr(tmp_parser->cmd[0], 9, ft_strlen(tmp_parser->cmd[0] - 9));
-            char *args[] = {cmd, NULL};
-            execve(tmp_parser->cmd[0], args, NULL);
+            if (tmp_parser->prev != NULL)
+                prev_pipe(&pipe_x, cmd_num);
+            if(tmp_parser->next != NULL)
+                next_pipe(&pipe_x, cmd_num);
+            if (tmp_parser->file != NULL)
+                redirect(tmp_parser, context, &status);
+
+
+            setup_heredoc_fd(tmp_parser);
+
+
+            for (int i = 0; i < cmd_num; i++)
+            {
+                close(pipe_x.pipe_fd[i][READ]);
+                close(pipe_x.pipe_fd[i][WRITE]);
+            }
+            // // 9 is the length of "/usr/bin/"
+            char *cmd_path = ft_strjoin("/usr/bin/", tmp_parser->cmd[0]);
+            execve(cmd_path, tmp_parser->cmd, NULL);
+            free(cmd_path);
             printf("execve error\n");
+            close(pipe_x.stdin_fd);
+            close(pipe_x.stdout_fd);
+            exit(1);
         }
+        // Parent process
+        if (tmp_parser->prev != NULL)
+        {
+            close(pipe_x.pipe_fd[cmd_num - 1][READ]);
+            close(pipe_x.pipe_fd[cmd_num - 1][WRITE]);
+        }
+
+        close_heredoc_fds(tmp_parser);
+
         cmd_num++;
         tmp_parser = tmp_parser->next;
     }
+
+
+    // // Wait for the last command to finish
+    // waitpid(pipe_x.last_cmd_pid, &status, 0);
     int i = 0;
     while(i < cmd_num)
     {
         waitpid(pipe_x.pids[i], NULL, 0);
         i++;
     }
+    dup2(pipe_x.stdin_fd, STDIN_FILENO);
+    dup2(pipe_x.stdout_fd, STDOUT_FILENO);
+    close(pipe_x.stdin_fd);
+    close(pipe_x.stdout_fd);
     tmp_parser = parser_head;
     free_pipex(tmp_parser, &pipe_x);
 }
 
 
 
-// Example main function for demonstration
-//./pipex cmd1 cmd2
-int main(int ac, char **av)
-{
-    t_context ctx;
-    t_parser *parser_head;
-    int i;
+// #include <unistd.h>
 
-    parser_head = (t_parser *)malloc(sizeof(t_parser) * (ac - 1));
-    i = 0;
-    while (i < ac - 1)
-    {
-        parser_head[i].cmd = (char **)malloc(sizeof(char *) * 2);
-        parser_head[i].cmd[0] = ft_strjoin("/usr/bin/", av[i + 1]);
-        parser_head[i].cmd[1] = NULL;
-        if (i == ac - 2)
-            parser_head[i].next = NULL;
-        else
-            parser_head[i].next = &parser_head[i + 1];
-        if (i == 0)
-            parser_head[i].prev = NULL;
-        else
-            parser_head[i].prev = &parser_head[i - 1];
-        i++;
-    }
+// // Example main function for demonstration
+// //./pipex cmd1 cmd2
+// int main(int ac, char **av)
+// {
+//     t_context ctx;
+//     t_parser *parser_head;
+//     int i;
 
-    minishell_pipe(parser_head, &ctx);
+//     parser_head = (t_parser *)malloc(sizeof(t_parser) * (ac - 1));
+//     i = 0;
+//     while (i < ac - 1)
+//     {
 
-    while(i > 0)
-    {
-        i--;
-        free(parser_head[i].cmd[0]);
-        free(parser_head[i].cmd);
-    }
-    free(parser_head);
-    return 0;
-}
+//         parser_head[i].cmd = (char **)malloc(sizeof(char *) * 2);
+//         parser_head[i].cmd[0] = ft_strdup(av[i + 1]);
+//         parser_head[i].cmd[1] = NULL;
+//         parser_head[i].file = NULL;
+//         if (i == ac - 2)
+//             parser_head[i].next = NULL;
+//         else
+//             parser_head[i].next = &parser_head[i + 1];
+//         if (i == 0)
+//             parser_head[i].prev = NULL;
+//         else
+//             parser_head[i].prev = &parser_head[i - 1];
+//         i++;
+//     }
+
+//     // << eof > test2 > test3
+//     t_file f11;
+//     t_file f12;
+//     t_file f13;
+//     f11.file_name = "eof";
+//     f11.type = HEREDOC;
+//     f11.heredoc_fd = -1;
+//     f11.next = &f12;
+//     f12.file_name = "test2";
+//     f12.type = OUT_FILE;
+//     f12.heredoc_fd = -1;
+//     f12.next = &f13;
+//     f13.file_name = "test3";
+//     f13.type = OUT_FILE;
+//     f13.heredoc_fd = -1;
+//     f13.next = NULL;
+
+
+//     parser_head[0].file = &f11;
+    
+//     minishell_pipe(parser_head, &ctx);
+
+//     while(i > 0)
+//     {
+//         i--;
+//         free(parser_head[i].cmd[0]);
+//         free(parser_head[i].cmd);
+//     }
+//     free(parser_head);
+//     printf("pid %d\n", getpid());
+//     delete_tmpfile();
+//     return 0;
+// }

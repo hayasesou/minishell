@@ -1,0 +1,84 @@
+#include "minishell.h"
+
+static int count_process(t_parser *parser_head)
+{
+    t_parser *tmp_parser;
+    int count;
+
+    count = 0;
+    tmp_parser = parser_head;
+    while(tmp_parser != NULL)
+    {
+        count++;
+        tmp_parser = tmp_parser->next;
+    }
+    return count;
+}
+
+static void malloc_for_process(t_pipex *pipe_x, int count)
+{
+    pipe_x->pids = (pid_t *)malloc(sizeof(pid_t) * count);
+    if (pipe_x->pids == NULL)
+        fatal_error("malloc error\n");
+}
+
+static void malloc_for_pipe_fd(t_pipex *pipe_x, int count)
+{
+    int i;
+
+    i = 0;
+    pipe_x->pipe_fd = (int **)malloc(sizeof(int *) * (count - 1));
+    if (pipe_x->pipe_fd == NULL)
+    {
+        free(pipe_x->pids);
+        fatal_error("malloc error\n");
+    }
+    while(i < count -1)
+    {
+        pipe_x->pipe_fd[i] = (int *)malloc(sizeof(int) * 2);
+        if(pipe_x->pipe_fd[i] == NULL)
+        {
+            while(i-- > 0)
+                free(pipe_x->pipe_fd[i]);
+            free(pipe_x->pipe_fd);
+            free(pipe_x->pids);
+            fatal_error("malloc error\n");
+        }
+        i++;
+    }
+}
+
+static void stash_stdin_stdout(t_pipex *pipe_x, t_parser *parser_head)
+
+{
+    pipe_x->stdin_fd = dup(STDIN_FILENO);
+    if(pipe_x->stdin_fd == -1)
+    {
+        free_pipex(parser_head, pipe_x);
+        fatal_error("dup error\n");
+    }
+    pipe_x->stdout_fd = dup(STDOUT_FILENO);
+    if(pipe_x->stdout_fd == -1)
+    {
+        free_pipex(parser_head, pipe_x);
+        fatal_error("dup error\n");
+    }
+}
+
+
+#define LAST_CMD_PID 0
+
+//initialize pipex struct
+// cmd1 | cmd2 | cmd3
+//process count is 3
+//pipe_fd count is 2
+void init_pipex(t_parser *parser_head, t_pipex *pipe_x)
+{
+    int count;
+
+    count = count_process(parser_head);
+    malloc_for_process(pipe_x, count);
+    malloc_for_pipe_fd(pipe_x, count);
+    stash_stdin_stdout(pipe_x, parser_head);
+    pipe_x->last_cmd_pid = LAST_CMD_PID;
+}

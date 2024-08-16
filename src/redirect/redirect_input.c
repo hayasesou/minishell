@@ -32,5 +32,7 @@ int redirect_input(t_file *file, t_context *context, int *status)
 
 bool is_input(t_file *file)
 {
+    if (file == NULL)
+        return false;
     return (file->type == IN_FILE || file->type == HEREDOC || file->type == QUOTE_HEREDOC);
 }
