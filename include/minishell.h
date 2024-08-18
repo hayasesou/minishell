@@ -17,9 +17,15 @@
 # include "struct.h"
 # include "lexer.h"
 # include "redirect.h"
+# include "builtin.h"
 
 
+//exit_status
+# define NORMAL_ERROR 1
 # define ERROR_TOKENIZE 258
+# define COMMAND_NOT_FOUND 127
+# define PERMISSION_DENIED 126
+
 extern bool	syntax_error;
 
 void	todo(const char *msg) __attribute__((noreturn));

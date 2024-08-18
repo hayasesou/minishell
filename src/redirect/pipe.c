@@ -105,24 +105,31 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
 //     }
 
 //     // << eof > test2 > test3
-//     // t_file f11;
-//     // t_file f12;
-//     // t_file f13;
-//     // f11.file_name = "test1";
-//     // f11.type = HEREDOC;
-//     // f11.heredoc_fd = -1;
-//     // f11.next = &f12;
-//     // f12.file_name = "test2";
-//     // f12.type = HEREDOC;
-//     // f12.heredoc_fd = -1;
-//     // f12.next = &f13;
-//     // f13.file_name = "test3";
-//     // f13.type = HEREDOC;
-//     // f13.heredoc_fd = -1;
-//     // f13.next = NULL;
+//     t_file f11;
+//     t_file f12;
+//     t_file f13;
+//     f11.file_name = "eof";
+//     f11.type = HEREDOC;
+//     f11.heredoc_fd = -1;
+//     f11.next = &f12;
+//     f12.file_name = "test2";
+//     f12.type = OUT_FILE;
+//     f12.heredoc_fd = -1;
+//     f12.next = &f13;
+//     f13.file_name = "test3";
+//     f13.type = OUT_FILE;
+//     f13.heredoc_fd = -1;
+//     f13.next = NULL;
 
 
-//     // parser_head[0].file = &f11;
+//     parser_head[0].file = &f11;
+
+//     t_file f21;
+//     f21.file_name = "eof2";
+//     f21.type = HEREDOC;
+//     f21.heredoc_fd = -1;
+//     f21.next = NULL;
+//     parser_head[1].file = &f21;
     
 //     minishell_pipe(parser_head, &ctx);
 
