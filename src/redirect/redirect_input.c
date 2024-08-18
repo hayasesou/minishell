@@ -7,13 +7,13 @@
 //before redireting, our bash  will do expantion and if it is not defined in env, it will make "\0" string 
 int redirect_input(t_file *file, t_context *context, int *status)
 {
-    (void)status;
     int fd;
     
     if (file->file_name[0] == '\0')
     {
         context->exit_status = 1;
         unexisted_env_error(file->file_name);
+        *status = 1;
         return 0;
     }
     fd = open(file->file_name, O_RDONLY);
@@ -21,6 +21,7 @@ int redirect_input(t_file *file, t_context *context, int *status)
     {
         context->exit_status = 1;
         error_message(file->file_name);
+        *status = 1;
         return 0;
     }
     context->exit_status = 0;
@@ -32,5 +33,7 @@ int redirect_input(t_file *file, t_context *context, int *status)
 
 bool is_input(t_file *file)
 {
+    if (file == NULL)
+        return false;
     return (file->type == IN_FILE || file->type == HEREDOC || file->type == QUOTE_HEREDOC);
 }

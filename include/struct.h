@@ -98,6 +98,7 @@ typedef struct s_file
 	char				*file_name;
 	t_redirect_type		type;
 	t_file				*next;
+	int heredoc_fd; //仮に追加
 }						t_file;
 
 typedef struct s_parser
