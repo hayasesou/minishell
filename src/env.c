@@ -3,12 +3,22 @@
 t_env	*node_new_set(t_env *env_node, char *str)
 {
 	// dupする部分調べる
-	env_node->env_name = strdup(str);
+	char **key_val;
+	int i;
+
+
+	i = 0;
+	key_val = ft_split(str, '=');
+	while(key_val[i])
+		i++;	
+	env_node->env_name = key_val[0];
 	if (env_node->env_name == NULL)
 		return (NULL);
-	env_node->env_val = strdup(str);
-	if (env_node->env_val == NULL)
-		return (NULL);
+	if(i == 1)
+		env_node->env_val = NULL;
+	else
+		env_node->env_val = key_val[1];
+	free(key_val);
 	return (env_node);
 }
 

@@ -22,12 +22,20 @@ void exec_cmd(t_parser *parser, t_context *context)
 
 // Example main function for demonstration
 //./pipex cmd1 cmd2
-int main(int ac, char **av)
+int main(int ac, char **av, char **envp)
 {
     t_context ctx;
     t_parser *parser_head;
     int i;
 
+    ctx.env_head = env_init(envp);
+    t_env *tmp_env = ctx.env_head->next;
+    while(tmp_env != ctx.env_head)
+    {
+        printf("env_naem: %s\n", tmp_env->env_name);
+        printf("env_value: %s\n", tmp_env->env_val);
+        tmp_env = tmp_env->next;
+    }
     if(ac < 2)
     {
         ft_putstr_fd("Usage: ./builtin cmd1 cmd2\n", 2);
@@ -53,6 +61,7 @@ int main(int ac, char **av)
         i++;
     }
 
+    
     // << eof > test2 > test3
     t_file f11;
     t_file f12;
@@ -72,6 +81,8 @@ int main(int ac, char **av)
 
 
     parser_head[0].file = &f11;
+
+    
 
     
     exec_cmd(parser_head, &ctx);
