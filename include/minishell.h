@@ -41,6 +41,8 @@ t_env	*node_new_set(t_env *env_node, char *str);
 t_env	*node_new(char *str);
 t_env	*env_head_init(void);
 t_env	*env_init(char **envp);
+char ** make_env_list(t_env *env_head, t_context *context);
+void free_env_list(char **env_list);
 
 // main
 void	main_loop(t_context *ctx, char *line);

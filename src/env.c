@@ -15,7 +15,7 @@ t_env	*node_new_set(t_env *env_node, char *str)
 	if (env_node->env_name == NULL)
 		return (NULL);
 	if(i == 1)
-		env_node->env_val = NULL;
+		env_node->env_val = ft_strdup("");
 	else
 		env_node->env_val = key_val[1];
 	free(key_val);

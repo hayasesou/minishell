@@ -28,15 +28,18 @@ int main(int ac, char **av, char **envp)
     t_context ctx;
     t_parser *parser_head;
     int i;
+    int j =0;
 
     ctx.env_head = env_init(envp);
     t_env *tmp_env = ctx.env_head->next;
     while(tmp_env != ctx.env_head)
     {
-        printf("env_naem: %s\n", tmp_env->env_name);
+        printf("env_name: %s\n", tmp_env->env_name);
         printf("env_value: %s\n", tmp_env->env_val);
         tmp_env = tmp_env->next;
+        j++;
     }
+    printf("j: %d\n", j);
     if(ac < 2)
     {
         ft_putstr_fd("Usage: ./builtin cmd1 cmd2\n", 2);
@@ -63,25 +66,25 @@ int main(int ac, char **av, char **envp)
     }
 
     
-    // << eof > test2 > test3
-    t_file f11;
-    t_file f12;
-    t_file f13;
-    f11.file_name = "eof";
-    f11.type = HEREDOC;
-    f11.heredoc_fd = -1;
-    f11.next = &f12;
-    f12.file_name = "test2";
-    f12.type = OUT_FILE;
-    f12.heredoc_fd = -1;
-    f12.next = &f13;
-    f13.file_name = "test3";
-    f13.type = OUT_FILE;
-    f13.heredoc_fd = -1;
-    f13.next = NULL;
+    // // << eof > test2 > test3
+    // t_file f11;
+    // t_file f12;
+    // t_file f13;
+    // f11.file_name = "eof";
+    // f11.type = HEREDOC;
+    // f11.heredoc_fd = -1;
+    // f11.next = &f12;
+    // f12.file_name = "test2";
+    // f12.type = OUT_FILE;
+    // f12.heredoc_fd = -1;
+    // f12.next = &f13;
+    // f13.file_name = "test3";
+    // f13.type = OUT_FILE;
+    // f13.heredoc_fd = -1;
+    // f13.next = NULL;
 
 
-    parser_head[0].file = &f11;
+    // parser_head[0].file = &f11;
 
     
 

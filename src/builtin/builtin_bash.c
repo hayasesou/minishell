@@ -2,12 +2,16 @@
 
 static void check_file_and_execute(t_parser *parser, t_context *context, char *cmd_path)
 {
+
+    char **env_list;
     if (access(cmd_path, F_OK) == 0)
     {
         if(access(cmd_path, X_OK) == 0)
         {
-            execve(cmd_path, parser->cmd, NULL);
+            env_list = make_env_list(context->env_head, context);
+            execve(cmd_path, parser->cmd, env_list);
             free(cmd_path);
+            free_env_list(env_list);
             printf("execve error\n");
             context->exit_status = NORMAL_ERROR;
             exit(NORMAL_ERROR);
@@ -23,6 +27,8 @@ static void check_file_and_execute(t_parser *parser, t_context *context, char *c
 }
 
 
+
+//e.g.) usr/bin + / + ls
 static char *make_cmd_path(char *path, int start, int i, t_parser *parser)
 {
     char *stash_dir1;

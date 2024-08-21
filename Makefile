@@ -2,8 +2,10 @@ NAME = minishell
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror -fPIE
 I_FLAGS = -Iinclude/ -Ilibft/
-H_FLAGS = -lreadline
-L_FLAGS = -Llibft -lft
+# linkerの順番
+#https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc
+H_FLAGS = -lreadline -lft
+L_FLAGS = -Llibft #-lft
 
 LIBFT = libft/libft.a
 
