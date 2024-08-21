@@ -12,6 +12,7 @@
 # include <stdbool.h>
 # include <errno.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 # include "libft.h"
 # include "struct.h"
@@ -25,6 +26,7 @@
 # define ERROR_TOKENIZE 258
 # define COMMAND_NOT_FOUND 127
 # define PERMISSION_DENIED 126
+# define IS_DIR 126
 
 extern bool	syntax_error;
 

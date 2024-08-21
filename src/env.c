@@ -26,12 +26,20 @@ static char *ft_strndup(char *str, size_t n)
 t_env	*node_new_set(t_env *env_node, char *str)
 {
 	char *equal_pos;
+	size_t env_name_len;
 
 	equal_pos = find_first_equal(str);
 
-	size_t env_name_len = (equal_pos - str) / sizeof(char);
+	env_name_len = (equal_pos - str) / sizeof(char);
 	env_node->env_name = ft_strndup(str, env_name_len);
+	if(env_node->env_name == NULL)
+		return (NULL);
 	env_node->env_val = ft_strdup(equal_pos + 1);
+	if(env_node->env_val == NULL)
+	{
+		free(env_node->env_name);
+		return (NULL);
+	}
 	return (env_node);
 }
 

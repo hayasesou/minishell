@@ -20,7 +20,7 @@ static void check_file_and_execute(t_parser *parser, t_context *context, char *c
         }
         else
         {
-            printf("Permission denied\n");
+            printf("minishell : %s: Permission denied\n", parser->cmd[0]);
             free_all_env_node(context->env_head);
             context->exit_status = PERMISSION_DENIED;
             exit(PERMISSION_DENIED);
@@ -39,11 +39,19 @@ static char *make_cmd_path(char *path, int start, int i, t_parser *parser)
     char *cmd_path;
 
     stash_dir1 = ft_substr(path, start, i - start);
+    if(stash_dir1 == NULL)
+        return (NULL);
     stash_dir2 = ft_strjoin(stash_dir1, "/");
+    if(stash_dir2 == NULL)
+    {
+        free(stash_dir1);
+        return (NULL);
+    }
     free(stash_dir1);
     cmd_path = ft_strjoin(stash_dir2, parser->cmd[0]);
     free(stash_dir2);
-    
+    if(cmd_path == NULL)
+        return (NULL);
     return cmd_path;
 }
 
@@ -53,7 +61,8 @@ void bash_builtin(t_parser *parser, t_context *context)
     char *path;
     int i;
     int start;
-    char* cmd_path; 
+    char* cmd_path;
+    struct stat st; 
 
     path = getenv("PATH"); 
     if(path == NULL)
@@ -67,7 +76,16 @@ void bash_builtin(t_parser *parser, t_context *context)
 
     if(ft_strchr(parser->cmd[0], '/') != NULL)
     {
-        check_file_and_execute(parser, context, parser->cmd[0]);
+        if(stat(parser->cmd[0], &st) == 0)
+        {
+            if(S_ISDIR(st.st_mode))
+            {
+                printf("minishell : %s: Is a directory\n", parser->cmd[0]);
+                context->exit_status = IS_DIR;
+                exit(IS_DIR);
+            }
+            check_file_and_execute(parser, context, parser->cmd[0]);
+        }
         return ;
     }
     while(path[i] != '\0')
