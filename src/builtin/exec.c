@@ -8,6 +8,7 @@ void exec_cmd(t_parser *parser, t_context *context)
         printf("self builtin\n");
         //todo;
         //implement self_builin
+        
         return ;
     }
     else
