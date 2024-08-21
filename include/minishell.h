@@ -43,6 +43,7 @@ t_env	*env_head_init(void);
 t_env	*env_init(char **envp);
 char ** make_env_list(t_env *env_head, t_context *context);
 void free_env_list(char **env_list);
+void free_all_env_node(t_env *env_head);
 
 // main
 void	main_loop(t_context *ctx, char *line);

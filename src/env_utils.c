@@ -70,3 +70,21 @@ void free_env_list(char**env_list)
     }
     free(env_list);
 }
+
+
+void free_all_env_node(t_env *env_head)
+{
+    t_env *env_tmp;
+    t_env *env_tmp2;
+
+    env_tmp = env_head->next;
+    while(env_tmp != env_head)
+    {
+        free(env_tmp->env_name);
+        free(env_tmp->env_val);
+        env_tmp2 = env_tmp;
+        env_tmp = env_tmp->next;
+        free(env_tmp2);
+    }
+    free(env_head);
+}

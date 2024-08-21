@@ -28,18 +28,19 @@ int main(int ac, char **av, char **envp)
     t_context ctx;
     t_parser *parser_head;
     int i;
-    int j =0;
 
     ctx.env_head = env_init(envp);
-    t_env *tmp_env = ctx.env_head->next;
-    while(tmp_env != ctx.env_head)
-    {
-        printf("env_name: %s\n", tmp_env->env_name);
-        printf("env_value: %s\n", tmp_env->env_val);
-        tmp_env = tmp_env->next;
-        j++;
-    }
-    printf("j: %d\n", j);
+    // int j =0;
+    // t_env *tmp_env = ctx.env_head->next;
+    // while(tmp_env != ctx.env_head)
+    // {
+    //     printf("env_name: %s\n", tmp_env->env_name);
+    //     printf("env_value: %s\n", tmp_env->env_val);
+    //     tmp_env = tmp_env->next;
+    //     j++;
+    //     j++;
+    // }
+    // printf("j: %d\n", j);
     if(ac < 2)
     {
         ft_putstr_fd("Usage: ./builtin cmd1 cmd2\n", 2);
@@ -65,7 +66,7 @@ int main(int ac, char **av, char **envp)
         i++;
     }
 
-    
+
     // // << eof > test2 > test3
     // t_file f11;
     // t_file f12;
@@ -98,5 +99,6 @@ int main(int ac, char **av, char **envp)
         free(parser_head[i].cmd);
     }
     free(parser_head);
+    free_all_env_node(ctx.env_head);
     return 0;
 }

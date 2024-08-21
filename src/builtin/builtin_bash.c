@@ -4,6 +4,7 @@ static void check_file_and_execute(t_parser *parser, t_context *context, char *c
 {
 
     char **env_list;
+
     if (access(cmd_path, F_OK) == 0)
     {
         if(access(cmd_path, X_OK) == 0)
@@ -13,13 +14,15 @@ static void check_file_and_execute(t_parser *parser, t_context *context, char *c
             free(cmd_path);
             free_env_list(env_list);
             printf("execve error\n");
+            free_all_env_node(context->env_head);
             context->exit_status = NORMAL_ERROR;
             exit(NORMAL_ERROR);
         }
         else
         {
-            context->exit_status = PERMISSION_DENIED;
             printf("Permission denied\n");
+            free_all_env_node(context->env_head);
+            context->exit_status = PERMISSION_DENIED;
             exit(PERMISSION_DENIED);
         }
     }
@@ -44,7 +47,7 @@ static char *make_cmd_path(char *path, int start, int i, t_parser *parser)
     return cmd_path;
 }
 
-
+//imginable input of t_parsaer->cmd[0]: ls or usr/bin/ls or usr/bin  or ./a.out
 void bash_builtin(t_parser *parser, t_context *context)
 {
     char *path;
@@ -61,6 +64,12 @@ void bash_builtin(t_parser *parser, t_context *context)
     }
     start = 0;
     i = 0;
+
+    if(ft_strchr(parser->cmd[0], '/') != NULL)
+    {
+        check_file_and_execute(parser, context, parser->cmd[0]);
+        return ;
+    }
     while(path[i] != '\0')
     {
         if(path[i] == ':')
