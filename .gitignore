@@ -10,3 +10,5 @@ ss
 tlpi_hdr.h
 cmp
 error_functions.h
+.env
+pipex

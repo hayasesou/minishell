@@ -17,26 +17,6 @@ typedef struct s_env	t_env;
 typedef struct s_file	t_file;
 typedef struct s_parser	t_parser;
 
-//enum列挙型
-//typedef enum e_token_type {
-//	CHAR,
-//	PIPE,
-//	QUOTE,
-//	CHAR_QUOTE,
-//	D_QUOTE,
-//	CHAR_D_QUOTE,
-//	GREATER,
-//	D_GREATER, // redirect
-//	LESSER,
-//	D_LESSER, // heredoc
-//	SEMICOLON,
-//	SPACE,
-//	TAB,
-//	IO_NUM,
-//	ESCAPE, // いる？
-//	//COMMAND
-//}			t_token_type;
-
 typedef enum e_token_type {
 	TK_REDIR_IN,
 	TK_REDIR_OUT,
@@ -97,6 +77,7 @@ typedef struct s_file
 	char				*filename;
 	t_redirect_type		type;
 	t_file				*next;
+	int heredoc_fd; //仮に追加
 }						t_file;
 
 typedef struct s_parser

@@ -1,10 +1,13 @@
 NAME = minishell
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror
-I_FLAGS = -Iinclude/
+C_FLAGS = -Wall -Wextra -Werror -fPIE
+I_FLAGS = -Iinclude/ -Ilibft/
 H_FLAGS = -lreadline
+L_FLAGS = -Llibft -lft
 
-FLAGS = $(C_FLAGS) $(I_FLAGS) #$(H_FLAGS)
+LIBFT = libft/libft.a
+
+FLAGS = $(C_FLAGS) $(I_FLAGS) $(L_FLAGS) #$(H_FLAGS)
 
 
 SRCDIR = ./src
@@ -26,11 +29,13 @@ PARSER_FILES = parser_main.c parser_bool.c parser_init.c parser_token.c parser_u
 
 all: $(NAME)
 
-# $(NAME): $(OBJS)
-# 	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
 
-# .c.o:
-# 	$(CC) $(C_FLAGS) -c $< -o $@
+$(NAME): $(LIBFT) $(OBJS)  
+	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
+
+$(LIBFT):
+	make -C libft/
+
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
@@ -50,9 +55,11 @@ $(NAME): $(OBJS)
 
 clean:
 	$(RM) $(OBJS)
+	make -C libft/ clean
 
 fclean: clean
 	$(RM) $(NAME)
+	make -C libft/ fclean
 
 re: fclean all
 
