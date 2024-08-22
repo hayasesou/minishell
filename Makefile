@@ -22,7 +22,7 @@ OBJS = $(addprefix $(OBJDIR)/, $(FILES:.c=.o)) \
 
 FILES = main.c env.c error.c
 LEXER_FILES = lexer_main.c operator.c print_token.c quote.c token_bool.c token.c word.c
-PARSER_FILES = parser_main.c parser_bool.c print_parser.c parser_help.c
+PARSER_FILES = parser_main.c parser_bool.c parser_init.c parser_token.c parser_utils.c print_parser.c
 
 all: $(NAME)
 
