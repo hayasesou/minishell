@@ -15,11 +15,21 @@ t_parser    *args_init(void)
     return (args);
 }
 
-void    command_init(t_parser *args)
+void command_init(t_parser *args, t_token *token)
 {
     args->cmd = malloc(sizeof(char *) * 2);
     if (args->cmd == NULL)
-        return (fatal_error("parser: command init malloc error"));
+        fatal_error("parser: command init malloc error");
+    
+    if (token != NULL)
+    {
+        args->cmd[0] = strdup(token->data);
+        args->cmd[1] = NULL;
+    }
+    else
+    {
+        args->cmd[0] = NULL;
+    }
 }
 
 // パイプの処理

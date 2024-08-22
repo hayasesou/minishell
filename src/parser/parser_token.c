@@ -41,15 +41,6 @@ void join_words(t_token **new_token, t_token **tmp)
     *new_token = *tmp;
 }
 
-void init_cmd(t_parser **args, t_token *token)
-{
-    (*args)->cmd = malloc(sizeof(char *) * 2);
-    if ((*args)->cmd == NULL)
-        fatal_error("parser: append_token malloc error");
-    (*args)->cmd[0] = strdup(token->data);
-    (*args)->cmd[1] = NULL;
-}
-
 void append_token(t_parser **args, t_token *token)
 {
     int i;
@@ -57,7 +48,7 @@ void append_token(t_parser **args, t_token *token)
 
     if ((*args)->cmd == NULL)
     {
-        init_cmd(args, token);
+        command_init(*args, token);
         return;
     }
     i = 0;
