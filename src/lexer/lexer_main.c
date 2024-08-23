@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 void lexer(t_context *ctx, char *line)
 {
     t_token *token;
@@ -43,5 +42,4 @@ void lexer(t_context *ctx, char *line)
     printf("----------- lexer end --------------\n\n");
 }
 
-	// expansion(token_head); // typeがDOUBLE_QUOTEのときにexpansionする
-// このループにexpansion入れるか、double_quote_removalのところでexpansionするか迷い中
+// TODO:expansion(token_head); // typeがDOUBLE_QUOTEのときにexpansionする
