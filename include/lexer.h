@@ -35,7 +35,7 @@ char            *single_quote_removal(char *str);
 char            *double_quote_removal(char *str);
 
 // token
-t_token     	*token_node_create(char *data, t_token_type type, t_token_state state);
+t_token         *token_node_create(char *data, t_token_type type);
 void        	token_node_add(t_token *head, t_token *new_token);
 t_token     	*token_init(t_context *ctx);
 void        	free_tokens(t_token *token);

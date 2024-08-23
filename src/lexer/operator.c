@@ -74,7 +74,6 @@ void	operator(char **line_ptr, char *line, t_token *token)
 	}
 	else
 		err_exit(line, "operatorが有効じゃありません", 0) ; // error変更した方がいい
-	token_node_add(token, token_node_create(op, type, GENERAL));
-	//assert_error("tokenize: operator, unexpected operator");
+	token_node_add(token, token_node_create(op, type));
 	*line_ptr += strlen(op);
 }

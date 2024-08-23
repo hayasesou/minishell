@@ -1,27 +1,42 @@
 #include "minishell.h"
 
-void	print_enum(t_token *node)
+void print_enum(t_token *node)
 {
-	if (node->type == TK_EMPTY)
-		printf("type [%s]\n", "EMPTY");
-	else if (node->type == TK_PIPE)
-		printf("type [%s]\n", "PIPE");
-	else if (node->type == TK_SINGLE_QUOTE)
-		printf("type [%s]\n", "SINGLE QUOTE");
-	else if (node->type == TK_DOUBLE_QUOTE)
-		printf("type [%s]\n", "DOUBLE QUOTE");
-	else if (node->type == TK_REDIR_IN)
-		printf("type [%s]\n", "REDIRECT IN");
-	else if (node->type == TK_REDIR_HEREDOC)
-		printf("type [%s]\n", "HEREDOC");
-	else if (node->type == TK_REDIR_OUT)
-		printf("type [%s]\n", "REDIRECT OUT");
-	else if (node->type == TK_REDIR_APPEND)
-		printf("type [%s]\n", "APPEND");
-	else if (node->type == TK_WORD)
-		printf("type [%s]\n", "WORD");
-	else if (node->type == TK_EOF)
-		printf("type [%s]\n", "TK_EOF");
+    switch(node->type)
+    {
+        case TK_WORD:
+            printf("type [WORD]\n");
+            break;
+        case TK_SINGLE_QUOTE:
+            printf("type [SINGLE QUOTE]\n");
+            break;
+        case TK_DOUBLE_QUOTE:
+            printf("type [DOUBLE QUOTE]\n");
+            break;
+        case TK_PIPE:
+            printf("type [PIPE]\n");
+            break;
+        case TK_REDIR_IN:
+            printf("type [REDIRECT IN]\n");
+            break;
+        case TK_REDIR_OUT:
+            printf("type [REDIRECT OUT]\n");
+            break;
+        case TK_REDIR_APPEND:
+            printf("type [APPEND]\n");
+            break;
+        case TK_REDIR_HEREDOC:
+            printf("type [HEREDOC]\n");
+            break;
+        case TK_EOF:
+            printf("type [EOF]\n");
+            break;
+        case TK_EMPTY:
+            printf("type [EMPTY]\n");
+            break;
+        default:
+            printf("type [UNKNOWN(%d)]\n", node->type);
+    }
 }
 
 void print_lexer(t_token *token_head)

@@ -52,31 +52,32 @@ char	*double_quote_removal(char *str)
 		return (NULL);
 }
 
-void	quote(char **line_ptr, char *line, t_token *token)
+void quote(char **line_ptr, char *line, t_token *token)
 {
-	char			*word;
-	t_token_state	type;
+    char *word;
+    t_token_type type;
+    char quote_char = *line;
 
-	if (*line && is_single_quote(*line))
-	{
-        if (is_single_quote_closed(line))
-    		word = single_quote_removal(line);
-		else
-			err_exit(line, "Unclosed single quote", 1); // locationとstatusの確認
-		type = SINGLE_QUOTE;
-	}
-	else if (*line && is_double_quote(*line))
-	{
-		if (is_double_quote_closed(line))
-			word = double_quote_removal(line);
-		else
-			err_exit(line, "Unclosed single quote", 1); // locationとstatusの確認
-		type = DOUBLE_QUOTE;
-	}
-	else
-		err_exit(line, "not quote", 0); // errorの種類あとで変える
-	if (word == NULL)
-		fatal_error("tokenize: word strndup error");
-	token_node_add(token, token_node_create(word, TK_WORD, type));
-    *line_ptr += strlen(word) + 2; // +2はクオーテーション2個分
+    if (quote_char == '\'')
+    {
+        if (!is_single_quote_closed(line))
+            err_exit(line, "Unclosed single quote", 1);
+        word = single_quote_removal(line);
+        type = TK_SINGLE_QUOTE;  // Single quotes don't allow expansions, so it's just a word
+    }
+    else if (quote_char == '\"')
+    {
+        if (!is_double_quote_closed(line))
+            err_exit(line, "Unclosed double quote", 1);
+        word = double_quote_removal(line);
+        type = TK_DOUBLE_QUOTE;  // We'll handle expansions later, for now it's a word
+    }
+    else
+        err_exit(line, "not quote", 0);
+
+    if (word == NULL)
+        fatal_error("tokenize: word strndup error");
+    token_node_add(token, token_node_create(word, type));
+    *line_ptr += strlen(word) + 2;  // +2 for the quotes
+    free(word);
 }

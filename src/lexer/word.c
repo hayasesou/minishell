@@ -25,5 +25,5 @@ void	word(char **line_ptr, char *line, t_token *token)
 	if (word == NULL)
 		fatal_error("tokenize: word strndup error");
 	*line_ptr = line;
-	token_node_add(token, token_node_create(word, TK_WORD, GENERAL));
+	token_node_add(token, token_node_create(word, TK_WORD));
 }
