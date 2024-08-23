@@ -7,11 +7,20 @@ void print_enum(t_token *node)
         case TK_WORD:
             printf("type [WORD]\n");
             break;
+        case TK_SPACE_WORD:
+            printf("type [SPACE WORD]\n");
+            break;
         case TK_SINGLE_QUOTE:
             printf("type [SINGLE QUOTE]\n");
             break;
+        case TK_SPACE_SINGLE_QUOTE:
+            printf("type [SPACE SINGLE QUOTE]\n");
+            break;
         case TK_DOUBLE_QUOTE:
             printf("type [DOUBLE QUOTE]\n");
+            break;
+        case TK_SPACE_DOUBLE_QUOTE:
+            printf("type [SPACE DOUBLE QUOTE]\n");
             break;
         case TK_PIPE:
             printf("type [PIPE]\n");

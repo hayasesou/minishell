@@ -22,7 +22,7 @@ bool	        is_double_quote_closed(char *line);
 
 // word
 bool        	consume_blank(char **line_ptr, char *line);
-void        	word(char **line_ptr, char *line, t_token *token);
+void            word(char **line_ptr, char *line, t_token *token, bool space_before);
 
 // operator
 void            operator(char **line_ptr, char *line, t_token *token);
@@ -30,9 +30,10 @@ char	        *select_op(char *line);
 t_token_type	select_op_type(char *op);
 
 // quote
-void	        quote(char **line_ptr, char *line, t_token *token);
+void            quote(char **line_ptr, char *line, t_token *token, bool space_before);
 char            *single_quote_removal(char *str);
 char            *double_quote_removal(char *str);
+bool            is_combinable(t_token *token);
 
 // token
 t_token         *token_node_create(char *data, t_token_type type);

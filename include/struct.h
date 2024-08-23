@@ -19,8 +19,11 @@ typedef struct s_parser	t_parser;
 
 typedef enum e_token_type {
     TK_WORD,
+	TK_SPACE_WORD,
     TK_SINGLE_QUOTE,
+	TK_SPACE_SINGLE_QUOTE,
     TK_DOUBLE_QUOTE,
+	TK_SPACE_DOUBLE_QUOTE,
     TK_PIPE,
     TK_REDIR_IN,
     TK_REDIR_OUT,
