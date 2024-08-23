@@ -54,32 +54,31 @@ char	*double_quote_removal(char *str)
 
 void quote(char **line_ptr, char *line, t_token *token, bool space_before)
 {
-    char quote_char = *line;
-    char *start = line + 1;  // クォートの次の文字から始める
-    line++;
+    char			quote_char;
+    char			*start;
+	int				length;
+	char			*quoted_str;
+    t_token_type	type;
 
+	quote_char = *line;
+	start = line + 1;  // クォートの次の文字から始める
+    line++;
     while (*line && *line != quote_char)
         line++;
-
     if (*line == quote_char)
     {
-        int length = line - start;  // クォートを含まない長さ
-        char *quoted_str = strndup(start, length);
+        length = line - start;  // クォートを含まない長さ
+        quoted_str = strndup(start, length);
         if (quoted_str == NULL)
             fatal_error("quote: strndup error");
-
-        t_token_type type;
         if (quote_char == '\'')
             type = space_before ? TK_SPACE_SINGLE_QUOTE : TK_SINGLE_QUOTE;
         else
             type = space_before ? TK_SPACE_DOUBLE_QUOTE : TK_DOUBLE_QUOTE;
-
         token_node_add(token, token_node_create(quoted_str, type));
         free(quoted_str);
         *line_ptr = line + 1;  // 終わりのクォートの次の文字へ
     }
     else
-    {
         err_exit(start - 1, "Unclosed quote", 1);
-    }
 }
