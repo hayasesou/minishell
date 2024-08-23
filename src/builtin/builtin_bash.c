@@ -26,12 +26,12 @@ static void check_file_and_execute(t_parser *parser, t_context *context, char *c
             exit(PERMISSION_DENIED);
         }
     }
-    
+    return;  
 }
 
 
-
-//e.g.) usr/bin + / + ls
+// "path" + "/" + "cmd"
+//e.g.) "/usr/bin" + "/" + "ls"
 static char *make_cmd_path(char *path, int start, int i, t_parser *parser)
 {
     char *stash_dir1;
@@ -42,12 +42,9 @@ static char *make_cmd_path(char *path, int start, int i, t_parser *parser)
     if(stash_dir1 == NULL)
         return (NULL);
     stash_dir2 = ft_strjoin(stash_dir1, "/");
-    if(stash_dir2 == NULL)
-    {
-        free(stash_dir1);
-        return (NULL);
-    }
     free(stash_dir1);
+    if(stash_dir2 == NULL)
+        return (NULL);
     cmd_path = ft_strjoin(stash_dir2, parser->cmd[0]);
     free(stash_dir2);
     if(cmd_path == NULL)
@@ -73,7 +70,9 @@ void bash_builtin(t_parser *parser, t_context *context)
     }
     start = 0;
     i = 0;
-
+    
+    // "binary file path" or "directory path"
+    //e.g.) "usr/bin/ls" "./a.out" or "usr/bin"
     if(ft_strchr(parser->cmd[0], '/') != NULL)
     {
         if(stat(parser->cmd[0], &st) == 0)

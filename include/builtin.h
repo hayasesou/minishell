@@ -9,6 +9,7 @@ void exec_cmd(t_parser *parser, t_context *context);
 
 //builtin_minishell.c
 bool is_minishell_builtin(char *cmd);
+void exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd);
 
 //builtin_bash.c
 void bash_builtin(t_parser *parser, t_context *context);

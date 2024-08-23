@@ -4,13 +4,7 @@ void exec_cmd(t_parser *parser, t_context *context)
 {
 
     if(is_minishell_builtin(parser->cmd[0]) == true)
-    {
-        printf("self builtin\n");
-        //todo;
-        //implement self_builin
-        
-        return ;
-    }
+        exec_minishell_builtin(parser, context, parser->cmd[0]);
     else
         bash_builtin(parser, context);
 
