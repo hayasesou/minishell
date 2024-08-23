@@ -1,20 +1,5 @@
 #include "minishell.h"
 
-t_parser *arg_node_add(t_parser *args)
-{
-    t_parser *new_node = args_init();
-    t_parser *last_node = args;
-
-    while (last_node->next != NULL)
-    {
-        last_node = last_node->next;
-    }
-    last_node->next = new_node;
-    new_node->prev = last_node;
-
-    return new_node;
-}
-
 char *ft_strjoin(const char *str1, const char *str2) {
     size_t len1 = strlen(str1);
     size_t len2 = strlen(str2);
@@ -29,4 +14,30 @@ char *ft_strjoin(const char *str1, const char *str2) {
     strcat(result, str2);
 
     return result;
+}
+
+void join_words(char **combined_str, t_token **tmp)
+{
+    char *joined_str;
+
+    joined_str = ft_strjoin(*combined_str, (*tmp)->data);
+    free((*tmp)->data);
+    *combined_str = joined_str;
+}
+
+t_redirect_type get_redirect_type(t_token_type type)
+{
+    switch (type)
+    {
+        case TK_REDIR_IN:
+            return IN_FILE;
+        case TK_REDIR_OUT:
+            return OUT_FILE;
+        case TK_REDIR_APPEND:
+            return APPEND;
+        case TK_REDIR_HEREDOC:
+            return HEREDOC;
+        default:
+            return UNKNOWN;
+    }
 }

@@ -25,7 +25,7 @@ static void add_redirect(t_parser *cur_arg, t_token *token)
     }
 }
 
-static void add_command(t_parser *cur_arg, t_token *token)
+void add_command(t_parser *cur_arg, char *cmd_str)
 {
     char **new_cmd;
     int i;
@@ -45,7 +45,7 @@ static void add_command(t_parser *cur_arg, t_token *token)
         new_cmd[i] = cur_arg->cmd[i];
         i++;
     }
-    new_cmd[i] = strdup(token->data);
+    new_cmd[i] = strdup(cmd_str);
     new_cmd[i + 1] = NULL;
     free(cur_arg->cmd);
     cur_arg->cmd = new_cmd;
@@ -55,24 +55,42 @@ void create_command(t_parser *args, t_token *token)
 {
     t_token *tmp;
     t_parser *cur_arg;
+    char *combined_str;
 
     tmp = token;
     cur_arg = args;
+    combined_str = NULL;
     while (tmp != NULL && tmp->type != TK_EOF && tmp->type != TK_PIPE)
     {
         if (is_redirect(tmp))
         {
-            if (tmp->next == NULL)
-            {
-                fprintf(stderr, "Syntax error near unexpected token `newline'\n");
-                return;
-            }
             add_redirect(cur_arg, tmp);
-            tmp = tmp->next;
+            tmp = tmp->next->next;
         }
         else if (is_string(tmp))
-            add_command(cur_arg, tmp);
-        tmp = tmp->next;
+        {
+            if (!combined_str)
+                combined_str = strdup(tmp->data);
+            else
+                join_words(&combined_str, &tmp);
+            tmp = tmp->next;
+            // 次のトークンがスペースない場合は結合を続ける
+            while (tmp && is_space_string(tmp))
+            {
+                join_words(&combined_str, &tmp);
+                tmp = tmp->next;
+            }
+            add_command(cur_arg, combined_str);
+            free(combined_str);
+            combined_str = NULL;
+        }
+        else
+            tmp = tmp->next;
+    }
+    if (combined_str)
+    {
+        add_command(cur_arg, combined_str);
+        free(combined_str);
     }
 }
 
@@ -90,6 +108,20 @@ static void handle_pipe(t_parser **args, t_token **token)
     new_args->prev = *args;
     *args = new_args;
     *token = (*token)->next;
+}
+
+t_parser    *args_init(void)
+{
+    t_parser    *args;
+
+    args = (t_parser *)malloc(sizeof(t_parser));
+    if (args == NULL)
+        fatal_error("parser: args init malloc error");
+    args->cmd = NULL;
+    args->file = NULL;
+    args->next = NULL;
+    args->prev = NULL;
+    return (args);
 }
 
 void parser(t_context *ctx)
