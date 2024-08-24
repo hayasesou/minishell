@@ -82,7 +82,7 @@ void free_parser(t_parser *args)
     }
 }
 
-void parser(t_context *ctx)
+t_parser *parser(t_context *ctx)
 {
     t_parser *args;
     t_parser *args_head;
@@ -90,10 +90,7 @@ void parser(t_context *ctx)
 
     args = args_init();
     if (args == NULL)
-    {
-        fprintf(stderr, "Parser initialization error\n");
-        return;
-    }
+        fatal_error("args_init malloc error");
     args_head = args;
     token = ctx->token_head->next;
     while (token != NULL && token->type != TK_EOF)
@@ -104,6 +101,7 @@ void parser(t_context *ctx)
         if (token != NULL && token->type == TK_PIPE)
             handle_pipe(&args, &token);
     }
-    print_parser(args_head);
-    free_parser(args_head);
+    // print_parser(args_head);
+    // free_parser(args_head);
+    return (args_head);
 }

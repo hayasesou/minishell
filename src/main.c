@@ -20,6 +20,8 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 
 void	main_loop(t_context *ctx, char *line)
 {
+	t_parser	*parsed;
+
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -34,9 +36,9 @@ void	main_loop(t_context *ctx, char *line)
 		{
 			add_history(line);
 			lexer(ctx, line);
-			parser(ctx);
+			parsed = parser(ctx);
+			print_parser(parsed);
 		}
-		// ctx->exit_status = interpret(ctx, line); // interpretはtokenizeと被ってる
 		free(line);
 	}
 }
