@@ -7,7 +7,7 @@ bool    is_string(t_token *token)
     return (false);
 }
 
-bool    is_space_string(t_token *token)
+bool    is_not_space_string(t_token *token)
 {
     if (token->type == TK_WORD || token->type == TK_SINGLE_QUOTE || token->type == TK_DOUBLE_QUOTE)
         return (true);

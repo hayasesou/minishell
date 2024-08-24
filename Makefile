@@ -7,8 +7,8 @@ L_FLAGS = -Llibft -lft
 
 LIBFT = libft/libft.a
 
-FLAGS = $(C_FLAGS) $(I_FLAGS) $(L_FLAGS) #$(H_FLAGS)
-
+FLAGS = $(C_FLAGS) $(I_FLAGS)
+LINK_FLAGS = $(L_FLAGS) $(H_FLAGS)
 
 SRCDIR = ./src
 LEXERDIR = ./src/lexer
@@ -25,13 +25,12 @@ OBJS = $(addprefix $(OBJDIR)/, $(FILES:.c=.o)) \
 
 FILES = main.c env.c error.c
 LEXER_FILES = lexer_main.c operator.c print_token.c quote.c token_bool.c token.c word.c
-PARSER_FILES = parser_main.c parser_bool.c parser_init.c parser_token.c parser_utils.c print_parser.c
+PARSER_FILES = parser_main.c parser_bool.c parser_utils.c print_parser.c parser_command.c
 
 all: $(NAME)
 
-
 $(NAME): $(LIBFT) $(OBJS)  
-	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
+	$(CC) $(FLAGS) $(OBJS) -o $@ $(LINK_FLAGS)
 
 $(LIBFT):
 	make -C libft/
@@ -41,7 +40,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
-
 $(OBJDIR)/%.o: $(LEXERDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(FLAGS) -c $< -o $@
@@ -49,9 +47,6 @@ $(OBJDIR)/%.o: $(LEXERDIR)/%.c
 $(OBJDIR)/%.o: $(PARSERDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(FLAGS) -c $< -o $@
-
-$(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $@ $(H_FLAGS)
 
 clean:
 	$(RM) $(OBJS)

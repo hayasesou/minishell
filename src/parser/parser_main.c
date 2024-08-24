@@ -1,18 +1,21 @@
 #include "minishell.h"
 
-static void add_redirect(t_parser *cur_arg, t_token *token)
+int add_redirect(t_parser *cur_arg, t_token *token)
 {
     t_file *new_file;
     t_file *last;
 
-    new_file = malloc(sizeof(t_file));
+    new_file = (t_file *)malloc(sizeof(t_file));
     if (new_file == NULL)
+        return (0);
+    new_file->filename = ft_strdup(token->next->data);
+    if (!new_file->filename)
     {
-        fprintf(stderr, "Memory allocation error\n");
-        return;
+        free(new_file);
+        return (0);
     }
-    new_file->filename = strdup(token->next->data);
     new_file->type = get_redirect_type(token->type);
+    new_file->heredoc_fd = -1;
     new_file->next = NULL;
     if (cur_arg->file == NULL)
         cur_arg->file = new_file;
@@ -23,75 +26,7 @@ static void add_redirect(t_parser *cur_arg, t_token *token)
             last = last->next;
         last->next = new_file;
     }
-}
-
-void add_command(t_parser *cur_arg, char *cmd_str)
-{
-    char **new_cmd;
-    int i;
-
-    i = 0;
-    while (cur_arg->cmd && cur_arg->cmd[i])
-        i++;
-    new_cmd = malloc(sizeof(char *) * (i + 2));
-    if (new_cmd == NULL)
-    {
-        fprintf(stderr, "Memory allocation error\n");
-        return;
-    }
-    i = 0;
-    while (cur_arg->cmd && cur_arg->cmd[i])
-    {
-        new_cmd[i] = cur_arg->cmd[i];
-        i++;
-    }
-    new_cmd[i] = strdup(cmd_str);
-    new_cmd[i + 1] = NULL;
-    free(cur_arg->cmd);
-    cur_arg->cmd = new_cmd;
-}
-
-void create_command(t_parser *args, t_token *token)
-{
-    t_token *tmp;
-    t_parser *cur_arg;
-    char *combined_str;
-
-    tmp = token;
-    cur_arg = args;
-    combined_str = NULL;
-    while (tmp != NULL && tmp->type != TK_EOF && tmp->type != TK_PIPE)
-    {
-        if (is_redirect(tmp))
-        {
-            add_redirect(cur_arg, tmp);
-            tmp = tmp->next->next;
-        }
-        else if (is_string(tmp))
-        {
-            if (!combined_str)
-                combined_str = strdup(tmp->data);
-            else
-                join_words(&combined_str, &tmp);
-            tmp = tmp->next;
-            // 次のトークンがスペースない場合は結合を続ける
-            while (tmp && is_space_string(tmp))
-            {
-                join_words(&combined_str, &tmp);
-                tmp = tmp->next;
-            }
-            add_command(cur_arg, combined_str);
-            free(combined_str);
-            combined_str = NULL;
-        }
-        else
-            tmp = tmp->next;
-    }
-    if (combined_str)
-    {
-        add_command(cur_arg, combined_str);
-        free(combined_str);
-    }
+    return (1);
 }
 
 static void handle_pipe(t_parser **args, t_token **token)
@@ -124,6 +59,29 @@ t_parser    *args_init(void)
     return (args);
 }
 
+void free_parser(t_parser *args)
+{
+    t_parser *tmp;
+    t_file *file_tmp;
+
+    while (args)
+    {
+        free_command(args->cmd);
+
+        while (args->file)
+        {
+            file_tmp = args->file;
+            args->file = args->file->next;
+            free(file_tmp->filename);
+            free(file_tmp);
+        }
+
+        tmp = args;
+        args = args->next;
+        free(tmp);
+    }
+}
+
 void parser(t_context *ctx)
 {
     t_parser *args;
@@ -147,5 +105,5 @@ void parser(t_context *ctx)
             handle_pipe(&args, &token);
     }
     print_parser(args_head);
-    // free_parser(args_head);
+    free_parser(args_head);
 }
