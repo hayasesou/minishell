@@ -88,3 +88,41 @@ void free_all_env_node(t_env *env_head)
     }
     free(env_head);
 }
+
+
+char *get_env_value(char *env_name, t_env *env_head)
+{
+    t_env *env_tmp;
+
+    env_tmp = env_head->next;
+    while(env_tmp != env_head)
+    {
+        if((ft_strncmp(env_tmp->env_name, env_name, ft_strlen(env_name)) == 0) && (env_tmp->env_name[ft_strlen(env_name)] == '\0'))
+            return (env_tmp->env_val);
+        env_tmp = env_tmp->next;
+    }
+    return (NULL);
+}
+
+void set_env_value(char *env_name, char *new_env_value, t_env *env_head, t_context *context)
+{
+    t_env *env_tmp;
+
+    env_tmp = env_head->next;
+    while(env_tmp != env_head)
+    {
+        if((ft_strncmp(env_tmp->env_name, env_name, ft_strlen(env_name)) == 0) && (env_tmp->env_name[ft_strlen(env_name)] == '\0'))
+        {
+            free(env_tmp->env_val);
+            env_tmp->env_val = ft_strdup(new_env_value);
+            if(env_tmp->env_val == NULL)
+            {
+                context->exit_status = NORMAL_ERROR;
+                perror("minishell setenv");
+                return ;
+            }
+            return ;
+        }
+        env_tmp = env_tmp->next;
+    }
+}

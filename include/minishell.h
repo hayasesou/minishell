@@ -22,6 +22,7 @@
 
 
 //exit_status
+# define NORMAL_EXIT 0
 # define NORMAL_ERROR 1
 # define ERROR_TOKENIZE 258
 # define COMMAND_NOT_FOUND 127
@@ -46,6 +47,8 @@ t_env	*env_init(char **envp);
 char ** make_env_list(t_env *env_head, t_context *context);
 void free_env_list(char **env_list);
 void free_all_env_node(t_env *env_head);
+char *get_env_value(char *env_name, t_env *env_head);
+void set_env_value(char *env_name, char *new_env_value, t_env *env_head, t_context *context);
 
 // main
 void	main_loop(t_context *ctx, char *line);
