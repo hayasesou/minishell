@@ -13,7 +13,6 @@
 bool	        is_blank(char c);
 bool	        is_word(char c);
 bool	        is_quote(char c);
-bool	        is_metacharacter(char c);
 bool        	is_operator(char c);
 bool	        is_single_quote(char c);
 bool	        is_double_quote(char c);
