@@ -17,52 +17,25 @@ typedef struct s_env	t_env;
 typedef struct s_file	t_file;
 typedef struct s_parser	t_parser;
 
-
-//enum列挙型
-//typedef enum e_token_type {
-//	CHAR,
-//	PIPE,
-//	QUOTE,
-//	CHAR_QUOTE,
-//	D_QUOTE,
-//	CHAR_D_QUOTE,
-//	GREATER,
-//	D_GREATER, // redirect
-//	LESSER,
-//	D_LESSER, // heredoc
-//	SEMICOLON,
-//	SPACE,
-//	TAB,
-//	IO_NUM,
-//	ESCAPE, // いる？
-//	//COMMAND
-//}			t_token_type;
-
 typedef enum e_token_type {
-	TK_REDIR_IN,
-	TK_REDIR_OUT,
-	TK_REDIR_APPEND,
-	TK_REDIR_HEREDOC,
-
-	TK_OP,
-	TK_WORD,
-	TK_PIPE,
-	TK_EOF,
+    TK_WORD,
+	TK_SPACE_WORD,
+    TK_SINGLE_QUOTE,
+	TK_SPACE_SINGLE_QUOTE,
+    TK_DOUBLE_QUOTE,
+	TK_SPACE_DOUBLE_QUOTE,
+    TK_PIPE,
+    TK_REDIR_IN,
+    TK_REDIR_OUT,
+    TK_REDIR_APPEND,
+    TK_REDIR_HEREDOC,
 	TK_EMPTY,
-	TK_SINGLE_QUOTE,
-	TK_DOUBLE_QUOTE
-}	t_token_type;
-
-typedef enum e_token_state {
-	GENERAL,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE
-}	t_token_state;
+    TK_EOF
+} t_token_type;
 
 typedef struct s_token {
 	char			*data;
 	t_token_type	type;
-	t_token_state	state;
 	t_token			*next;
 	t_token			*prev;
 
@@ -95,7 +68,7 @@ typedef struct s_list {
 
 typedef struct s_file
 {
-	char				*file_name;
+	char				*filename;
 	t_redirect_type		type;
 	t_file				*next;
 	int heredoc_fd; //仮に追加
@@ -123,6 +96,5 @@ typedef struct s_context {
 	int		exit_status;
 	bool	sys_error; // 一応
 }	t_context;
-
 
 #endif

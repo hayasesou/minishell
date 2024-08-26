@@ -16,7 +16,9 @@
 
 # include "libft.h"
 # include "struct.h"
+# include "error.h"
 # include "lexer.h"
+# include "parser.h"
 # include "redirect.h"
 # include "builtin.h"
 
