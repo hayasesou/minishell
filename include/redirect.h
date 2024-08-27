@@ -75,4 +75,8 @@ void close_heredoc_fds(t_parser *parser);
 void pipe_check(t_pipex *pipex, t_context *context, int *status, int cmd_num);
 int fork_check(t_context *context, int *status);
 
+
+//pipe.c
+void minishell_pipe(t_parser *parser_head, t_context *context);
+
 #endif

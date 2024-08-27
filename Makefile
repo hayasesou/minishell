@@ -15,19 +15,29 @@ LINK_FLAGS = $(L_FLAGS) $(H_FLAGS)
 SRCDIR = ./src
 LEXERDIR = ./src/lexer
 PARSERDIR = ./src/parser
+REDIRECTDIR = ./src/redirect
+BUILTINDIR = ./src/builtin
 OBJDIR = ./obj
 
 SRCS =	$(addprefix $(SRCDIR)/,$(FILES))\
 		$(addprefix $(LEXERDIR)/, $(LEXER_FILES))\
-		$(addprefix $(PARSERDIR)/, $(PARSER_FILES))
+		$(addprefix $(PARSERDIR)/, $(PARSER_FILES)) \
+		$(addprefix $(REDIRECTDIR)/, $(REDIRECT_FILES)) \
+		$(addprefix $(BUILTINDIR)/, $(BUILTIN_FILES))
 
 OBJS = $(addprefix $(OBJDIR)/, $(FILES:.c=.o)) \
        $(addprefix $(OBJDIR)/, $(LEXER_FILES:.c=.o)) \
-       $(addprefix $(OBJDIR)/, $(PARSER_FILES:.c=.o))
+       $(addprefix $(OBJDIR)/, $(PARSER_FILES:.c=.o)) \
+	   $(addprefix $(OBJDIR)/, $(REDIRECT_FILES:.c=.o)) \
+	   $(addprefix $(OBJDIR)/, $(BUILTIN_FILES:.c=.o))
 
 FILES = main.c env.c error.c
 LEXER_FILES = lexer_main.c operator.c print_token.c quote.c token_bool.c token.c word.c
 PARSER_FILES = parser_main.c parser_bool.c parser_utils.c print_parser.c parser_command.c
+#add
+REDIRECT_FILES = $(notdir $(wildcard $(REDIRECTDIR)/*.c))
+BUILTIN_FILES = $(notdir $(wildcard $(BUILTINDIR)/*.c))
+
 
 all: $(NAME)
 
@@ -47,6 +57,14 @@ $(OBJDIR)/%.o: $(LEXERDIR)/%.c
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJDIR)/%.o: $(PARSERDIR)/%.c
+	@mkdir -p $(OBJDIR)
+	$(CC) $(FLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o: $(REDIRECTDIR)/%.c
+	@mkdir -p $(OBJDIR)
+	$(CC) $(FLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o: $(BUILTINDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(FLAGS) -c $< -o $@
 

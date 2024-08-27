@@ -65,82 +65,82 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
 
 
 
-#include <unistd.h>
+// #include <unistd.h>
 
-// Example main function for demonstration
-//./pipex cmd1 cmd2
-int main(int ac, char **av, char **envp)
-{
-    t_context ctx;
-    t_parser *parser_head;
-    int i;
+// // Example main function for demonstration
+// //./pipex cmd1 cmd2
+// int main(int ac, char **av, char **envp)
+// {
+//     t_context ctx;
+//     t_parser *parser_head;
+//     int i;
 
-    parser_head = (t_parser *)malloc(sizeof(t_parser) * (ac - 1));
-    ctx.env_head = env_init(envp);
-    i = 0;
-    while (i < ac - 1)
-    {
+//     parser_head = (t_parser *)malloc(sizeof(t_parser) * (ac - 1));
+//     ctx.env_head = env_init(envp);
+//     i = 0;
+//     while (i < ac - 1)
+//     {
 
-        parser_head[i].cmd = (char **)malloc(sizeof(char *) * 2);
-        parser_head[i].cmd[0] = ft_strdup(av[i + 1]);
-        parser_head[i].cmd[1] = NULL;
-        parser_head[i].file = NULL;
-        if (i == ac - 2)
-            parser_head[i].next = NULL;
-        else
-            parser_head[i].next = &parser_head[i + 1];
-        if (i == 0)
-            parser_head[i].prev = NULL;
-        else
-            parser_head[i].prev = &parser_head[i - 1];
-        i++;
-    }
+//         parser_head[i].cmd = (char **)malloc(sizeof(char *) * 2);
+//         parser_head[i].cmd[0] = ft_strdup(av[i + 1]);
+//         parser_head[i].cmd[1] = NULL;
+//         parser_head[i].file = NULL;
+//         if (i == ac - 2)
+//             parser_head[i].next = NULL;
+//         else
+//             parser_head[i].next = &parser_head[i + 1];
+//         if (i == 0)
+//             parser_head[i].prev = NULL;
+//         else
+//             parser_head[i].prev = &parser_head[i - 1];
+//         i++;
+//     }
 
-    // if(ac > 2)
-    // {
-    // // << eof > test2 > test3
-    // t_file f11;
-    // t_file f12;
-    // t_file f13;
-    // f11.file_name = "eof";
-    // f11.type = HEREDOC;
-    // f11.heredoc_fd = -1;
-    // f11.next = &f12;
-    // f12.file_name = "test2";
-    // f12.type = OUT_FILE;
-    // f12.heredoc_fd = -1;
-    // f12.next = &f13;
-    // f13.file_name = "test3";
-    // f13.type = OUT_FILE;
-    // f13.heredoc_fd = -1;
-    // f13.next = NULL;
+//     // if(ac > 2)
+//     // {
+//     // // << eof > test2 > test3
+//     // t_file f11;
+//     // t_file f12;
+//     // t_file f13;
+//     // f11.filename = "eof";
+//     // f11.type = HEREDOC;
+//     // f11.heredoc_fd = -1;
+//     // f11.next = &f12;
+//     // f12.filename = "test2";
+//     // f12.type = OUT_FILE;
+//     // f12.heredoc_fd = -1;
+//     // f12.next = &f13;
+//     // f13.filename = "test3";
+//     // f13.type = OUT_FILE;
+//     // f13.heredoc_fd = -1;
+//     // f13.next = NULL;
 
 
-    // parser_head[0].file = &f11;
-    // }
+//     // parser_head[0].file = &f11;
+//     // }
 
-    // //cmd | cmd < eof
-    // if (ac > 3)
-    // {
-    //     t_file f21;
-    //     f21.file_name = "eof2";
-    //     f21.type = HEREDOC;
-    //     f21.heredoc_fd = -1;
-    //     f21.next = NULL;
-    //     parser_head[1].file = &f21;
-    // }
+//     // //cmd | cmd < eof
+//     // if (ac > 3)
+//     // {
+//     //     t_file f21;
+//     //     f21.filename = "eof2";
+//     //     f21.type = HEREDOC;
+//     //     f21.heredoc_fd = -1;
+//     //     f21.next = NULL;
+//     //     parser_head[1].file = &f21;
+//     // }
 
-    minishell_pipe(parser_head, &ctx);
+//     minishell_pipe(parser_head, &ctx);
 
-    while(i > 0)
-    {
-        i--;
-        free(parser_head[i].cmd[0]);
-        free(parser_head[i].cmd);
-    }
-    free(parser_head);
-    printf("pid %d\n", getpid());
-    delete_tmpfile();
-    free_all_env_node(ctx.env_head);
-    return 0;
-}
+//     while(i > 0)
+//     {
+//         i--;
+//         free(parser_head[i].cmd[0]);
+//         free(parser_head[i].cmd);
+//     }
+//     free(parser_head);
+//     printf("pid %d\n", getpid());
+//     delete_tmpfile();
+//     free_all_env_node(ctx.env_head);
+//     return 0;
+// }

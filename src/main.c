@@ -37,7 +37,8 @@ void	main_loop(t_context *ctx, char *line)
 			add_history(line);
 			lexer(ctx, line);
 			parsed = parser(ctx);
-			print_parser(parsed);
+			minishell_pipe(parsed, ctx);
+			// print_parser(parsed);
 		}
 		free(line);
 	}

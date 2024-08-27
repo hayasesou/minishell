@@ -6,7 +6,7 @@ int heredoc(t_file *file, t_context *context, int *heredoc_status)
     char *line;
     char *new_line;
 
-    heredoc.deliminater = file->file_name;
+    heredoc.deliminater = file->filename;
     create_tmpfile(&heredoc, context, heredoc_status);
     while(1)
     {
@@ -41,7 +41,7 @@ int quote_heredoc(t_file *file, t_context *context, int *heredoc_status)
     char *line;
     char *new_line;
 
-    heredoc.deliminater = file->file_name;
+    heredoc.deliminater = file->filename;
     create_tmpfile(&heredoc, context, heredoc_status);
     while(1)
     {
