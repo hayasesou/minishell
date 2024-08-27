@@ -4,13 +4,16 @@ void exec_cmd(t_parser *parser, t_context *context)
 {
 
     if(is_minishell_builtin(parser->cmd[0]) == true)
+    {
         exec_minishell_builtin(parser, context, parser->cmd[0]);
+        return ;
+    }
     else
         bash_builtin(parser, context);
 
     context->exit_status = COMMAND_NOT_FOUND;
     printf("%s: command not found\n", parser->cmd[0]);
-    exit(COMMAND_NOT_FOUND);
+    // exit(COMMAND_NOT_FOUND);
 }
 
 // #include <unistd.h>

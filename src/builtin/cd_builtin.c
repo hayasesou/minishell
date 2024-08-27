@@ -19,7 +19,8 @@ void cd_builtin(t_parser *parser, t_context *context)
         free(new_dir);
         context->exit_status = NORMAL_ERROR;
         perror("minishell cd");
-        exit(NORMAL_ERROR);
+        return ;
+        // exit(NORMAL_ERROR);
     }
     free(new_dir);
     current_dir = getcwd(NULL, 0);
@@ -30,7 +31,7 @@ void cd_builtin(t_parser *parser, t_context *context)
     printf("pwd: %s\n", get_env_value("PWD", context->env_head));
     printf("oldpwd: %s\n", get_env_value("OLDPWD", context->env_head));
 
-    context->exit_status = NORMAL_EXIT;
-    exit(NORMAL_EXIT);
+    // context->exit_status = NORMAL_EXIT;
+    // exit(NORMAL_EXIT);
 }
 

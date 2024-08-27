@@ -125,4 +125,21 @@ void set_env_value(char *env_name, char *new_env_value, t_env *env_head, t_conte
         }
         env_tmp = env_tmp->next;
     }
+
+    t_env *new_env_node;
+
+    new_env_node = node_new(env_name);
+    if(new_env_node == NULL)
+    {
+        context->exit_status = NORMAL_ERROR;
+        return ;
+    }
+    new_env_node->env_val = ft_strdup(new_env_value);
+    if(new_env_node->env_val == NULL)
+    {
+        free(new_env_node);
+        context->exit_status = NORMAL_ERROR;
+        return ;
+    }
+    node_add(env_head, new_env_node);
 }

@@ -18,6 +18,14 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 	return (ctx);
 }
 
+
+bool check_pipe(t_parser *parser)
+{
+	if(parser->next == NULL)
+		return (false);
+	return (true);
+}
+
 void	main_loop(t_context *ctx, char *line)
 {
 	t_parser	*parsed;
@@ -37,8 +45,29 @@ void	main_loop(t_context *ctx, char *line)
 			add_history(line);
 			lexer(ctx, line);
 			parsed = parser(ctx);
-			minishell_pipe(parsed, ctx);
+			if(check_pipe(parsed))
+				minishell_pipe(parsed, ctx);
+			else
+			{
+				if(is_minishell_builtin(parsed->cmd[0]))
+					exec_cmd(parsed, ctx);
+				else
+				{
+					int status;
+					int pid = fork();
+					if(pid == 0)
+					{
+						exec_cmd(parsed, ctx);
+					}
+					else
+					{
+						waitpid(pid, &status, 0);
+						ctx->exit_status = WEXITSTATUS(status);
+					}
+				}
+			}
 			// print_parser(parsed);
+			delete_tmpfile();
 		}
 		free(line);
 	}
