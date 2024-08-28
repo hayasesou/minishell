@@ -32,7 +32,7 @@ void	main_loop(t_context *ctx, char *line)
 
 	while (1)
 	{
-		line = readline("minishell$ ");
+		line = readline("\033[1;33mminishell$\033[0m ");
 		if (line == NULL)
 			break ;
 		if (strlen(line) == 0)
@@ -57,6 +57,9 @@ void	main_loop(t_context *ctx, char *line)
 					int pid = fork();
 					if(pid == 0)
 					{
+						process_heredoc(parsed, ctx, &status);
+						redirect(parsed, ctx, &status);
+						setup_heredoc_fd(parsed);
 						exec_cmd(parsed, ctx);
 					}
 					else
