@@ -98,7 +98,7 @@ char *get_env_value(char *env_name, t_env *env_head)
     while(env_tmp != env_head)
     {
         if((ft_strncmp(env_tmp->env_name, env_name, ft_strlen(env_name)) == 0) && (env_tmp->env_name[ft_strlen(env_name)] == '\0'))
-            return (env_tmp->env_val);
+            return (ft_strdup(env_tmp->env_val));
         env_tmp = env_tmp->next;
     }
     return (NULL);
