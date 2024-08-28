@@ -27,11 +27,5 @@ void cd_builtin(t_parser *parser, t_context *context)
     set_env_value("PWD", current_dir, context->env_head, context);
     free(current_dir);
 
-    printf("get_cwd: %s\n", getcwd(NULL, 0));
-    printf("pwd: %s\n", get_env_value("PWD", context->env_head));
-    printf("oldpwd: %s\n", get_env_value("OLDPWD", context->env_head));
-
-    // context->exit_status = NORMAL_EXIT;
-    // exit(NORMAL_EXIT);
 }
 

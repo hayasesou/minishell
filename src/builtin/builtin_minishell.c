@@ -31,8 +31,7 @@ void exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd)
     else if(ft_strncmp(cmd, "cd", ft_strlen("cd")) == 0 && (ft_strlen(cmd) == ft_strlen("cd")))
         cd_builtin(parser, context);
     else if(ft_strncmp(cmd, "pwd", ft_strlen("pwd")) == 0 && (ft_strlen(cmd) == ft_strlen("pwd")))
-    //todo pwd
-        return ;
+        pwd_builtin(context);
     else if(ft_strncmp(cmd, "export", ft_strlen("export")) == 0 && (ft_strlen(cmd) == ft_strlen("export")))
     //todo export
         return ;

@@ -18,4 +18,7 @@ void bash_builtin(t_parser *parser, t_context *context);
 //builtin_cd.c
 void cd_builtin(t_parser *parser, t_context *context);
 
+//builtin_pwd.c
+void pwd_builtin(t_context *context);
+
 #endif
