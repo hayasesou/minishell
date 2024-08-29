@@ -11,7 +11,7 @@ void no_arg_export(t_env *env_head)
     {
         if(ft_strncmp(env_tmp->env_name, "OLDPWD", ft_strlen(env_tmp->env_name)) == 0)
             is_exit_oldpwd = true;
-        printf("declare -x %s", env_tmp->env_name);
+        ft_printf("declare -x %s", env_tmp->env_name);
         if(env_tmp->env_val != NULL)
             ft_printf("=\"%s\"\n", env_tmp->env_val);
         else
