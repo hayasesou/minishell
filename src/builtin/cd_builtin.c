@@ -7,8 +7,8 @@ void cd_builtin(t_parser *parser, t_context *context)
 {
     char *new_dir;
     char *current_dir;
+    char *old_dir;
 
-    set_env_value("OLDPWD", get_env_value("PWD", context->env_head), context->env_head, context);
     if( parser->cmd[SPECIFIED_DIR] != NULL)
     {
         if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "~", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
@@ -17,9 +17,21 @@ void cd_builtin(t_parser *parser, t_context *context)
             new_dir = get_env_value("OLDPWD", context->env_head);
         else
             new_dir = parser->cmd[SPECIFIED_DIR];
+
+        if(new_dir == NULL)
+        {
+            context->exit_status = NORMAL_ERROR;
+            printf("minishell cd: OLDPWD not set\n");
+            return ;
+        }
+        if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "-", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
+            printf("%s\n", new_dir);
     }
     else
         new_dir = get_env_value("HOME", context->env_head);
+    old_dir = get_env_value("PWD", context->env_head);
+    set_env_value("OLDPWD", old_dir, context->env_head, context);
+    free(old_dir); 
     if (chdir(new_dir) == -1)
     {
         free(new_dir);
