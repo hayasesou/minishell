@@ -12,5 +12,6 @@ void pwd_builtin(t_context *context)
         return ;
     }
     ft_printf("%s\n", pwd);
+    free(pwd);
     context->exit_status = NORMAL_EXIT;
 }
