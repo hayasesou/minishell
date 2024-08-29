@@ -9,7 +9,18 @@ void cd_builtin(t_parser *parser, t_context *context)
     char *current_dir;
     char *old_dir;
 
-    if( parser->cmd[SPECIFIED_DIR] != NULL)
+    int args_count;
+
+    args_count = 0;
+    while(parser->cmd[args_count])
+        args_count++;
+    if(args_count > 1)
+    {
+        context->exit_status = NORMAL_ERROR;
+        printf("minishell cd: too many arguments\n");
+        return ;
+    }
+    if(parser->cmd[SPECIFIED_DIR] != NULL)
     {
         if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "~", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
             new_dir = get_env_value("HOME", context->env_head);
