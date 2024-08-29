@@ -6,14 +6,18 @@ static void check_file_and_execute(t_parser *parser, t_context *context, char *c
 {
 
     char **env_list;
+    char *shell_level;
 
     if (access(cmd_path, F_OK) == 0)
     {
         if(access(cmd_path, X_OK) == 0)
         {
             if(ft_strncmp(parser->cmd[0], PROGRAM_NAME, ft_strlen(PROGRAM_NAME)) == 0)
-                set_env_value("SHLVL", ft_itoa(ft_atoi(get_env_value("SHLVL", context->env_head)) + 1), context->env_head, context);
-
+            {
+                shell_level = get_env_value("SHLVL", context->env_head);
+                set_env_value("SHLVL", ft_itoa(ft_atoi(shell_level) + 1), context->env_head, context);
+                free(shell_level);
+            }
             env_list = make_env_list(context->env_head, context);
             execve(cmd_path, parser->cmd, env_list);
             free(cmd_path);
