@@ -2,6 +2,21 @@
 
 #define SPECIFIED_DIR 1
 
+static bool cd_valid_args(t_parser *parser, t_context *context)
+{
+    int args_count;
+    args_count = 0;
+    while(parser->cmd[args_count])
+        args_count++;
+    if(args_count > 2)
+    {
+        context->exit_status = NORMAL_ERROR;
+        printf("minishell cd: too many arguments\n");
+        return (false);
+    }
+    return (true);
+}
+
 
 void cd_builtin(t_parser *parser, t_context *context)
 {
@@ -9,17 +24,9 @@ void cd_builtin(t_parser *parser, t_context *context)
     char *current_dir;
     char *old_dir;
 
-    int args_count;
-
-    args_count = 0;
-    while(parser->cmd[args_count])
-        args_count++;
-    if(args_count > 1)
-    {
-        context->exit_status = NORMAL_ERROR;
-        printf("minishell cd: too many arguments\n");
+    if(!cd_valid_args(parser, context))
         return ;
-    }
+
     if(parser->cmd[SPECIFIED_DIR] != NULL)
     {
         if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "~", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
