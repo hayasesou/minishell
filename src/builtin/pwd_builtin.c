@@ -11,6 +11,6 @@ void pwd_builtin(t_context *context)
         perror("minishell pwd");
         return ;
     }
-    printf("%s\n", pwd);
+    ft_printf("%s\n", pwd);
     context->exit_status = NORMAL_EXIT;
 }

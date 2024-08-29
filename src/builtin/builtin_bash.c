@@ -77,7 +77,7 @@ void bash_builtin(t_parser *parser, t_context *context)
     i = 0;
     
     // "binary file path" or "directory path"
-    //e.g.) "usr/bin/ls" "./a.out" or "usr/bin"
+    //e.g.) "/usr/bin/ls" "/usr/bin" "./a.out"
     if(ft_strchr(parser->cmd[0], '/') != NULL)
     {
         if(stat(parser->cmd[0], &st) == 0)

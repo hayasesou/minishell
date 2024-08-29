@@ -11,7 +11,7 @@ static bool cd_valid_args(t_parser *parser, t_context *context)
     if(args_count > 2)
     {
         context->exit_status = NORMAL_ERROR;
-        printf("minishell cd: too many arguments\n");
+        ft_printf("minishell cd: too many arguments\n");
         return (false);
     }
     return (true);
@@ -39,11 +39,11 @@ void cd_builtin(t_parser *parser, t_context *context)
         if(new_dir == NULL)
         {
             context->exit_status = NORMAL_ERROR;
-            printf("minishell: cd: OLDPWD not set\n");
+            ft_printf("minishell: cd: OLDPWD not set\n");
             return ;
         }
         if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "-", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
-            printf("%s\n", new_dir);
+            ft_printf("%s\n", new_dir);
     }
     else
         new_dir = get_env_value("HOME", context->env_head);

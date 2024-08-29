@@ -13,13 +13,13 @@ void no_arg_export(t_env *env_head)
             is_exit_oldpwd = true;
         printf("declare -x %s", env_tmp->env_name);
         if(env_tmp->env_val != NULL)
-            printf("=\"%s\"\n", env_tmp->env_val);
+            ft_printf("=\"%s\"\n", env_tmp->env_val);
         else
-            printf("\n");
+            ft_printf("\n");
         env_tmp = env_tmp->next;
     }
     if(is_exit_oldpwd == false)
-        printf("declare -x OLDPWD\n");
+        ft_printf("declare -x OLDPWD\n");
 
 }
 

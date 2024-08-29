@@ -12,7 +12,7 @@ void exec_cmd(t_parser *parser, t_context *context)
         bash_builtin(parser, context);
 
     context->exit_status = COMMAND_NOT_FOUND;
-    printf("minishell: %s: command not found\n", parser->cmd[0]);
+    ft_printf("minishell: %s: command not found\n", parser->cmd[0]);
     // exit(COMMAND_NOT_FOUND);
 }
 
