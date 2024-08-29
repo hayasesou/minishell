@@ -19,6 +19,32 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 }
 
 
+void minishell_no_pipe(t_parser *parser, t_context *context)
+{
+	int status;
+	int pid;
+
+	if(is_minishell_builtin(parser->cmd[0]))
+		exec_cmd(parser, context);
+	else
+	{
+		pid = fork();
+		if(pid == 0)
+		{
+			process_heredoc(parser, context, &status);
+			redirect(parser, context, &status);
+			setup_heredoc_fd(parser);
+			exec_cmd(parser, context);
+		}
+		else
+		{
+		waitpid(pid, &status, 0);
+		context->exit_status = WEXITSTATUS(status);
+		}
+	}
+}
+
+
 bool check_pipe(t_parser *parser)
 {
 	if(parser->next == NULL)
@@ -48,27 +74,7 @@ void	main_loop(t_context *ctx, char *line)
 			if(check_pipe(parsed))
 				minishell_pipe(parsed, ctx);
 			else
-			{
-				if(is_minishell_builtin(parsed->cmd[0]))
-					exec_cmd(parsed, ctx);
-				else
-				{
-					int status;
-					int pid = fork();
-					if(pid == 0)
-					{
-						process_heredoc(parsed, ctx, &status);
-						redirect(parsed, ctx, &status);
-						setup_heredoc_fd(parsed);
-						exec_cmd(parsed, ctx);
-					}
-					else
-					{
-						waitpid(pid, &status, 0);
-						ctx->exit_status = WEXITSTATUS(status);
-					}
-				}
-			}
+				minishell_no_pipe(parsed, ctx);
 			// print_parser(parsed);
 			delete_tmpfile();
 		}
