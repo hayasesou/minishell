@@ -21,4 +21,11 @@ void cd_builtin(t_parser *parser, t_context *context);
 //builtin_pwd.c
 void pwd_builtin(t_context *context);
 
+//builtin_export.c
+void export_builtin(t_parser *parser, t_context *context);
+
+//builtin_export_utils.c
+void no_arg_export(t_env *env_head);
+void arg_export(t_env *env_head, char *arg, t_context *context);
+
 #endif

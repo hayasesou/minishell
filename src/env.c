@@ -2,8 +2,10 @@
 
 
 char *find_first_equal(char *str)
-{
-	while(str)
+{	
+	if (str == NULL)
+		return (NULL);
+	while(*str)
 	{
 		if(*str == '=')
 			return (str);
@@ -29,6 +31,14 @@ t_env	*node_new_set(t_env *env_node, char *str)
 	size_t env_name_len;
 
 	equal_pos = find_first_equal(str);
+	if(equal_pos == NULL)
+	{
+		env_node->env_name = ft_strdup(str);
+		if(env_node->env_name == NULL)
+			return (NULL);
+		env_node->env_val = NULL;
+		return (env_node);
+	}
 
 	env_name_len = (equal_pos - str) / sizeof(char);
 	env_node->env_name = ft_strndup(str, env_name_len);
