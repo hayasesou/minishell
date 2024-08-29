@@ -103,4 +103,5 @@ void bash_builtin(t_parser *parser, t_context *context)
         }
         i++;
     }
+    free(path);
 }
