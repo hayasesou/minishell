@@ -39,7 +39,7 @@ void cd_builtin(t_parser *parser, t_context *context)
         if(new_dir == NULL)
         {
             context->exit_status = NORMAL_ERROR;
-            printf("minishell cd: OLDPWD not set\n");
+            printf("minishell: cd: OLDPWD not set\n");
             return ;
         }
         if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "-", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
@@ -55,7 +55,7 @@ void cd_builtin(t_parser *parser, t_context *context)
         free(new_dir);
         new_dir = NULL;
         context->exit_status = NORMAL_ERROR;
-        perror("minishell cd");
+        perror("minishell: cd");
         return ;
         // exit(NORMAL_ERROR);
     }

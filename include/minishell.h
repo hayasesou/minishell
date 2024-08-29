@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 
 # include "libft.h"
+# include "ft_printf.h"
 # include "struct.h"
 # include "error.h"
 # include "lexer.h"

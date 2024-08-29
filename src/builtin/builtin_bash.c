@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+#define PROGRAM_NAME "./minishell"
+
 static void check_file_and_execute(t_parser *parser, t_context *context, char *cmd_path)
 {
 
@@ -9,18 +11,21 @@ static void check_file_and_execute(t_parser *parser, t_context *context, char *c
     {
         if(access(cmd_path, X_OK) == 0)
         {
+            if(ft_strncmp(parser->cmd[0], PROGRAM_NAME, ft_strlen(PROGRAM_NAME)) == 0)
+                set_env_value("SHLVL", ft_itoa(ft_atoi(get_env_value("SHLVL", context->env_head)) + 1), context->env_head, context);
+
             env_list = make_env_list(context->env_head, context);
             execve(cmd_path, parser->cmd, env_list);
             free(cmd_path);
             free_env_list(env_list);
-            printf("execve error\n");
+            ft_printf("execve error\n");
             free_all_env_node(context->env_head);
             context->exit_status = NORMAL_ERROR;
             exit(NORMAL_ERROR);
         }
         else
         {
-            printf("minishell : %s: Permission denied\n", parser->cmd[0]);
+            ft_printf("minishell : %s: Permission denied\n", parser->cmd[0]);
             free_all_env_node(context->env_head);
             context->exit_status = PERMISSION_DENIED;
             exit(PERMISSION_DENIED);
@@ -61,11 +66,11 @@ void bash_builtin(t_parser *parser, t_context *context)
     char* cmd_path;
     struct stat st; 
 
-    path = getenv("PATH"); 
+    path = get_env_value("PATH", context->env_head); 
     if(path == NULL)
     {
         context->exit_status = NORMAL_ERROR;
-        printf("PATH not found\n");
+        ft_printf("PATH not found\n");
         exit(NORMAL_ERROR);
     }
     start = 0;
@@ -79,7 +84,7 @@ void bash_builtin(t_parser *parser, t_context *context)
         {
             if(S_ISDIR(st.st_mode))
             {
-                printf("minishell : %s: Is a directory\n", parser->cmd[0]);
+                ft_printf("minishell : %s: Is a directory\n", parser->cmd[0]);
                 context->exit_status = IS_DIR;
                 exit(IS_DIR);
             }

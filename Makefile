@@ -1,13 +1,14 @@
 NAME = minishell
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror -fPIE
-I_FLAGS = -Iinclude/ -Ilibft/
+I_FLAGS = -Iinclude/ -Ilibft/ -Iprintf/
 # linkerの順番
 #https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc
-H_FLAGS = -lreadline -lft
-L_FLAGS = -Llibft #-lft
+H_FLAGS = -lreadline -lft -lftprintf
+L_FLAGS = -Llibft -Lprintf #-lft
 
 LIBFT = libft/libft.a
+PRINTF = printf/libftprintf.a
 
 FLAGS = $(C_FLAGS) $(I_FLAGS)
 LINK_FLAGS = $(L_FLAGS) $(H_FLAGS)
@@ -41,11 +42,14 @@ BUILTIN_FILES = $(notdir $(wildcard $(BUILTINDIR)/*.c))
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)  
+$(NAME): $(LIBFT) $(PRINTF) $(OBJS)  
 	$(CC) $(FLAGS) $(OBJS) -o $@ $(LINK_FLAGS)
 
 $(LIBFT):
 	make -C libft/
+
+$(PRINTF):
+	make -C printf/
 
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
@@ -71,10 +75,12 @@ $(OBJDIR)/%.o: $(BUILTINDIR)/%.c
 clean:
 	$(RM) $(OBJS)
 	make -C libft/ clean
+	make -C printf/ clean
 
 fclean: clean
 	$(RM) $(NAME)
 	make -C libft/ fclean
+	make -C printf/ fclean
 
 re: fclean all
 

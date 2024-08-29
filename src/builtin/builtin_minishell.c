@@ -27,7 +27,7 @@ void exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd)
 {
     if(ft_strncmp(cmd, "echo", ft_strlen("echo")) == 0 && (ft_strlen(cmd) == ft_strlen("echo")))
     //todo echo
-        return ;
+        return;
     else if(ft_strncmp(cmd, "cd", ft_strlen("cd")) == 0 && (ft_strlen(cmd) == ft_strlen("cd")))
         cd_builtin(parser, context);
     else if(ft_strncmp(cmd, "pwd", ft_strlen("pwd")) == 0 && (ft_strlen(cmd) == ft_strlen("pwd")))
@@ -36,11 +36,11 @@ void exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd)
         export_builtin(parser, context);
     else if(ft_strncmp(cmd, "unset", ft_strlen("unset")) == 0 && (ft_strlen(cmd) == ft_strlen("unset")))
     //todo unset
-        return ;
+        return;
     else if(ft_strncmp(cmd, "env", ft_strlen("env")) == 0 && (ft_strlen(cmd) == ft_strlen("env")))
     //todo env
-        return ;
+        return;
     else if(ft_strncmp(cmd, "exit", ft_strlen("exit")) == 0 && (ft_strlen(cmd) == ft_strlen("exit")))
     //todo exit
-        return ;
+        return;
 }
