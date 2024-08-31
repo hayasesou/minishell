@@ -1,0 +1,6 @@
+a.out
+ft_printf.h.gch
+*.o
+.vscode
+.DS_Store
+a.out.dSYMpft/

@@ -9,18 +9,18 @@ int redirect_input(t_file *file, t_context *context, int *status)
 {
     int fd;
     
-    if (file->file_name[0] == '\0')
+    if (file->filename[0] == '\0')
     {
         context->exit_status = 1;
-        unexisted_env_error(file->file_name);
+        unexisted_env_error(file->filename);
         *status = 1;
         return 0;
     }
-    fd = open(file->file_name, O_RDONLY);
+    fd = open(file->filename, O_RDONLY);
     if(fd == -1)
     {
         context->exit_status = 1;
-        error_message(file->file_name);
+        error_message(file->filename);
         *status = 1;
         return 0;
     }

@@ -13,16 +13,7 @@ static void child_process(t_parser *tmp_parser, t_pipex *pipe_x, t_context *cont
         next_pipe(pipe_x, pipe_x->current_cmd_num);
     redirect(tmp_parser, context, status);
     setup_heredoc_fd(tmp_parser);
-
-    // todo exec command
-    // // 9 is the length of "/usr/bin/"
-    char *cmd_path = ft_strjoin("/usr/bin/", tmp_parser->cmd[0]);
-    execve(cmd_path, tmp_parser->cmd, NULL);
-    free(cmd_path);
-    printf("execve error\n");
-    close(pipe_x->stdin_fd);
-    close(pipe_x->stdout_fd);
-    exit(1);
+    exec_cmd(tmp_parser, context);
 }
 
 
@@ -78,13 +69,14 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
 
 // // Example main function for demonstration
 // //./pipex cmd1 cmd2
-// int main(int ac, char **av)
+// int main(int ac, char **av, char **envp)
 // {
 //     t_context ctx;
 //     t_parser *parser_head;
 //     int i;
 
 //     parser_head = (t_parser *)malloc(sizeof(t_parser) * (ac - 1));
+//     ctx.env_head = env_init(envp);
 //     i = 0;
 //     while (i < ac - 1)
 //     {
@@ -104,26 +96,40 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
 //         i++;
 //     }
 
-//     // << eof > test2 > test3
+//     // if(ac > 2)
+//     // {
+//     // // << eof > test2 > test3
 //     // t_file f11;
 //     // t_file f12;
 //     // t_file f13;
-//     // f11.file_name = "test1";
+//     // f11.filename = "eof";
 //     // f11.type = HEREDOC;
 //     // f11.heredoc_fd = -1;
 //     // f11.next = &f12;
-//     // f12.file_name = "test2";
-//     // f12.type = HEREDOC;
+//     // f12.filename = "test2";
+//     // f12.type = OUT_FILE;
 //     // f12.heredoc_fd = -1;
 //     // f12.next = &f13;
-//     // f13.file_name = "test3";
-//     // f13.type = HEREDOC;
+//     // f13.filename = "test3";
+//     // f13.type = OUT_FILE;
 //     // f13.heredoc_fd = -1;
 //     // f13.next = NULL;
 
 
 //     // parser_head[0].file = &f11;
-    
+//     // }
+
+//     // //cmd | cmd < eof
+//     // if (ac > 3)
+//     // {
+//     //     t_file f21;
+//     //     f21.filename = "eof2";
+//     //     f21.type = HEREDOC;
+//     //     f21.heredoc_fd = -1;
+//     //     f21.next = NULL;
+//     //     parser_head[1].file = &f21;
+//     // }
+
 //     minishell_pipe(parser_head, &ctx);
 
 //     while(i > 0)
@@ -135,5 +141,6 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
 //     free(parser_head);
 //     printf("pid %d\n", getpid());
 //     delete_tmpfile();
+//     free_all_env_node(ctx.env_head);
 //     return 0;
 // }

@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 
-char  *get_env_value(char *env_name, t_env *env_head, t_context *context, int *heredoc_status)
+char  *heredoc_get_env_value(char *env_name, t_env *env_head, t_context *context, int *heredoc_status)
 {
     char *env_value;
     t_env *tmp_env;
@@ -88,7 +88,7 @@ static char *make_heredoc_newline(char *line, size_t *i, t_context *context, int
         *heredoc_status = 1;
         fatal_error("malloc error");
     }
-    env_value = ft_strdup(get_env_value(env_name, context->env_head, context, heredoc_status));
+    env_value = ft_strdup(heredoc_get_env_value(env_name, context->env_head, context, heredoc_status));
     if(env_value == NULL)
     {
         free(before_env);
