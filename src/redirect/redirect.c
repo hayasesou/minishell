@@ -71,132 +71,132 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
 
 //     t_file f1, f2, f3;
     //redirect output    ls > test1 > test2 > test3
-    // f1.file_name = "test1";
+    // f1.filename = "test1";
     // f1.type = OUT_FILE;
     // f1.next = &f2;
-    // f2.file_name = "test2";
+    // f2.filename = "test2";
     // f2.type = OUT_FILE;
     // f2.next = &f3;
-    // f3.file_name = "test3";
+    // f3.filename = "test3";
     // f3.type = OUT_FILE;
     // f3.next = NULL;
 
 
     // //redirect output append   ls >> test1 >> test2 >> test3
-    // f1.file_name = "test1";
+    // f1.filename = "test1";
     // f1.type = APPEND;
     // f1.next = &f2;
-    // f2.file_name = "test2";
+    // f2.filename = "test2";
     // f2.type = APPEND;
     // f2.next = &f3;
-    // f3.file_name = "test3";
+    // f3.filename = "test3";
     // f3.type = APPEND;
     // f3.next = NULL;
 
     // //mixture of redirect outtput and append ls > test1 >> test2 > test3
-    // f1.file_name = "test1";
+    // f1.filename = "test1";
     // f1.type = OUT_FILE;
     // f1.next = &f2;
-    // f2.file_name = "test2";
+    // f2.filename = "test2";
     // f2.type = APPEND;
     // f2.next = &f3;
-    // f3.file_name = "test3";
+    // f3.filename = "test3";
     // f3.type = OUT_FILE;
     // f3.next = NULL;
 
     // //redirect input cat < test1 < test2 < test3
-    // f1.file_name = "test1";
+    // f1.filename = "test1";
     // f1.type = IN_FILE;
     // f1.next = &f2;
-    // f2.file_name = "test2";
+    // f2.filename = "test2";
     // f2.type = IN_FILE;
     // f2.next = &f3;
-    // f3.file_name = "test3";
+    // f3.filename = "test3";
     // f3.type = IN_FILE;
     // f3.next = NULL;
 
     // //mixture of redirect input and output cat < test1 > test2 < test3
     // //test3の中身がtest2にリダイレクトされる
-    // f1.file_name = "test1";
+    // f1.filename = "test1";
     // f1.type = IN_FILE;
     // f1.next = &f2;
-    // f2.file_name = "test2";
+    // f2.filename = "test2";
     // f2.type = OUT_FILE;
 //     // f2.next = &f3;
-//     // f3.file_name = "test3";
+//     // f3.filename = "test3";
 //     // f3.type = IN_FILE;
 //     // f3.next = NULL;
 
 //     // //  cat >> test1 >> test2 < test3
-//     // f1.file_name = "test1";
+//     // f1.filename = "test1";
 //     // f1.type = APPEND;
 //     // f1.next = &f2;
-//     // f2.file_name = "test2";
+//     // f2.filename = "test2";
 //     // f2.type = APPEND;
 //     // f2.next = &f3;
-//     // f3.file_name = "test3";
+//     // f3.filename = "test3";
 //     // f3.type = IN_FILE;
 //     // f3.next = NULL;
 
 //     // //cat << eof
-//     // f1.file_name = "eof";
+//     // f1.filename = "eof";
 //     // f1.type = HEREDOC;
 //     // f1.next = NULL;
 //     // (void)f3;
 //     // (void)f2;
 
 //     // // cat << eof1 << eof2
-//     // f1.file_name = "eof1";
+//     // f1.filename = "eof1";
 //     // f1.type = HEREDOC;
 //     // f1.next = &f2;
-//     // f2.file_name = "eof2";
+//     // f2.filename = "eof2";
 //     // f2.type = HEREDOC;
 //     // f2.next = NULL;
 //     // (void)f3;
 
 
 //     // //cat << eof >test1
-//     // f1.file_name = "eof";
+//     // f1.filename = "eof";
 //     // f1.type = HEREDOC;
 //     // f1.next = &f2;
-//     // f2.file_name = "test1";
+//     // f2.filename = "test1";
 //     // f2.type = OUT_FILE;
 //     // f2.next = NULL;
 //     // (void)f3;
 
 //     // //cat > test1 << eof
-//     // f1.file_name = "test1";
+//     // f1.filename = "test1";
 //     // f1.type = OUT_FILE;
 //     // f1.next = &f2;
-//     // f2.file_name = "eof";
+//     // f2.filename = "eof";
 //     // f2.type = HEREDOC;
 //     // f2.next = NULL;
 //     // (void)f3;
 
 //     // //cat << eof1 << eof2 << eof3
-//     // f1.file_name = "eof1";
+//     // f1.filename = "eof1";
 //     // f1.type = HEREDOC;
 //     // f1.next = &f2;
-//     // f2.file_name = "eof2";
+//     // f2.filename = "eof2";
 //     // f2.type = HEREDOC;
 //     // f2.next = &f3;
-//     // f3.file_name = "eof3";
+//     // f3.filename = "eof3";
 //     // f3.type = HEREDOC;
 //     // f3.next = NULL;
     
 //     // //cat << eof1 > test2
 //     // //adapt to env_variable
-//     // f1.file_name = "eof1";
+//     // f1.filename = "eof1";
 //     // f1.type = HEREDOC;
 //     // f1.next = &f2;
-//     // f2.file_name = "test2";
+//     // f2.filename = "test2";
 //     // f2.type = OUT_FILE;
 //     // f2.next = NULL;
 //     // (void)f3;
 
 
 //     // //cat << eof1
-//     // f1.file_name = "eof1";
+//     // f1.filename = "eof1";
 //     // f1.type = HEREDOC;
 //     // f1.next = NULL;
 //     // (void)f3;
@@ -204,17 +204,17 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
 
 //     //heredoc quote test
 //     // cat << " "
-//     f1.file_name = " ";
+//     f1.filename = " ";
 //     f1.type = QUOTE_HEREDOC;
 //     f1.next = NULL;
 //     (void)f2;
 //     (void)f3;
 
 //     // // //cat << " " > test1
-//     // f1.file_name = " ";
+//     // f1.filename = " ";
 //     // f1.type = QUOTE_HEREDOC;
 //     // f1.next = &f2;
-//     // f2.file_name = "test1";
+//     // f2.filename = "test1";
 //     // f2.type = OUT_FILE;
 //     // f2.next = NULL;
 //     // (void)f3;

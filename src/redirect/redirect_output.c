@@ -9,18 +9,18 @@ int redirect_output(t_file *file, t_context *context,  int *status)
 {
     int fd;
 
-    if (file->file_name[0] == '\0')
+    if (file->filename[0] == '\0')
     {
-        unexisted_env_error(file->file_name);
+        unexisted_env_error(file->filename);
         context->exit_status = 1;
         *status = 1;
         return 0;
     }
-    fd = open(file->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    fd = open(file->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if(fd == -1)
     {
         context->exit_status = 1;
-        error_message(file->file_name);
+        error_message(file->filename);
         *status = 1;
         return 0;
     }
@@ -38,18 +38,18 @@ int append_output(t_file *file, t_context *context,int *status)
 {
     int fd;
 
-    if (file->file_name[0] == '\0')
+    if (file->filename[0] == '\0')
     {
         context->exit_status = 1;
-        unexisted_env_error(file->file_name);
+        unexisted_env_error(file->filename);
         *status = 1;
         return 0;
     }
-    fd = open(file->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    fd = open(file->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if(fd == -1)
     {
         context->exit_status = 1;
-        error_message(file->file_name);
+        error_message(file->filename);
         *status = 1;
         return 0;
     }

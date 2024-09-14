@@ -12,3 +12,7 @@ cmp
 error_functions.h
 .env
 pipex
+builtin
+!builtin/
+.vscode/
+*.a
