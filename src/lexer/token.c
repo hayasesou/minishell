@@ -26,8 +26,10 @@ void token_node_add(t_token *token, t_token *new_token)
     if (token == NULL || new_token == NULL)
         return;
     new_token->prev = token;
-    new_token->next = NULL;
-    token->next = new_token;
+    new_token->next = token->next;
+	if (token->next != NULL)
+		token->next->prev = new_token;
+	token->next = new_token;
 }
 
 t_token	*token_init(t_context *ctx)

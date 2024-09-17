@@ -1,19 +1,5 @@
 #include "minishell.h"
 
-// bool	consume_blank(char **line_ptr, char *line)
-// {
-// 	if (is_blank(*line))
-// 	{
-// 		while (*line && is_blank(*line))
-// 			line++;
-// 		*line_ptr = line;
-// 		return (true);
-// 	}
-// 	*line_ptr = line;
-// 	return (false);
-// }
-// spaceの判断をするため、consume_blankを使わなくなったが一応とっておいてる
-
 void word(char **line_ptr, char *line, t_token *token, bool space_before)
 {
     const char *start;
