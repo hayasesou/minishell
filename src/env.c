@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 char *find_first_equal(char *str)
 {	
 	if (str == NULL)

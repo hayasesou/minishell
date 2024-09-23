@@ -41,7 +41,7 @@ t_token     	*token_init(t_context *ctx);
 void        	free_tokens(t_token *token);
 
 // expansion
-void            expansion(t_token *token_head, t_env *env_head, t_context *ctx);
+void            expansion(t_token *token_head, t_context *ctx);
 char	        *ft_strjoin_free(char *s1, char *s2);
 t_token         *expansion_split(t_token *node);
 
