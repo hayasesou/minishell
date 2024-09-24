@@ -9,12 +9,12 @@ t_token *token_node_create(char *data, t_token_type type)
         fatal_error("tokenize: add token calloc error");
     if (data != NULL)
     {
-        new_token->data = strdup(data);
+        new_token->data = ft_strdup(data);
         if (new_token->data == NULL)
-            fatal_error("tokenize: add token strdup error");
+            fatal_error("tokenize: add token ft_strdup error");
     }
     else
-        new_token->data = strdup("");  // NULL の代わりに空文字列を設定
+        new_token->data = ft_strdup("");  // NULL の代わりに空文字列を設定
     new_token->type = type;
     new_token->next = NULL;
     new_token->prev = NULL;
