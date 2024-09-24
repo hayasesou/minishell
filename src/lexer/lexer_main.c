@@ -38,7 +38,7 @@ void lexer(t_context *ctx, char *line)
     }
     token_node_add(token, token_node_create("", TK_EOF));
     // printf("\n----------- lexer start-------------\n");
-    // print_lexer(token_head);
+    // print_lexer(token);
     // printf("----------- lexer end --------------\n\n");
 }
 

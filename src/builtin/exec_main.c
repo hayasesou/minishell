@@ -6,19 +6,19 @@ void exec_cmd(t_parser *parser, t_context *context)
     {
         ft_printf("minishell: syntax error\n");
         context->exit_status = NORMAL_ERROR;
-        return ;
+        exit(EXIT_FAILURE);
     }
     if(is_minishell_builtin(parser->cmd[0]) == true)
     {
         exec_minishell_builtin(parser, context, parser->cmd[0]);
-        return ;
+        exit(EXIT_SUCCESS);
     }
     else
         bash_builtin(parser, context);
 
     context->exit_status = COMMAND_NOT_FOUND;
     ft_printf("minishell: %s: command not found\n", parser->cmd[0]);
-    // exit(COMMAND_NOT_FOUND);
+    exit(COMMAND_NOT_FOUND);
 }
 
 // #include <unistd.h>
