@@ -2,7 +2,7 @@
 
 bool	is_operator(char c)
 {
-	return (c && strchr("|<>", c)); // \n\tは必要かどうか
+	return (c && strchr("|<>", c));
 }
 
 bool	is_available_operator(char *line)
@@ -22,44 +22,38 @@ bool	is_available_operator(char *line)
 	return (false);
 }
 
-char	*select_op(char *line)
+char *select_op(char *line)
 {
-	char	*op;
-
-	if (line[0] == '|' && !is_operator(line[1]))
-		op = "|";
-	else if (line[0] == '<')
-	{
-		if (!is_operator(line[1]))
-			op = "<";
-		if (line[1] == '<' && !is_operator(line[2]))
-			op = "<<";
-	}
-	else if (line[0] == '>')
-	{
-		if (!is_operator(line[1]))
-			op = ">";
-		if (line[1] == '>' && !is_operator(line[2]))
-			op = ">>";
-	}
-	else
-		return (NULL); // どうする
-	return (op);
+    if (line[0] == '|' && !is_operator(line[1]))
+        return "|";
+    else if (line[0] == '<')
+    {
+        if (line[1] == '<' && !is_operator(line[2]))
+            return "<<";
+        return "<";
+    }
+    else if (line[0] == '>')
+    {
+        if (line[1] == '>' && !is_operator(line[2]))
+            return ">>";
+        return ">";
+    }
+    return NULL; // エラー処理を呼び出す
 }
 
-t_token_type	select_op_type(char *op)
+t_token_type select_op_type(char *op)
 {
-	if (strcmp(op, "|") == 0)
-		return (TK_PIPE);
-	if (strcmp(op, "<") == 0)
-		return (TK_REDIR_IN);
-	if (strcmp(op, ">") == 0)
-		return (TK_REDIR_OUT);
-	if (strcmp(op, "<<") == 0)
-		return (TK_REDIR_HEREDOC);
-	if (strcmp(op, ">>") == 0)
-		return (TK_REDIR_APPEND);
-	return (TK_EMPTY); // errorの場合どうすればいい
+    if (ft_strncmp(op, "|", 1) == 0 && op[1] == '\0')
+        return TK_PIPE;
+    else if (ft_strncmp(op, "<", 1) == 0 && op[1] == '\0')
+        return TK_REDIR_IN;
+    else if (ft_strncmp(op, ">", 1) == 0 && op[1] == '\0')
+        return TK_REDIR_OUT;
+    else if (ft_strncmp(op, "<<", 2) == 0 && op[2] == '\0')
+        return TK_REDIR_HEREDOC;
+    else if (ft_strncmp(op, ">>", 2) == 0 && op[2] == '\0')
+        return TK_REDIR_APPEND;
+    return TK_EMPTY;
 }
 
 void	operator(char **line_ptr, char *line, t_token *token)

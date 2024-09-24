@@ -1,38 +1,14 @@
 #include "minishell.h"
 
-bool	is_single_quote_closed(char *line)
-{
-	while (*line)
-	{
-		line++;
-		if (*line == '\'')
-			return (true);
-	}
-	printf("single quote is not closed\n");
-	return (false);
-}
-
-bool	is_double_quote_closed(char *line)
-{
-	while (*line)
-	{
-		line++;
-		if (*line == '\"')
-			return (true);
-	}
-	printf("double quote is not closed\n");
-	return (false);
-}
-
 // クォート内の文字列を抽出する関数
-char *extract_quoted_str(char *start, int length) {
+static char *extract_quoted_str(char *start, int length) {
     if (length > 0)
         return ft_strndup(start, length);
     return ft_strdup("");
 }
 
 // クォート文字とスペースの有無に基づいてトークンタイプを決定する関数
-t_token_type determine_token_type(char quote_char, bool space_before) {
+static t_token_type determine_token_type(char quote_char, bool space_before) {
     if (quote_char == '\'')
         return space_before ? TK_SPACE_SINGLE_QUOTE : TK_SINGLE_QUOTE;
     else
