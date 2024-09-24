@@ -68,9 +68,12 @@ void quote(char **line_ptr, char *line, t_token *token, bool space_before)
     if (*line == quote_char)
     {
         length = line - start;  // クォートを含まない長さ
-        quoted_str = strndup(start, length);
+		if (length > 0)
+			quoted_str = ft_strndup(start, length);
+		else
+			quoted_str = ft_strdup("");
         if (quoted_str == NULL)
-            fatal_error("quote: strndup error");
+            fatal_error("quote: ft_strndup error");
         if (quote_char == '\'')
             type = space_before ? TK_SPACE_SINGLE_QUOTE : TK_SINGLE_QUOTE;
         else

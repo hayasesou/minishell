@@ -7,14 +7,14 @@ t_token *token_node_create(char *data, t_token_type type)
     new_token = (t_token *)calloc(1, sizeof(t_token));
     if (new_token == NULL)
         fatal_error("tokenize: add token calloc error");
-    if (data != NULL && strlen(data) > 0)
+    if (data != NULL)
     {
         new_token->data = strdup(data);
         if (new_token->data == NULL)
             fatal_error("tokenize: add token strdup error");
     }
     else
-        new_token->data = NULL;
+        new_token->data = strdup("");  // NULL の代わりに空文字列を設定
     new_token->type = type;
     new_token->next = NULL;
     new_token->prev = NULL;
