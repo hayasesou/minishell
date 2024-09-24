@@ -2,7 +2,7 @@
 
 bool	is_operator(char c)
 {
-	return (c && strchr("|<>", c));
+	return (c && ft_strchr("|<>", c));
 }
 
 bool	is_available_operator(char *line)
