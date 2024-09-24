@@ -24,63 +24,44 @@ bool	is_double_quote_closed(char *line)
 	return (false);
 }
 
-char	*single_quote_removal(char *str)
-{
-	char	*start;
-
-	str++;
-	start = str;
-	while (*str && !(is_single_quote(*str)))
-		str++;
-	if (is_single_quote(*str))
-		return (strndup(start, str - start));
-	else
-		return (NULL);
+// クォート内の文字列を抽出する関数
+char *extract_quoted_str(char *start, int length) {
+    if (length > 0)
+        return ft_strndup(start, length);
+    return ft_strdup("");
 }
 
-char	*double_quote_removal(char *str)
-{
-	char	*start;
-
-	str++;
-	start = str;
-	while (*str && !(is_double_quote(*str)))
-		str++;
-	if (is_double_quote(*str))
-		return (strndup(start, str - start));
-	else
-		return (NULL);
+// クォート文字とスペースの有無に基づいてトークンタイプを決定する関数
+t_token_type determine_token_type(char quote_char, bool space_before) {
+    if (quote_char == '\'')
+        return space_before ? TK_SPACE_SINGLE_QUOTE : TK_SINGLE_QUOTE;
+    else
+        return space_before ? TK_SPACE_DOUBLE_QUOTE : TK_DOUBLE_QUOTE;
 }
 
 void quote(char **line_ptr, char *line, t_token *token, bool space_before)
 {
-    char			quote_char;
-    char			*start;
+    char            quote_char;
+    char            *start;
+    char            *quoted_str;
 	int				length;
-	char			*quoted_str;
-    t_token_type	type;
+    t_token_type    type;
 
 	quote_char = *line;
-	start = line + 1;  // クォートの次の文字から始める
-    line++;
+	start = line + 1;
+	line++;
     while (*line && *line != quote_char)
         line++;
     if (*line == quote_char)
     {
-        length = line - start;  // クォートを含まない長さ
-		if (length > 0)
-			quoted_str = ft_strndup(start, length);
-		else
-			quoted_str = ft_strdup("");
-        if (quoted_str == NULL)
-            fatal_error("quote: ft_strndup error");
-        if (quote_char == '\'')
-            type = space_before ? TK_SPACE_SINGLE_QUOTE : TK_SINGLE_QUOTE;
-        else
-            type = space_before ? TK_SPACE_DOUBLE_QUOTE : TK_DOUBLE_QUOTE;
+        length = line - start;
+        quoted_str = extract_quoted_str(start, length);
+        if (!quoted_str)
+            fatal_error("quote: ft_strdup error");
+        type = determine_token_type(quote_char, space_before);
         token_node_add(token, token_node_create(quoted_str, type));
         free(quoted_str);
-        *line_ptr = line + 1;  // 終わりのクォートの次の文字へ
+        *line_ptr = line + 1;
     }
     else
         err_exit(start - 1, "Unclosed quote", 1);
