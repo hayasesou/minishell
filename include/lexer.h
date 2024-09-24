@@ -39,20 +39,12 @@ void        	free_tokens(t_token *token);
 
 // expansion
 void            expansion(t_token *token_head, t_context *ctx);
-char	        *ft_strjoin_free(char *s1, char *s2);
-t_token         *expansion_split(t_token *node);
 
 // expansion_env
 void            expansion_env(char *data, t_token *token, size_t *i, t_context *ctx);
 
 // expansion_utils
 char            *ft_strjoin_all(char *s1, char *s2, char *s3);
-char            *ft_strjoin_free(char *s1, char *s2);
-void            free_result(char **result, size_t i);
-
-// expansion_split
-t_token         *expansion_split(t_token *node);
-char            **ft_split_charset(char *s, char *charset);
 
 // expansion_bool
 bool            is_env_name(char c);

@@ -1,10 +1,13 @@
 #include "minishell.h"
 
-void free_result(char **result, size_t i)
+bool is_double_quote_expansion(t_token_type type)
 {
-    while (i > 0)
-        free(result[--i]);
-    free(result);
+    return (type == TK_DOUBLE_QUOTE || type == TK_SPACE_DOUBLE_QUOTE);
+}
+
+bool is_word_expansion(t_token_type type)
+{
+    return (type == TK_WORD || type == TK_SPACE_WORD);
 }
 
 char *ft_strjoin_all(char *s1, char *s2, char *s3)
@@ -18,17 +21,4 @@ char *ft_strjoin_all(char *s1, char *s2, char *s3)
     result = ft_strjoin(tmp, s3);
     free(tmp);
     return (result);
-}
-
-char	*ft_strjoin_free(char *s1, char *s2)
-{
-    char	*joined;
-
-    if (!s1 || !s2)
-        return (NULL);
-    joined = ft_strjoin(s1, s2);
-    if (!joined)
-        return (NULL);
-    free(s1);
-    return (joined);
 }
