@@ -31,9 +31,8 @@ OBJS = $(addprefix $(OBJDIR)/, $(FILES:.c=.o)) \
 	   $(addprefix $(OBJDIR)/, $(BUILTIN_FILES:.c=.o))
 
 FILES = main.c env.c error.c env_utils.c
-LEXER_FILES = lexer_main.c operator.c print_token.c quote.c token_bool.c token.c word.c expansion.c expansion_env.c expansion_utils.c expansion_split.c expansion_split_utils.c expansion_bool.c expansion_token_bool.c
-PARSER_FILES = parser_main.c parser_bool.c parser_utils.c print_parser.c parser_command.c
-#add
+LEXER_FILES = $(notdir $(wildcard $(LEXERDIR)/*.c))
+PARSER_FILES =	$(notdir $(wildcard $(PARSERDIR)/*.c))
 REDIRECT_FILES = $(notdir $(wildcard $(REDIRECTDIR)/*.c))
 BUILTIN_FILES = $(notdir $(wildcard $(BUILTINDIR)/*.c))
 
