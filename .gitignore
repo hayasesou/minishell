@@ -16,3 +16,4 @@ builtin
 !builtin/
 .vscode/
 *.a
+test

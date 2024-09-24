@@ -2,7 +2,12 @@
 
 void exec_cmd(t_parser *parser, t_context *context)
 {
-
+    if(parser->cmd == NULL)
+    {
+        ft_printf("minishell: syntax error\n");
+        context->exit_status = NORMAL_ERROR;
+        return ;
+    }
     if(is_minishell_builtin(parser->cmd[0]) == true)
     {
         exec_minishell_builtin(parser, context, parser->cmd[0]);
