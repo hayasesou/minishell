@@ -45,6 +45,27 @@ void            expansion(t_token *token_head, t_context *ctx);
 char	        *ft_strjoin_free(char *s1, char *s2);
 t_token         *expansion_split(t_token *node);
 
+// expansion_env
+void            expansion_env(char *data, t_token *token, size_t *i, t_context *ctx);
+
+// expansion_utils
+char            *ft_strjoin_all(char *s1, char *s2, char *s3);
+char            *ft_strjoin_free(char *s1, char *s2);
+void            free_result(char **result, size_t i);
+
+// expansion_split
+t_token         *expansion_split(t_token *node);
+char            **ft_split_charset(char *s, char *charset);
+
+// expansion_bool
+bool            is_env_name(char c);
+bool            is_heredoc_expansion(t_token *token);
+bool            is_env_name_start(char c);
+bool            is_env_name_char(char c);
+bool            is_charset(char c, const char *charset);
+bool            is_double_quote_expansion(t_token_type type);
+bool            is_word_expansion(t_token_type type);
+
 // main
 void        	lexer(t_context *ctx, char *line);
 void	        print_lexer(t_token *token_head);
