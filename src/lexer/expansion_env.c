@@ -47,17 +47,11 @@ static char *get_env_variable_value(char *data, size_t *i, t_context *ctx)
         fatal_error("Expansion: ft_substr failed");
     env_value = get_env_value(env_name, ctx->env_head);
     if (!env_value) // 環境変数が見つからない場合、元の文字列を返す
-    {
         env_value = ft_substr(data, start, var_len + 1); // '+1' は '$' の分
-        if (!env_value)
-            fatal_error("Expansion: ft_substr failed");
-    }
     else
-    {
         env_value = ft_strdup(env_value);
-        if (!env_value)
-            fatal_error("Expansion: ft_strdup failed");
-    }
+    if (!env_value)
+        fatal_error("Expansion: ft_substr failed");
     free(env_name);
     *i += var_len;
     return env_value;
