@@ -29,9 +29,7 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 	if(is_minishell_builtin(parser->cmd[0]))
 	{
 		process_heredoc(parser, context, &status);
-		redirect(parser, context, &status);
-		setup_heredoc_fd(parser);
-		// exec_cmd(parser, context);
+		builtin_redirect(parser, context, &status);
 		exec_minishell_builtin(parser, context, parser->cmd[0]);
 	}
 	else
