@@ -27,7 +27,6 @@ static void expand_string(t_token *token, t_context *ctx)
 static void expand_value(t_token *token, t_context *ctx)
 {
     size_t  i;
-    t_token *new_token;
 
     i = 0;
     while (token->data[i])
@@ -44,12 +43,6 @@ static void expand_value(t_token *token, t_context *ctx)
         }
         else
             i++;
-    }
-    if (ft_strchr(token->data, ' ') || ft_strchr(token->data, '\t'))
-    {
-        new_token = expansion_split(token);
-        if (!new_token)
-            fatal_error("Expansion: expansion_split failed");
     }
 }
 
