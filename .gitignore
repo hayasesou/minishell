@@ -16,3 +16,5 @@ builtin
 !builtin/
 .vscode/
 *.a
+.idea/
+.gitignore
