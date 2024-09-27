@@ -18,12 +18,6 @@ static bool is_n_option(char *op)
     return (true);
 }
 
-static void have_n_option(t_parser *tmp_parser)
-{
-    (void)tmp_parser;
-    ft_printf("have_n_option\n");
-}
-
 static int count_command(char **cmd)
 {
     int i;
@@ -32,6 +26,24 @@ static int count_command(char **cmd)
     while (cmd[i] != NULL)
         i++;
     return (i);
+}
+
+static void have_n_option(char **cmd)
+{
+    int i;
+    int cmd_size;
+
+    i = 1;
+    cmd_size = count_command(cmd);
+    while (i < cmd_size)
+    {
+        if (!is_n_option(cmd[i]))
+            ft_printf("%s", cmd[i]);
+        if (i < cmd_size - 1)
+            ft_printf(" ");
+        i++;
+    }
+    ft_printf("\n");
 }
 
 static void no_n_option(char **cmd)
@@ -60,7 +72,7 @@ void    echo_builtin(t_parser *parser, t_context *context)
     {
         while (tmp_parser)
         {
-            have_n_option(tmp_parser);
+            have_n_option(tmp_parser->cmd);
             tmp_parser = tmp_parser->next;
         }
     }
