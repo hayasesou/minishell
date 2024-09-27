@@ -24,10 +24,30 @@ static void have_n_option(t_parser *tmp_parser)
     ft_printf("have_n_option\n");
 }
 
-static void no_n_option(t_parser *tmp_parser)
+static int count_command(char **cmd)
 {
-    (void)tmp_parser;
-    ft_printf("no_n_option\n");
+    int i;
+
+    i = 0;
+    while (cmd[i] != NULL)
+        i++;
+    return (i);
+}
+
+static void no_n_option(char **cmd)
+{
+    int i;
+    int cmd_size;
+
+    i = 1;
+    cmd_size = count_command(cmd);
+    while (i < cmd_size)
+    {
+        ft_printf("%s", cmd[i]);
+        if (i < cmd_size - 1)
+            ft_printf(" ");
+        i++;
+    }
 }
 
 void    echo_builtin(t_parser *parser, t_context *context)
@@ -48,7 +68,7 @@ void    echo_builtin(t_parser *parser, t_context *context)
     {
         while (tmp_parser)
         {
-            no_n_option(tmp_parser);
+            no_n_option(tmp_parser->cmd);
             tmp_parser = tmp_parser->next;
         }
     }
