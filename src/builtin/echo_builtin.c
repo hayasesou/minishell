@@ -38,12 +38,13 @@ static void have_n_option(char **cmd)
     while (i < cmd_size)
     {
         if (!is_n_option(cmd[i]))
+        {
             ft_printf("%s", cmd[i]);
-        if (i < cmd_size - 1)
-            ft_printf(" ");
+            if (i < cmd_size - 1)
+                ft_printf(" ");
+        }
         i++;
     }
-    ft_printf("\n");
 }
 
 static void no_n_option(char **cmd)
@@ -60,6 +61,7 @@ static void no_n_option(char **cmd)
             ft_printf(" ");
         i++;
     }
+    ft_printf("\n");
 }
 
 void    echo_builtin(t_parser *parser, t_context *context)
@@ -75,6 +77,7 @@ void    echo_builtin(t_parser *parser, t_context *context)
             have_n_option(tmp_parser->cmd);
             tmp_parser = tmp_parser->next;
         }
+        context->exit_status = 0;
     }
     else
     {
@@ -83,5 +86,6 @@ void    echo_builtin(t_parser *parser, t_context *context)
             no_n_option(tmp_parser->cmd);
             tmp_parser = tmp_parser->next;
         }
+        context->exit_status = 0;
     }
 }
