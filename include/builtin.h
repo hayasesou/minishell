@@ -28,4 +28,7 @@ void export_builtin(t_parser *parser, t_context *context);
 void no_arg_export(t_env *env_head);
 void arg_export(t_env *env_head, char *arg, t_context *context);
 
+//builtin_echo.c
+void echo_builtin(t_parser *parser, t_context *context);
+
 #endif
