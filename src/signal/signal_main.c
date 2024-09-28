@@ -1,14 +1,11 @@
 #include "../../include/minishell.h"
 
-int g_signal = 0;
-
 void sigint_handler(int signum, siginfo_t *info, void *ucontext)
 {
     (void)signum;
     (void)ucontext;
     (void)info;
     g_signal = SIGINT;
-    printf("sigint\n");
     rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();
@@ -19,8 +16,7 @@ void sigquit_handler(int signum, siginfo_t *info, void *ucontext)
     (void)signum;
     (void)ucontext;
     (void)info;
-    g_signal = SIGQUIT;
-    printf("sigquit\n");
+//    g_signal = SIGQUIT;
     rl_on_new_line();
     rl_redisplay();
 }

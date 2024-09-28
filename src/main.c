@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+int	g_signal = 0;
+
 t_context	*minishell_init(int ac, char **av, char **envp)
 {
 	t_context	*ctx;
@@ -58,6 +60,7 @@ void	main_loop(t_context *ctx, char *line)
 
 	while (1)
 	{
+		signal_init(ctx);
 		line = readline("\033[1;33mminishell$\033[0m ");
 		if (line == NULL)
 			break ;

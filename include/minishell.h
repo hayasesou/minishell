@@ -33,7 +33,8 @@
 # define PERMISSION_DENIED 126
 # define IS_DIR 126
 
-extern bool	syntax_error;
+extern bool   syntax_error;
+extern int    g_signal;
 
 void	todo(const char *msg) __attribute__((noreturn));
 
@@ -62,6 +63,7 @@ char *find_first_equal(char *str);
 // main
 void	main_loop(t_context *ctx, char *line);
 t_context	*minishell_init(int ac, char **av, char **envp);
+void signal_init(t_context *ctx);
 int	exec(char argv[]);
 void	validate_access(const char *path, const char *filename);
 char	*search_path(const char *filename);
