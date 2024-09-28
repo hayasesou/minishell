@@ -65,4 +65,7 @@ int	exec(char argv[]);
 void	validate_access(const char *path, const char *filename);
 char	*search_path(const char *filename);
 
+// free
+void    free_all(t_context *context);
+
 #endif

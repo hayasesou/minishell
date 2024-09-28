@@ -9,7 +9,6 @@ static bool    is_exit_null(char **list)
     return (false);
 }
 
-
 void    free_exit(char **list, t_context *context)
 {
     free_all(context);
@@ -40,7 +39,7 @@ static bool    is_exit_code(char *num, t_context *context)
     int    exit_code;
 
     if (is_exit_code(num, context))
-        fatal_error("exit", "numeric argument required");
+        fatal_error("exit: numeric argument required");
     else
     {
         exit_code = ft_atoi(num);
@@ -62,11 +61,11 @@ statuc void    excute_exit(char *num, char **line, t_context *context)
     int    exit_code;
 
     if (is_exit_code(num, context))
-        fatal_error("exit", "numeric argument required");
+        fatal_error("exit: numeric argument required");
     else
     {
         exit_code = ft_atoi(num);
-        free_exit(line, context);
+        free_all(context);
         if (exit_code < 0)
         {
             while (exit_code < 0)
@@ -74,8 +73,7 @@ statuc void    excute_exit(char *num, char **line, t_context *context)
         }
         if (exit_code > 255)
             exit_code %= 256;
-//        if (type == PARENT)
-//            ft_puterr("exit\n");
+//      親プロセスの場合はexitを表示とかの処理
         context->exit_status = exit_code;
         exit(exit_code);
     }
@@ -84,9 +82,9 @@ statuc void    excute_exit(char *num, char **line, t_context *context)
 static void    exit_main(char **list, t_context *context)
 {
     if (!is_exit_status(list[1]))
-        fatal_error("exit", "numeric argument required");
+        fatal_error("exit: numeric argument required");
     if (list[2] != NULL)
-        fatal_error("exit", "too many arguments");
+        fatal_error("exit: too many arguments");
     else
         excute_exit();
 }
