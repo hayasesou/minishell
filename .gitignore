@@ -16,4 +16,6 @@ builtin
 !builtin/
 .vscode/
 *.a
-test
+lol.c
+.idea/editor.xml
+.idea/misc.xml

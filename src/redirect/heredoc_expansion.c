@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 char  *heredoc_get_env_value(char *env_name, t_env *env_head, t_context *context, int *heredoc_status)
 {
     char *env_value;
