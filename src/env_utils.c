@@ -89,7 +89,6 @@ void free_all_env_node(t_env *env_head)
     free(env_head);
 }
 
-
 char *get_env_value(char *env_name, t_env *env_head)
 {
     t_env *env_tmp;

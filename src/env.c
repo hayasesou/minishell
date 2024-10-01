@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 char *find_first_equal(char *str)
 {	
 	if (str == NULL)
@@ -14,7 +13,7 @@ char *find_first_equal(char *str)
 	return (NULL);
 }
 
-static char *ft_strndup(char *str, size_t n)
+char *ft_strndup(char *str, size_t n)
 {
 	char *new_str;
 
