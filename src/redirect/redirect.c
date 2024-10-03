@@ -49,7 +49,47 @@ void redirect(t_parser *parser, t_context *context, int *redirect_status)
 }
 
 
+void builtin_redirect(t_parser *parser, t_context *context, int *redirect_status)
+{
+    int tmp_input_fd;
+    int tmp_output_fd;
+    t_file *file;
 
+    file = parser->file;
+    tmp_input_fd = -1;
+    tmp_output_fd = -1;
+
+    while(file != NULL)
+    {
+        if (is_output(file))
+        {
+            if (tmp_output_fd != -1)
+                close_fd(tmp_output_fd, context);
+            if(file->type == OUT_FILE)
+                tmp_output_fd = redirect_output(file, context,  redirect_status);
+            else if(file->type == APPEND)
+                tmp_output_fd = append_output(file, context,  redirect_status);
+        }
+        else if (is_input(file))
+        {
+            if(tmp_input_fd != -1)
+                close_fd(tmp_input_fd, context);
+        }
+        else
+        {
+            context->exit_status = 1;
+            *redirect_status = 1;
+            fatal_error("redirect error");
+        }
+       file = file->next;
+    }
+
+    if (tmp_output_fd != -1)
+        dup2_fd(tmp_output_fd, STDOUT_FILENO, context);
+    if (tmp_input_fd != -1)
+        dup2_fd(tmp_input_fd, STDIN_FILENO, context);
+
+}
 // __attribute__((destructor))
 // static void destructor() {
 //     system("leaks -q redirect");

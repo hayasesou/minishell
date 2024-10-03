@@ -23,9 +23,15 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 {
 	int status;
 	int pid;
-
+	
+	if(parser->cmd == NULL)
+		return ;
 	if(is_minishell_builtin(parser->cmd[0]))
-		exec_cmd(parser, context);
+	{
+		process_heredoc(parser, context, &status);
+		builtin_redirect(parser, context, &status);
+		exec_minishell_builtin(parser, context, parser->cmd[0]);
+	}
 	else
 	{
 		pid = fork();
@@ -71,6 +77,7 @@ void	main_loop(t_context *ctx, char *line)
 			add_history(line);
 			lexer(ctx, line);
 			parsed = parser(ctx);
+			// print_parser(parsed);
 			if(check_pipe(parsed))
 				minishell_pipe(parsed, ctx);
 			else

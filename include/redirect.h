@@ -56,6 +56,7 @@ void dup2_fd(int old_fd, int new_fd, t_context *context);
 
 //redirect.c
 void redirect(t_parser *parser, t_context *context, int *redirect_status);
+void builtin_redirect(t_parser *parser, t_context *context, int *redirect_status);
 
 //pipe_utils.c
 void prev_pipe(t_pipex *pipe_x, int cmd_num);
