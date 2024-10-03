@@ -60,6 +60,16 @@ char  *heredoc_get_env_value(char *env_name, t_env *env_head, t_context *context
 void set_env_value(char *env_name, char *new_env_value, t_env *env_head, t_context *context);
 char *find_first_equal(char *str);
 
+// signal
+void    signal_init(t_context *ctx);
+void    set_signal_handler();
+void    set_signal_child_handler();
+void    set_heredoc_signal_parent_handler();
+void    set_heredoc_signal_child_handler();
+void	signal_handler(int signum);
+void	signal_parent_handler(int signum);
+void	heredoc_signal_parent_handler(int signum);
+
 // main
 void	main_loop(t_context *ctx, char *line);
 t_context	*minishell_init(int ac, char **av, char **envp);
