@@ -26,8 +26,7 @@ bool is_minishell_builtin(char *cmd)
 void exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd)
 {
     if(ft_strncmp(cmd, "echo", ft_strlen("echo")) == 0 && (ft_strlen(cmd) == ft_strlen("echo")))
-    //todo echo
-        return;
+        echo_builtin(parser, context);
     else if(ft_strncmp(cmd, "cd", ft_strlen("cd")) == 0 && (ft_strlen(cmd) == ft_strlen("cd")))
         cd_builtin(parser, context);
     else if(ft_strncmp(cmd, "pwd", ft_strlen("pwd")) == 0 && (ft_strlen(cmd) == ft_strlen("pwd")))

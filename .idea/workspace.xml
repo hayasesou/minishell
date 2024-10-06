@@ -22,37 +22,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4af5c0a5-5530-43d6-8a6e-919b08b3325c" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lexer/expansion.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lexer/expansion_bool.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lexer/expansion_env.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lexer/expansion_utils.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lexer/lexer_operator.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lexer/lexer_quote.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backup/editor.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backup/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/builtin/echo_builtin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/lexer.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/lexer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/minishell.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/minishell.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/env.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/env.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/env_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/env_utils.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/lexer_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/operator.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/print_token.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer_print_token.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/quote.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/token.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer_token.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/token_bool.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer_bool.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/word.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer_word.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/parser_bool.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/parser_bool.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/builtin.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/builtin.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/builtin_minishell.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/builtin_minishell.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/export_builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/export_builtin.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/parser/parser_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/parser_main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redirect/heredoc_expansion.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/heredoc_expansion.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,24 +93,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "feature/hakobaya/signal をマージ中",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/hakobaya/signal をマージ中&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="ネイティブアプリケーション.all">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">

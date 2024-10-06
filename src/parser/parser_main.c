@@ -101,7 +101,7 @@ t_parser *parser(t_context *ctx)
         if (token != NULL && token->type == TK_PIPE)
             handle_pipe(&args, &token);
     }
-    print_parser(args_head);
+    // print_parser(args_head);
     // free_parser(args_head);
     return (args_head);
 }
