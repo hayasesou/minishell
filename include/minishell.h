@@ -24,6 +24,8 @@
 # include "builtin.h"
 
 
+#define SUCCESS 1
+#define LAST_CMD_PID 0
 //exit_status
 # define NORMAL_EXIT 0
 # define NORMAL_ERROR 1
