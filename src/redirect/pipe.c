@@ -5,31 +5,34 @@
 #define SUCESS 1
 
 
-static void child_process(t_parser *tmp_parser, t_pipex *pipe_x, t_context *context, int *status)
+static	void	child_process(t_parser *tmp_parser,
+	t_pipex *pipe_x, t_context *context, int *status)
 {
-    if (tmp_parser->prev != NULL)
-        prev_pipe(pipe_x, pipe_x->current_cmd_num);
-    if(tmp_parser->next != NULL)
-        next_pipe(pipe_x, pipe_x->current_cmd_num);
-    redirect(tmp_parser, context, status);
-    setup_heredoc_fd(tmp_parser);
-    exec_cmd(tmp_parser, context);
+	if (tmp_parser->prev != NULL)
+		prev_pipe(pipe_x, pipe_x->current_cmd_num);
+	if (tmp_parser->next != NULL)
+		next_pipe(pipe_x, pipe_x->current_cmd_num);
+	redirect(tmp_parser, context, status);
+	setup_heredoc_fd(tmp_parser);
+	exec_cmd(tmp_parser, context);
 }
 
 
-static void wait_child_and_close_pipe(t_parser *parser, t_pipex *pipe_x)
+static	void	wait_child_and_close_pipe(t_parser *parser, t_pipex *pipe_x)
 {
-    int i = 0;
-    while(i < pipe_x->current_cmd_num)
-    {
-        waitpid(pipe_x->pids[i], NULL, 0);
-        i++;
-    }
-    dup2(pipe_x->stdin_fd, STDIN_FILENO);
-    dup2(pipe_x->stdout_fd, STDOUT_FILENO);
-    close(pipe_x->stdin_fd);
-    close(pipe_x->stdout_fd);
-    free_pipex(parser, pipe_x);
+	int	i;
+
+	i = 0;
+	while (i < pipe_x->current_cmd_num)
+	{
+		waitpid(pipe_x->pids[i], NULL, 0);
+		i++;
+	}
+	dup2(pipe_x->stdin_fd, STDIN_FILENO);
+	dup2(pipe_x->stdout_fd, STDOUT_FILENO);
+	close(pipe_x->stdin_fd);
+	close(pipe_x->stdout_fd);
+	free_pipex(parser, pipe_x);
 }
 
 
