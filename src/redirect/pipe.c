@@ -47,13 +47,18 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
 
     while(tmp_parser != NULL)
     {
+        set_heredoc_signal_parent_handler();
         if (tmp_parser->next != NULL)
             pipe_check(&pipe_x, context, &status, pipe_x.current_cmd_num);
         pipe_x.pids[pipe_x.current_cmd_num] = fork_check(context, &status);
         pipe_x.last_cmd_pid = pipe_x.pids[pipe_x.current_cmd_num];
 
         if (pipe_x.pids[pipe_x.current_cmd_num] == 0)
+        {
+            set_signal_child_handler();
             child_process(tmp_parser, &pipe_x, context, &status);
+        }
+
         if (pipe_x.current_cmd_num > 0)
             close_pipe_fd(&pipe_x);
         close_heredoc_fds(tmp_parser);
@@ -61,6 +66,7 @@ void minishell_pipe(t_parser *parser_head, t_context *context)
         tmp_parser = tmp_parser->next;
     }
     wait_child_and_close_pipe(parser_head, &pipe_x);
+    set_signal_handler();
 }
 
 

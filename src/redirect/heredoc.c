@@ -6,6 +6,7 @@ int heredoc(t_file *file, t_context *context, int *heredoc_status)
     char *line;
     char *new_line;
 
+    set_heredoc_signal_parent_handler();
     heredoc.deliminater = file->filename;
     create_tmpfile(&heredoc, context, heredoc_status);
     while(1)

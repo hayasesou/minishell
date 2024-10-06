@@ -30,9 +30,11 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 		exec_cmd(parser, context);
 	else
 	{
+		set_signal_parent_handler();
 		pid = fork();
 		if(pid == 0)
 		{
+			set_signal_child_handler();
 			process_heredoc(parser, context, &status);
 			redirect(parser, context, &status);
 			setup_heredoc_fd(parser);
@@ -40,8 +42,9 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 		}
 		else
 		{
-		waitpid(pid, &status, 0);
-		context->exit_status = WEXITSTATUS(status);
+			waitpid(pid, &status, 0);
+			context->exit_status = WEXITSTATUS(status);
+			set_signal_handler();
 		}
 	}
 }
