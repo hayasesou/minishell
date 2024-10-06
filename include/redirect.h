@@ -50,6 +50,10 @@ void delete_tmpfile(void);
 //heredoc_expansion.c
 char *heredoc_expantion(char *line, t_context *context, int *heredoc_status);
 
+//heredoc_expansion_utils.c
+void error_handling_heredoc_newline(t_context *context, int *heredoc_status);
+char *make_heredoc_newline(char *line, size_t *i, t_context *context, int *heredoc_status);
+
 //redirect_utils.c
 void close_fd(int fd, t_context *context);
 void dup2_fd(int old_fd, int new_fd, t_context *context);

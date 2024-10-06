@@ -30,7 +30,6 @@ int	redirect_output(t_file *file, t_context *context, int *status)
 	return (fd);
 }
 
-
 //if you use env which is not defined in redirect append,
 //bash will display "ambiguous redirect"
 //e.g)

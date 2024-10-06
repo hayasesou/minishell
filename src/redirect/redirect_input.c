@@ -30,9 +30,6 @@ int	redirect_input(t_file *file, t_context *context, int *status)
 	return (fd);
 }
 
-
-
-
 bool	is_input(t_file *file)
 {
 	if (file == NULL)

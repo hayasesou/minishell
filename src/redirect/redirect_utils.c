@@ -9,7 +9,6 @@ void	close_fd(int fd, t_context *context)
 	}
 }
 
-
 void	dup2_fd(int old_fd, int new_fd, t_context *context)
 {
 	if (dup2(old_fd, new_fd) == -1)
