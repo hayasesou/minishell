@@ -20,10 +20,3 @@ bool    is_redirect(t_token *token)
         return (true);
     return (false);
 }
-
-bool    is_pipe(t_token *token)
-{
-    if (token->type == TK_PIPE)
-        return (true);
-    return (false);
-}   

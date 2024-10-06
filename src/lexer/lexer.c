@@ -3,11 +3,13 @@
 void lexer(t_context *ctx, char *line)
 {
     t_token *token;
-    // t_token *token_head;
     bool space_before = false;
+    t_token *token_head;
 
     token = token_init(ctx);
-    // token_head = token;
+    token_head = token;
+    while (*line && is_blank(*line))
+        line++;
     while (*line)
     {
         if (is_blank(*line))
@@ -37,9 +39,8 @@ void lexer(t_context *ctx, char *line)
             token = token->next;
     }
     token_node_add(token, token_node_create("", TK_EOF));
-    // printf("\n----------- lexer start-------------\n");
-    // print_lexer(token_head);
-    // printf("----------- lexer end --------------\n\n");
+    expansion(token_head,  ctx);
+//    printf("\n----------- lexer start-------------\n");
+//    print_lexer(token_head);
+//    printf("----------- lexer end --------------\n\n");
 }
-
-// TODO:expansion(token_head); // typeがDOUBLE_QUOTEのときにexpansionする

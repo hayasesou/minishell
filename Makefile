@@ -2,8 +2,6 @@ NAME = minishell
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror -fPIE
 I_FLAGS = -Iinclude/ -Ilibft/ -Iprintf/
-# linkerの順番
-#https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc
 H_FLAGS = -lreadline -lft -lftprintf
 L_FLAGS = -Llibft -Lprintf #-lft
 
@@ -36,9 +34,8 @@ OBJS = $(addprefix $(OBJDIR)/, $(FILES:.c=.o)) \
 	   $(addprefix $(OBJDIR)/, $(SIGNAL_FILES:.c=.o))
 
 FILES = main.c env.c error.c env_utils.c
-LEXER_FILES = lexer_main.c operator.c print_token.c quote.c token_bool.c token.c word.c
-PARSER_FILES = parser_main.c parser_bool.c parser_utils.c print_parser.c parser_command.c
-#add
+LEXER_FILES = $(notdir $(wildcard $(LEXERDIR)/*.c))
+PARSER_FILES =	$(notdir $(wildcard $(PARSERDIR)/*.c))
 REDIRECT_FILES = $(notdir $(wildcard $(REDIRECTDIR)/*.c))
 BUILTIN_FILES = $(notdir $(wildcard $(BUILTINDIR)/*.c))
 SIGNAL_FILES = $(notdir $(wildcard $(SIGNALDIR)/*.c))

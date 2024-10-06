@@ -59,6 +59,7 @@ char *get_env_value(char *env_name, t_env *env_head);
 char  *heredoc_get_env_value(char *env_name, t_env *env_head, t_context *context, int *heredoc_status);
 void set_env_value(char *env_name, char *new_env_value, t_env *env_head, t_context *context);
 char *find_first_equal(char *str);
+char *ft_strndup(char *str, size_t n);
 
 // signal
 void    signal_init(t_context *ctx);
