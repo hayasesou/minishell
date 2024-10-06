@@ -42,6 +42,7 @@ int quote_heredoc(t_file *file, t_context *context, int *heredoc_status)
     char *line;
     char *new_line;
 
+    set_heredoc_signal_parent_handler();
     heredoc.deliminater = file->filename;
     create_tmpfile(&heredoc, context, heredoc_status);
     while(1)
@@ -65,6 +66,7 @@ int quote_heredoc(t_file *file, t_context *context, int *heredoc_status)
         write(heredoc.tmpfile_fd, new_line, ft_strlen(new_line));
         free(new_line);
     }
+    set_signal_handler();
     close(heredoc.tmpfile_fd);
     heredoc.tmpfile_fd = open(heredoc.tmpfile, O_RDONLY);
     free(heredoc.tmpfile);

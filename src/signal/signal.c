@@ -55,26 +55,29 @@ void    set_heredoc_signal_parent_handler()
 
 }
 
-void    set_heredoc_signal_child_handler()
-{
-    struct sigaction sa;
+//void    set_heredoc_signal_child_handler()
+//{
+//    struct sigaction sa;
+//
+//    ft_memset(&sa, 0, sizeof(struct sigaction));
+//    sigemptyset(&sa.sa_mask);
+//    sa.sa_flags = SA_SIGINFO;
+////    SIGQUIT
+//    sa.sa_handler = SIG_IGN;
+//    sigaction(SIGQUIT, &sa, NULL);
+////    SIGINT
+//    sa.sa_handler = SIG_DFL;
+//    sigaction(SIGINT, &sa, NULL);
+//}
+//
+//void    signal_init(t_context *ctx)
+//{
+//    if (g_signal == 1 || g_signal == SIGINT)
+//        ctx->exit_status = 1;
+//    g_signal = 0;
+//
+//    set_signal_handler();
+//}
 
-    ft_memset(&sa, 0, sizeof(struct sigaction));
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_SIGINFO;
-//    SIGQUIT
-    sa.sa_handler = SIG_IGN;
-    sigaction(SIGQUIT, &sa, NULL);
-//    SIGINT
-    sa.sa_handler = SIG_DFL;
-    sigaction(SIGINT, &sa, NULL);
-}
-
-void    signal_init(t_context *ctx)
-{
-    if (g_signal == 1 || g_signal == SIGINT)
-        ctx->exit_status = 1;
-    g_signal = 0;
-
-    set_signal_handler();
-}
+//ヒアドクの処理が親プロセスないで同期的におこなってるからsignal_heredoc_child_handlerはいらない
+//ー＞ヒアドクの処理中に発生するシグナルは親プロセスでハンドリングする

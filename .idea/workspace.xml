@@ -21,7 +21,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4af5c0a5-5530-43d6-8a6e-919b08b3325c" name="変更" comment="" />
+    <list default="true" id="4af5c0a5-5530-43d6-8a6e-919b08b3325c" name="変更" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/heredoc.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/heredoc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signal/signal.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/signal/signal.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -162,7 +166,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fbcf3070-af83-49e5-b59e-a37e9d1fd334" name="Changes" comment="" />
+      <changelist id="4af5c0a5-5530-43d6-8a6e-919b08b3325c" name="変更" comment="" />
       <created>1726485958103</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -186,6 +190,7 @@
       <workItem from="1727136247170" duration="432000" />
       <workItem from="1727136683475" duration="1616000" />
       <workItem from="1727214129163" duration="823000" />
+      <workItem from="1728204193364" duration="965000" />
     </task>
     <servers />
   </component>
