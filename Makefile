@@ -72,6 +72,10 @@ $(OBJDIR)/%.o: $(BUILTINDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
+$(OBJDIR)/%.o: $(SIGNALDIR)/%.c
+	@mkdir -p $(OBJDIR)
+	$(CC) $(FLAGS) -c $< -o $@
+
 clean:
 	$(RM) $(OBJS)
 	make -C libft/ clean

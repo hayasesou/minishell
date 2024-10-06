@@ -11,9 +11,9 @@
 # include <stddef.h>
 # include <stdbool.h>
 # include <errno.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <signal.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <signal.h>
 
 # include "libft.h"
 # include "ft_printf.h"
@@ -23,7 +23,6 @@
 # include "parser.h"
 # include "redirect.h"
 # include "builtin.h"
-
 
 //exit_status
 # define NORMAL_EXIT 0
@@ -64,11 +63,12 @@ char *ft_strndup(char *str, size_t n);
 // signal
 void    signal_init(t_context *ctx);
 void    set_signal_handler();
+void	set_signal_parent_handler();
 void    set_signal_child_handler();
 void    set_heredoc_signal_parent_handler();
 void    set_heredoc_signal_child_handler();
 void	signal_handler(int signum);
-void	signal_parent_handler(int signum);
+void    signal_parent_handler(int signum);
 void	heredoc_signal_parent_handler(int signum);
 
 // main
