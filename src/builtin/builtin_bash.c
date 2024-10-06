@@ -8,7 +8,8 @@ static void check_file_and_execute(t_parser *parser, t_context *context, char *c
     char **env_list;
     char *shell_level;
 
-    if (access(cmd_path, F_OK) == 0)
+
+    if (access(cmd_path, F_OK) == 0 && cmd_path[ft_strlen(cmd_path) - 1] != '/')
     {
         if(access(cmd_path, X_OK) == 0)
         {
