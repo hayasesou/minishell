@@ -33,6 +33,15 @@ typedef enum e_token_type {
     TK_EOF
 } t_token_type;
 
+typedef struct s_expantion_info
+{
+	char *before_env;
+	char *after_env;
+	char *env_name;
+	char *line;
+} t_expantion_info;
+
+
 typedef struct s_token {
 	char			*data;
 	t_token_type	type;

@@ -23,7 +23,9 @@
 # include "redirect.h"
 # include "builtin.h"
 
-
+#define SUCCESS 1
+#define LAST_CMD_PID 0
+#define SPECIFIED_DIR 1
 //exit_status
 # define NORMAL_EXIT 0
 # define NORMAL_ERROR 1
