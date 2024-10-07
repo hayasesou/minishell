@@ -103,5 +103,4 @@ void    parser(t_context *ctx)
     }
     ctx->parser_head = args_head;
 //    print_parser(args_head);
-    // free_parser(args_head);
 }

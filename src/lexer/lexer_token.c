@@ -4,7 +4,7 @@ t_token *token_node_create(char *data, t_token_type type)
 {
     t_token *new_token;
 
-    new_token = (t_token *)calloc(1, sizeof(t_token));
+    new_token = (t_token *)ft_calloc(1, sizeof(t_token));
     if (new_token == NULL)
         fatal_error("tokenize: add token calloc error");
     if (data != NULL)
@@ -50,7 +50,7 @@ t_token	*token_init(t_context *ctx)
 	return (head);
 }
 
-void	free_tokens(t_token *token)
+void	free_token(t_token *token)
 {
 	t_token	*tmp;
 

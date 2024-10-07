@@ -84,11 +84,11 @@ void	main_loop(t_context *ctx, char *line)
 				minishell_pipe(ctx->parser_head, ctx);
 			else
 				minishell_no_pipe(ctx->parser_head, ctx);
-			// print_parser(parsed);
 			delete_tmpfile();
 		}
 		free(line);
 	}
+	free_all(ctx);
 }
 
 int	main(int ac, char **av, char **envp)

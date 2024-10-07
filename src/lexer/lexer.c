@@ -3,11 +3,12 @@
 void lexer(t_context *ctx, char *line)
 {
     t_token *token;
-    bool space_before = false;
+    bool space_before;
     t_token *token_head;
 
     token = token_init(ctx);
     token_head = token;
+    space_before = false;
     while (*line && is_blank(*line))
         line++;
     while (*line)
@@ -40,6 +41,7 @@ void lexer(t_context *ctx, char *line)
     }
     token_node_add(token, token_node_create("", TK_EOF));
     expansion(token_head,  ctx);
+//    free_token(token_head);
 //    printf("\n----------- lexer start-------------\n");
 //    print_lexer(token_head);
 //    printf("----------- lexer end --------------\n\n");
