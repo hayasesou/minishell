@@ -20,7 +20,6 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 	return (ctx);
 }
 
-
 void minishell_no_pipe(t_parser *parser, t_context *context)
 {
 	int status;
