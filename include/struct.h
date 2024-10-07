@@ -100,10 +100,11 @@ typedef struct s_env {
 
 typedef struct s_context {
 	// 構造体の総まとめをこの構造体にまとめる
-	t_token	*token_head;
-	t_env	*env_head;
-	int		exit_status;
-	bool	sys_error; // 一応
+	t_token     *token_head;
+	t_parser    *parser_head;
+	t_env	    *env_head;
+	int		    exit_status;
+	bool	    sys_error; // 一応
 }	t_context;
 
 #endif

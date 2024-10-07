@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
 static	void	child_process(t_parser *tmp_parser,
 	t_pipex *pipe_x, t_context *context, int *status)
 {
@@ -13,6 +14,7 @@ static	void	child_process(t_parser *tmp_parser,
 	setup_heredoc_fd(tmp_parser);
 	exec_cmd(tmp_parser, context);
 }
+
 
 static	void	wait_child_and_close_pipe(t_parser *parser, t_pipex *pipe_x)
 {
