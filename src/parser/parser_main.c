@@ -82,11 +82,11 @@ void free_parser(t_parser *args)
     }
 }
 
-t_parser *parser(t_context *ctx)
+void    parser(t_context *ctx)
 {
-    t_parser *args;
-    t_parser *args_head;
-    t_token *token;
+    t_parser    *args;
+    t_parser    *args_head;
+    t_token     *token;
 
     args = args_init();
     if (args == NULL)
@@ -101,7 +101,7 @@ t_parser *parser(t_context *ctx)
         if (token != NULL && token->type == TK_PIPE)
             handle_pipe(&args, &token);
     }
-    // print_parser(args_head);
+    ctx->parser_head = args_head;
+//    print_parser(args_head);
     // free_parser(args_head);
-    return (args_head);
 }

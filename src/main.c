@@ -60,8 +60,6 @@ bool check_pipe(t_parser *parser)
 
 void	main_loop(t_context *ctx, char *line)
 {
-	t_parser	*parsed;
-
 	while (1)
 	{
 		line = readline("\033[1;33mminishell$\033[0m ");
@@ -76,12 +74,11 @@ void	main_loop(t_context *ctx, char *line)
 		{
 			add_history(line);
 			lexer(ctx, line);
-			parsed = parser(ctx);
-			// print_parser(parsed);
-			if(check_pipe(parsed))
-				minishell_pipe(parsed, ctx);
+			parser(ctx);
+			if(check_pipe(ctx->parser_head))
+				minishell_pipe(ctx->parser_head, ctx);
 			else
-				minishell_no_pipe(parsed, ctx);
+				minishell_no_pipe(ctx->parser_head, ctx);
 			// print_parser(parsed);
 			delete_tmpfile();
 		}

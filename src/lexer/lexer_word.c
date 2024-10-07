@@ -2,13 +2,13 @@
 
 void word(char **line_ptr, char *line, t_token *token, bool space_before)
 {
-    const char *start;
+    char *start;
     char *word;
 
     start = line;
     while (*line && is_word(*line))
         line++;
-    word = strndup(start, line - start);
+    word = ft_strndup(start, line - start);
     if (word == NULL)
         fatal_error("tokenize: word strndup error");
     *line_ptr = line;

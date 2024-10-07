@@ -4,7 +4,6 @@
 
 #define SUCESS 1
 
-
 static void child_process(t_parser *tmp_parser, t_pipex *pipe_x, t_context *context, int *status)
 {
     if (tmp_parser->prev != NULL)
@@ -15,7 +14,6 @@ static void child_process(t_parser *tmp_parser, t_pipex *pipe_x, t_context *cont
     setup_heredoc_fd(tmp_parser);
     exec_cmd(tmp_parser, context);
 }
-
 
 static void wait_child_and_close_pipe(t_parser *parser, t_pipex *pipe_x)
 {
