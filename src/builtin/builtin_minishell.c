@@ -44,7 +44,7 @@ void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd)
 		export_builtin(parser, context);
 	else if (ft_strncmp(cmd, "unset", ft_strlen("unset")) == 0
 		&& (ft_strlen(cmd) == ft_strlen("unset")))
-		return ;
+		unset_builtin(parser, context);
 	else if (ft_strncmp(cmd, "env", ft_strlen("env")) == 0
 		&& (ft_strlen(cmd) == ft_strlen("env")))
 		env_builtin(parser, context);
