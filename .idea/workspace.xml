@@ -22,8 +22,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4af5c0a5-5530-43d6-8a6e-919b08b3325c" name="変更" comment="コンフリクト解消">
+      <change afterPath="$PROJECT_DIR$/src/redirect/heredoc_expantion_utils.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/signal/signal_handler.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/signal/signal_handler.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/minishell.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/minishell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/parser.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/redirect.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/redirect.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/struct.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/struct.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/builtin_bash.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/builtin_bash.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/builtin_minishell.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/builtin_minishell.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/cd_builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/cd_builtin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/exec_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/exec_main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/export_builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/export_builtin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/export_builtin_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/export_builtin_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/pwd_builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/pwd_builtin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/lexer_word.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer_word.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/parser_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/parser_main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/heredoc.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/heredoc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/heredoc_expansion.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/heredoc_expansion.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/heredoc_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/heredoc_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/pipe.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/pipe.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/pipe_error.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/pipe_error.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/pipe_heredoc.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/pipe_heredoc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/pipe_struct_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/pipe_struct_init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/pipe_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/pipe_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/redirect.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/redirect.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/redirect_error.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/redirect_error.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/redirect_input.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/redirect_input.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/redirect_output.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/redirect_output.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redirect/redirect_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/redirect/redirect_utils.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,8 +69,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/include/minishell.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/include/minishell.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/include/minishell.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/include/minishell.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/include/struct.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/src/builtin/exec_main.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/src/builtin/exec_main.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/src/redirect/heredoc.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/src/redirect/heredoc.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/src/redirect/pipe.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/src/redirect/pipe.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/src/redirect/redirect.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hakobaya/Desktop/minishell/src/redirect/redirect.c" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/signal/signal.c" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
@@ -60,24 +97,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/hakobaya/signal&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "feature/hakobaya/signal をマージ中",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="ネイティブアプリケーション.all">
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="minishell" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
@@ -201,5 +238,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="コンフリクト解消" />
     <option name="LAST_COMMIT_MESSAGE" value="コンフリクト解消" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/main.c</url>
+          <line>5</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

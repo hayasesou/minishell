@@ -25,9 +25,15 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 {
 	int status;
 	int pid;
-
+	
+	if(parser->cmd == NULL)
+		return ;
 	if(is_minishell_builtin(parser->cmd[0]))
-		exec_cmd(parser, context);
+	{
+		process_heredoc(parser, context, &status);
+		builtin_redirect(parser, context, &status);
+		exec_minishell_builtin(parser, context, parser->cmd[0]);
+	}
 	else
 	{
 		set_signal_parent_handler();
@@ -59,8 +65,6 @@ bool check_pipe(t_parser *parser)
 
 void	main_loop(t_context *ctx, char *line)
 {
-	t_parser	*parsed;
-
 	while (1)
 	{
 		signal_init(ctx);
@@ -76,11 +80,11 @@ void	main_loop(t_context *ctx, char *line)
 		{
 			add_history(line);
 			lexer(ctx, line);
-			parsed = parser(ctx);
-			if(check_pipe(parsed))
-				minishell_pipe(parsed, ctx);
+			parser(ctx);
+			if(check_pipe(ctx->parser_head))
+				minishell_pipe(ctx->parser_head, ctx);
 			else
-				minishell_no_pipe(parsed, ctx);
+				minishell_no_pipe(ctx->parser_head, ctx);
 			// print_parser(parsed);
 			delete_tmpfile();
 		}

@@ -33,6 +33,15 @@ typedef enum e_token_type {
     TK_EOF
 } t_token_type;
 
+typedef struct s_expantion_info
+{
+	char *before_env;
+	char *after_env;
+	char *env_name;
+	char *line;
+} t_expantion_info;
+
+
 typedef struct s_token {
 	char			*data;
 	t_token_type	type;
@@ -91,10 +100,11 @@ typedef struct s_env {
 
 typedef struct s_context {
 	// 構造体の総まとめをこの構造体にまとめる
-	t_token	*token_head;
-	t_env	*env_head;
-	int		exit_status;
-	bool	sys_error; // 一応
+	t_token     *token_head;
+	t_parser    *parser_head;
+	t_env	    *env_head;
+	int		    exit_status;
+	bool	    sys_error; // 一応
 }	t_context;
 
 #endif
