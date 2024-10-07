@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+int	g_signal = 0;
+
 t_context	*minishell_init(int ac, char **av, char **envp)
 {
 	t_context	*ctx;
@@ -18,7 +20,6 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 	return (ctx);
 }
 
-
 void minishell_no_pipe(t_parser *parser, t_context *context)
 {
 	int status;
@@ -34,9 +35,11 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 	}
 	else
 	{
+		set_signal_parent_handler();
 		pid = fork();
 		if(pid == 0)
 		{
+			set_signal_child_handler();
 			process_heredoc(parser, context, &status);
 			redirect(parser, context, &status);
 			setup_heredoc_fd(parser);
@@ -44,8 +47,9 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 		}
 		else
 		{
-		waitpid(pid, &status, 0);
-		context->exit_status = WEXITSTATUS(status);
+			waitpid(pid, &status, 0);
+			context->exit_status = WEXITSTATUS(status);
+			set_signal_handler();
 		}
 	}
 }
@@ -62,6 +66,7 @@ void	main_loop(t_context *ctx, char *line)
 {
 	while (1)
 	{
+		signal_init(ctx);
 		line = readline("\033[1;33mminishell$\033[0m ");
 		if (line == NULL)
 			break ;

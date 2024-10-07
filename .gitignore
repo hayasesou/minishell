@@ -16,7 +16,3 @@ builtin
 !builtin/
 .vscode/
 *.a
-lol.c
-.idea/editor.xml
-.idea/misc.xml.idea/
-.idea/misc.xml

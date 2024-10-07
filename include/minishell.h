@@ -11,8 +11,9 @@
 # include <stddef.h>
 # include <stdbool.h>
 # include <errno.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <signal.h>
 
 # include "libft.h"
 # include "ft_printf.h"
@@ -34,7 +35,8 @@
 # define PERMISSION_DENIED 126
 # define IS_DIR 126
 
-extern bool	syntax_error;
+extern bool   syntax_error;
+extern int    g_signal;
 
 void	todo(const char *msg) __attribute__((noreturn));
 
@@ -61,9 +63,21 @@ void set_env_value(char *env_name, char *new_env_value, t_env *env_head, t_conte
 char *find_first_equal(char *str);
 char *ft_strndup(char *str, size_t n);
 
+// signal
+void    signal_init(t_context *ctx);
+void    set_signal_handler();
+void	set_signal_parent_handler();
+void    set_signal_child_handler();
+void    set_heredoc_signal_parent_handler();
+void    set_heredoc_signal_child_handler();
+void	signal_handler(int signum);
+void    signal_parent_handler(int signum);
+void	heredoc_signal_parent_handler(int signum);
+
 // main
 void	main_loop(t_context *ctx, char *line);
 t_context	*minishell_init(int ac, char **av, char **envp);
+void signal_init(t_context *ctx);
 int	exec(char argv[]);
 void	validate_access(const char *path, const char *filename);
 char	*search_path(const char *filename);

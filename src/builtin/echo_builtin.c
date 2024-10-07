@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static bool is_n_option(char *op)
 {
