@@ -49,16 +49,3 @@ t_token	*token_init(t_context *ctx)
 	ctx->token_head = head;
 	return (head);
 }
-
-void	free_tokens(t_token *token)
-{
-	t_token	*tmp;
-
-	while (token)
-	{
-		tmp = token;
-		token = token->next;
-		free(tmp->data);
-		free(tmp);
-	}
-}
