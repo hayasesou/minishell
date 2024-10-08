@@ -59,29 +59,6 @@ t_parser    *args_init(void)
     return (args);
 }
 
-void free_parser(t_parser *args)
-{
-    t_parser *tmp;
-    t_file *file_tmp;
-
-    while (args)
-    {
-        free_command(args->cmd);
-
-        while (args->file)
-        {
-            file_tmp = args->file;
-            args->file = args->file->next;
-            free(file_tmp->filename);
-            free(file_tmp);
-        }
-
-        tmp = args;
-        args = args->next;
-        free(tmp);
-    }
-}
-
 void    parser(t_context *ctx)
 {
     t_parser    *args;
@@ -102,5 +79,6 @@ void    parser(t_context *ctx)
             handle_pipe(&args, &token);
     }
     ctx->parser_head = args_head;
+    free_token(ctx->token_head);
 //    print_parser(args_head);
 }

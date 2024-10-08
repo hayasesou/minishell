@@ -74,6 +74,12 @@ void	signal_handler(int signum);
 void    signal_parent_handler(int signum);
 void	heredoc_signal_parent_handler(int signum);
 
+// free
+void free_token(t_token *head);
+void free_parser(t_parser *head);
+void free_env_node(t_env *node);
+void free_env(t_env *head);
+
 // main
 void	main_loop(t_context *ctx, char *line);
 t_context	*minishell_init(int ac, char **av, char **envp);

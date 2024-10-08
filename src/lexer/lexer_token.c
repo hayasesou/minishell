@@ -8,11 +8,11 @@ t_token *token_node_create(char *data, t_token_type type)
     if (new_token == NULL)
         fatal_error("tokenize: add token calloc error");
     if (data != NULL)
-    {
-        new_token->data = ft_strdup(data);
-        if (new_token->data == NULL)
-            fatal_error("tokenize: add token ft_strdup error");
-    }
+	{
+		new_token->data = ft_strdup(data);
+		if (!new_token->data)
+			fatal_error("tokenize: ft_strdup error");
+	}
     else
         new_token->data = ft_strdup("");  // NULL の代わりに空文字列を設定
     new_token->type = type;
@@ -50,7 +50,7 @@ t_token	*token_init(t_context *ctx)
 	return (head);
 }
 
-void	free_token(t_token *token)
+void	free_tokens(t_token *token)
 {
 	t_token	*tmp;
 
@@ -58,7 +58,8 @@ void	free_token(t_token *token)
 	{
 		tmp = token;
 		token = token->next;
-		free(tmp->data);
+		if (tmp->data)
+			free(tmp->data);
 		free(tmp);
 	}
 }

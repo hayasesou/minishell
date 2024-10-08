@@ -4,7 +4,6 @@
 // parser main
 
 void            parser(t_context *ctx);
-void            free_parser(t_parser *args);
 t_parser        *args_init(void);
 int             add_redirect(t_parser *cur_arg, t_token *token);
 

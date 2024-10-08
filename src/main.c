@@ -54,12 +54,32 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 	}
 }
 
-
 bool check_pipe(t_parser *parser)
 {
 	if(parser->next == NULL)
 		return (false);
 	return (true);
+}
+
+void main_exec(char *line, t_context *ctx)
+{
+	if (g_signal == 1 || g_signal == SIGINT)
+		ctx->exit_status = 1;
+	g_signal = 0;
+	lexer(ctx, line);
+	if (ctx->token_head == NULL)
+		return ;
+	parser(ctx);
+	print_lexer(ctx->token_head);
+	print_parser(ctx->parser_head);
+	if (ctx->parser_head == NULL)
+		return ;
+	if(check_pipe(ctx->parser_head))
+		minishell_pipe(ctx->parser_head, ctx);
+	else
+		minishell_no_pipe(ctx->parser_head, ctx);
+	free_parser(ctx->parser_head);
+	free(line);
 }
 
 void	main_loop(t_context *ctx, char *line)
@@ -69,26 +89,19 @@ void	main_loop(t_context *ctx, char *line)
 		signal_init(ctx);
 		line = readline("\033[1;33mminishell$\033[0m ");
 		if (line == NULL)
+		{
+			free_env(ctx->env_head);
+			free(line);	
 			break ;
+		}
 		if (strlen(line) == 0)
 		{
 			free(line);
 			continue ;
 		}
-		if (*line)
-		{
-			add_history(line);
-			lexer(ctx, line);
-			parser(ctx);
-			if(check_pipe(ctx->parser_head))
-				minishell_pipe(ctx->parser_head, ctx);
-			else
-				minishell_no_pipe(ctx->parser_head, ctx);
-			delete_tmpfile();
-		}
-		free(line);
+		add_history(line);
+		main_exec(line, ctx);
 	}
-	free_all(ctx);
 }
 
 int	main(int ac, char **av, char **envp)
