@@ -69,9 +69,12 @@ void main_exec(char *line, t_context *ctx)
 	g_signal = 0;
 	lexer(ctx, line);
 	if (ctx->token_head == NULL)
+	{
+		free(line);
 		return ;
+	}
 	parser(ctx);
-	print_lexer(ctx->token_head);
+	free_token(ctx->token_head);
 	print_parser(ctx->parser_head);
 	if (ctx->parser_head == NULL)
 		return ;
