@@ -26,9 +26,10 @@ void free_file(t_file *head)
 
 	while (head != NULL)
 	{
-		free(tmp->filename);
 		tmp = head;
 		head = head->next;
+		if (tmp->filename != NULL)
+			free(tmp->filename);
 		free(tmp);
 	}
 }
