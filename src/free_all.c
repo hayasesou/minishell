@@ -62,6 +62,8 @@ void free_parser(t_parser *head)
 
 void free_env_node(t_env *node)
 {
+	if (node == NULL)
+		return ;
 	free(node->env_name);
 	node->env_name = NULL;
 	free(node->env_val);
@@ -72,30 +74,33 @@ void free_env_node(t_env *node)
 
 void free_env(t_env *head)
 {
-	t_env *tmp;
-	t_env *delete;
+    t_env	*cur;
+    t_env	*next;
 
-	if (head == NULL)
-		return ;
-	tmp = head->next;
-	while(tmp != NULL)
-	{
-		delete = tmp;
-		head->next = tmp->next;
-		tmp->next->prev = head;
-		tmp = tmp->next;
-		free_env_node(delete);
-	}
-	free_env_node(head);
+	cur = head->next;
+    if (head == NULL)
+        return;
+    while (cur != head)
+    {
+        next = cur->next;
+        free_env_node(cur);
+        cur = next;
+    }
+    free_env_node(head);
 }
 
-// void free_all(t_context *ctx)
-// {
-//     free_token(ctx->token_head);
-//     free_parser(ctx->parser_head);
-//     free_env(ctx->env_head);
-//     free_ctx(ctx);
-// }
+void free_all(t_context *ctx)
+{
+    if (ctx == NULL)
+        return ;
+    if (ctx->env_head != NULL)
+        free_env(ctx->env_head);
+    if (ctx->token_head != NULL)
+        free_token(ctx->token_head);
+    if (ctx->parser_head != NULL)
+        free_parser(ctx->parser_head);
+    free(ctx);
+}
 
 // void    exit_free(t_context *ctx)
 // {

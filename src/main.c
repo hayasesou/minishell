@@ -14,9 +14,15 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 		return (NULL);
 	ctx = (t_context *)malloc(sizeof(t_context));
 	if (ctx == NULL)
+	{
+		free_env(env_head);
 		return (NULL);
+	}
 	ctx->env_head = env_head;
 	ctx->exit_status = 0;
+	ctx->token_head = NULL;
+	ctx->parser_head = NULL;
+	ctx->sys_error = false;
 	return (ctx);
 }
 
@@ -93,11 +99,7 @@ void	main_loop(t_context *ctx, char *line)
 		signal_init(ctx);
 		line = readline("\033[1;33mminishell$\033[0m ");
 		if (line == NULL)
-		{
-			free_env(ctx->env_head);
-			free(line);	
 			break ;
-		}
 		if (strlen(line) == 0)
 		{
 			free(line);
@@ -122,5 +124,6 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	line = NULL;
 	main_loop(ctx, line);
-	exit(status);
+	free_all(ctx);
+	return (status);
 }

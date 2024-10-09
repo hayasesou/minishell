@@ -80,6 +80,7 @@ void    free_file(t_file *head);
 void    free_parser(t_parser *head);
 void    free_env_node(t_env *node);
 void    free_env(t_env *head);
+void    free_all(t_context *ctx);
 
 // main
 void	main_loop(t_context *ctx, char *line);
