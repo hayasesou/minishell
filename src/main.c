@@ -80,15 +80,17 @@ void main_exec(char *line, t_context *ctx)
 		return ;
 	}
 	parser(ctx);
-	free_token(ctx->token_head);
-	print_parser(ctx->parser_head);
+	free_token(&ctx->token_head);
+	ctx->token_head = NULL;
+	// print_parser(ctx->parser_head);
 	if (ctx->parser_head == NULL)
 		return ;
 	if(check_pipe(ctx->parser_head))
 		minishell_pipe(ctx->parser_head, ctx);
 	else
 		minishell_no_pipe(ctx->parser_head, ctx);
-	free_parser(ctx->parser_head);
+	free_parser(&ctx->parser_head);
+	ctx->parser_head = NULL;
 	free(line);
 }
 

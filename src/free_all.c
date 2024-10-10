@@ -1,10 +1,12 @@
 #include "minishell.h"
 
-void free_token(t_token *head)
+void free_token(t_token **head_ref)
 {
     t_token *cur;
     t_token *next;
+	t_token *head;
 
+	head = *head_ref;
     if (head == NULL)
         return;
     cur = head->next;
@@ -17,6 +19,7 @@ void free_token(t_token *head)
     }
     free(head->data);
     free(head);
+	*head_ref = NULL;
 }
 
 void free_file(t_file *head)
@@ -33,15 +36,15 @@ void free_file(t_file *head)
 	}
 }
 
-void free_parser(t_parser *head)
+void free_parser(t_parser **head_ref)
 {
     t_parser *tmp;
     t_parser *delete;
     int i;
 
-    if (head == NULL)
+    if (*head_ref == NULL)
         return;
-    tmp = head;
+    tmp = *head_ref;
     while(tmp != NULL)
     {
         i = 0;
@@ -50,13 +53,18 @@ void free_parser(t_parser *head)
             while(tmp->cmd[i] != NULL)
                 free(tmp->cmd[i++]);
             free(tmp->cmd);
+			tmp->cmd = NULL;
         }
         if (tmp->file != NULL)
+        {
             free_file(tmp->file);
+			tmp->file = NULL;
+        }
         delete = tmp;
         tmp = tmp->next;
         free(delete);
     }
+	*head_ref = NULL;
 }
 
 void free_env_node(t_env *node)
@@ -99,12 +107,12 @@ void free_all(t_context *ctx)
     }
     if (ctx->token_head != NULL)
     {
-        free_token(ctx->token_head);
+        free_token(&(ctx->token_head));
         ctx->token_head = NULL;
     }
     if (ctx->parser_head != NULL)
     {
-        free_parser(ctx->parser_head);
+	free_parser(&(ctx->parser_head));
         ctx->parser_head = NULL;
     }
     free(ctx);
