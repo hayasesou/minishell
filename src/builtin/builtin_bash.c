@@ -105,7 +105,10 @@ void	bash_builtin(t_parser *parser, t_context *context)
 	start = 0;
 	i = 0;
 	if (check_file_type(parser, context, &path) == true)
+	{
+		free(path);
 		return ;
+	}
 	while (path[i] != '\0')
 	{
 		if (path[i] == ':')

@@ -109,6 +109,7 @@ void	main_loop(t_context *ctx, char *line)
 		}
 		add_history(line);
 		main_exec(line, ctx);
+		delete_tmpfile();
 	}
 }
 
