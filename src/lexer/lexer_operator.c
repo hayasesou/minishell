@@ -25,20 +25,20 @@ bool	is_available_operator(char *line)
 char *select_op(char *line)
 {
     if (line[0] == '|' && !is_operator(line[1]))
-        return "|";
+        return ft_strdup("|");
     else if (line[0] == '<')
     {
         if (line[1] == '<' && !is_operator(line[2]))
-            return "<<";
-        return "<";
+            return ft_strdup("<<");
+        return ft_strdup("<");
     }
     else if (line[0] == '>')
     {
         if (line[1] == '>' && !is_operator(line[2]))
-            return ">>";
-        return ">";
+            return ft_strdup(">>");
+        return ft_strdup(">");
     }
-    return NULL; // エラー処理を呼び出す
+    return NULL;
 }
 
 t_token_type select_op_type(char *op)
@@ -70,4 +70,5 @@ void	operator(char **line_ptr, char *line, t_token *token)
 		err_exit(line, "operatorが有効じゃありません", 0) ; // error変更した方がいい
 	token_node_add(token, token_node_create(op, type));
 	*line_ptr += strlen(op);
+    free(op);
 }

@@ -38,7 +38,6 @@ t_env	*node_new_set(t_env *env_node, char *str)
 		env_node->env_val = NULL;
 		return (env_node);
 	}
-
 	env_name_len = (equal_pos - str) / sizeof(char);
 	env_node->env_name = ft_strndup(str, env_name_len);
 	if(env_node->env_name == NULL)
@@ -68,7 +67,10 @@ t_env	*node_new(char *str)
 	{
 		env_node = node_new_set(env_node, str);
 		if (env_node == NULL)
+		{
+			free(env_node);
 			return (NULL);
+		}
 	}
 	env_node->next = NULL;
 	env_node->prev = NULL;
@@ -105,12 +107,14 @@ t_env	*env_init(char **envp)
 
 	i = 0;
 	head = env_head_init();
+	if (head == NULL)
+		return (NULL);
 	while (envp[i])
 	{
 		new = node_new(envp[i]);
 		if (new == NULL)
 		{
-			// free_env_all
+			free_env(head);
 			return (NULL);
 		}
 		node_add(head, new);

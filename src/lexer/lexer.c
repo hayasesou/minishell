@@ -3,10 +3,11 @@
 void lexer(t_context *ctx, char *line)
 {
     t_token *token;
-    bool space_before = false;
+    bool space_before;
     t_token *token_head;
 
     token = token_init(ctx);
+    space_before = false;
     token_head = token;
     while (*line && is_blank(*line))
         line++;
