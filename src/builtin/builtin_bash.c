@@ -109,6 +109,8 @@ void	bash_builtin(t_parser *parser, t_context *context)
 		free(path);
 		return ;
 	}
+	if (path == NULL)
+		return ;
 	while (path[i] != '\0')
 	{
 		if (path[i] == ':')
