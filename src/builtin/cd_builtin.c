@@ -27,7 +27,7 @@ static	char	*make_new_dir(t_parser *parser, t_context *context)
 			"-", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
 		new_dir = get_env_value("OLDPWD", context->env_head);
 	else
-		new_dir = parser->cmd[SPECIFIED_DIR];
+		new_dir = ft_strdup(parser->cmd[SPECIFIED_DIR]);
 	if (new_dir == NULL)
 	{
 		context->exit_status = NORMAL_ERROR;

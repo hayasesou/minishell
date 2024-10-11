@@ -13,4 +13,5 @@ void word(char **line_ptr, char *line, t_token *token, bool space_before)
         fatal_error("tokenize: word strndup error");
     *line_ptr = line;
     token_node_add(token, token_node_create(word, space_before ? TK_SPACE_WORD : TK_WORD));
+    free(word);
 }
