@@ -35,9 +35,7 @@ static char *get_env_variable_value(char *data, size_t *i, t_context *ctx)
     char    *env_name;
     char    *env_value;
     size_t  var_len;
-    size_t  start;
 
-    start = *i; // '$' の位置を記録
     var_len = 0;
     (*i)++; // '$' を消費
     while (data[*i + var_len] && is_env_name_char(data[*i + var_len]))
@@ -47,7 +45,7 @@ static char *get_env_variable_value(char *data, size_t *i, t_context *ctx)
         fatal_error("Expansion: ft_substr failed");
     env_value = get_env_value(env_name, ctx->env_head);
     if (!env_value) // 環境変数が見つからない場合、元の文字列を返す
-        env_value = ft_substr(data, start, var_len + 1); // '+1' は '$' の分
+        env_value = ft_strdup("");
     else
         env_value = ft_strdup(env_value);
     if (!env_value)
