@@ -30,6 +30,7 @@
 //exit_status
 # define NORMAL_EXIT 0
 # define NORMAL_ERROR 1
+# define NUMERIC_ERROR 255
 # define ERROR_TOKENIZE 258
 # define COMMAND_NOT_FOUND 127
 # define PERMISSION_DENIED 126
