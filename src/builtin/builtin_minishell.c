@@ -50,5 +50,5 @@ void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd)
 		env_builtin(parser, context);
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit")) == 0
 		&& (ft_strlen(cmd) == ft_strlen("exit")))
-		return ;
+		exit_builtin(parser, context);
 }

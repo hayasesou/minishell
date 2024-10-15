@@ -82,7 +82,6 @@ void main_exec(char *line, t_context *ctx)
 	parser(ctx);
 	free_token(&ctx->token_head);
 	ctx->token_head = NULL;
-	// print_parser(ctx->parser_head);
 	if (ctx->parser_head == NULL)
 		return ;
 	if(check_pipe(ctx->parser_head))
