@@ -38,5 +38,10 @@ void	unset_builtin(t_parser *parser, t_context *context);
 
 //builtin_exit.c
 void	exit_builtin(t_parser *parser, t_context *context, bool is_parent);
+void    ft_puterr(char *str);
+bool    overflow_check(long num, int num2, int flag);
+bool    is_overflow(char *str);
+bool    is_valid_number(const char *str);
+void	cleanup_and_exit(t_context *context, int exit_status);
 
 #endif

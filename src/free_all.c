@@ -67,35 +67,6 @@ void free_parser(t_parser **head_ref)
 	*head_ref = NULL;
 }
 
-void free_env_node(t_env *node)
-{
-	if (node == NULL)
-		return ;
-	free(node->env_name);
-	node->env_name = NULL;
-	free(node->env_val);
-	node->env_val = NULL;
-	free(node);
-	node = NULL;
-}
-
-void free_env(t_env *head)
-{
-    t_env	*cur;
-    t_env	*next;
-
-	cur = head->next;
-    if (head == NULL)
-        return;
-    while (cur != head)
-    {
-        next = cur->next;
-        free_env_node(cur);
-        cur = next;
-    }
-    free_env_node(head);
-}
-
 void free_all(t_context *ctx)
 {
     if (ctx == NULL)
@@ -117,9 +88,3 @@ void free_all(t_context *ctx)
     }
     free(ctx);
 }
-
-// void    exit_free(t_context *ctx)
-// {
-//     free_all(ctx);
-//     exit(1);
-// }
