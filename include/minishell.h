@@ -69,11 +69,10 @@ void    signal_init(t_context *ctx);
 void    set_signal_handler();
 void	set_signal_parent_handler();
 void    set_signal_child_handler();
-void    set_heredoc_signal_parent_handler();
-void    set_heredoc_signal_child_handler();
+void    set_heredoc_signal_handler();
 void	signal_handler(int signum);
 void    signal_parent_handler(int signum);
-void	heredoc_signal_parent_handler(int signum);
+void	heredoc_signal_handler(int signum);
 
 // free
 void    free_token(t_token **head);

@@ -5,128 +5,145 @@ void ft_puterr(char *str)
     write(2, str, ft_strlen(str));
 }
 
-bool is_overflow(const char *str, long *result)
+bool is_overflow(const char *str)
 {
-    int i;
-    int sign;
-    unsigned long num;
-    unsigned long cutoff;
-    int cutlim;
+    size_t	len;
+	size_t	num;
+	int		flag;
 
-    i = 0;
-    sign = 1;
-    num = 0;
-    if (str[i] == '+' || str[i] == '-')
-    {
-        if (str[i] == '-')
-            sign = -1;
-        i++;
-    }
-    if (sign == -1)
-        cutoff = -(unsigned long)LONG_MIN;
-    else
-        cutoff = LONG_MAX;
-    cutlim = cutoff % 10;
-    cutoff /= 10;
-    while (str[i])
-    {
-        int c = str[i++] - '0';
-
-        if (num > cutoff || (num == cutoff && c > cutlim))
-            return true;
-
-        num = num * 10 + c;
-    }
-    if (sign == -1)
-        *result = -(long)num;
-    else
-        *result = (long)num;
-
-    return false;
+	len = ft_strlen(str);
+	if (len > 20)
+		return (false);
+	num = 0;
+	flag = 1;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			flag *= -1;
+		str++;
+	}
+	while (ft_isdigit(*str))
+	{
+		num = (num * 10) + (*str - '0');
+		str++;
+	}
+	if ((num > LONG_MAX && flag == 1) || (num - 1 > LONG_MAX && flag == -1))
+		return (false);
+	return (true);
 }
 
 bool is_valid_number(const char *str)
 {
-    int i = 0;
+    int i;
 
+    i = 0;
+    if (str == NULL)
+        return (false);
     if (str[i] == '\0')
         return (false);
     if (str[i] == '+' || str[i] == '-')
         i++;
-    if (str[i] == '\0') // 符号のみの場合
-        return (false);
     while (str[i])
     {
         if (!ft_isdigit(str[i]))
             return (false);
         i++;
     }
-    return (true);
+    if (str[i] == '\0')
+        return (true);
+    else
+        return (false);
 }
 
-
-static void	print_numeric_error(char *status, bool is_parent)
+static void	print_numeric_error(t_context *context, char *str)
 {
-    if (is_parent)
-        ft_puterr("minishell: exit: ");
     ft_puterr("minishell: exit: ");
-    ft_puterr(status);
+    ft_puterr(str);
     ft_puterr(": numeric argument required\n");
+    free_env(context->env_head);
+    context->exit_status = 255;
+    exit(255);
 }
 
-static void	print_too_many_args(bool is_parent)
+static void	print_too_many_args(t_context *context)
 {
-    if (is_parent)
-        ft_puterr("exit\n");
     ft_puterr("minishell: exit: too many arguments\n");
+    context->exit_status = 1;
 }
 
-static void	cleanup_and_exit(t_context *context, int exit_code)
+static void	cleanup_and_exit(t_context *context, int exit_status)
 {
     free_all(context);
-    exit(exit_code);
+    exit(exit_status);
 }
 
-void    exit_builtin(t_parser *parser, t_context *context)
+void    free_cmd(char **cmd)
 {
-    char    **cmd;
-    long    exit_code;
-    int     final_exit_code;
-    bool    is_parent;
-    pid_t   pid;
+    size_t	i;
 
-    pid = getpid();
-    if (pid == 0)
-        is_parent = false;
-    else
-        is_parent = true;
-    cmd = parser->cmd;
-    exit_code = 0;
-    if (cmd[1] == NULL)
+	i = 0;
+	if (cmd == NULL)
+		return ;
+	while (cmd[i])
+	{
+		free(cmd[i]);
+		cmd[i] = NULL;
+		i++;
+	}
+	free(cmd);
+	cmd = NULL;
+}
+
+void    exit_space(char **cmd, char **new_cmd, t_context *context)
+{
+    if (!is_valid_number(new_cmd[0]) || is_overflow(new_cmd[0]))
     {
-        if (is_parent)
-            ft_puterr("exit\n");
-        cleanup_and_exit(context, context->exit_status);
+        free_cmd(new_cmd);
+        print_numeric_error(context, cmd[1]);
     }
-
-    if (!is_valid_number(cmd[1]) || is_overflow(cmd[1], &exit_code))
+    if (new_cmd[1] != NULL)
+        print_too_many_args(context);
+    else
     {
-        print_numeric_error(cmd[1], is_parent);
+        free_cmd(new_cmd);
+        exit (ft_atoi(cmd[1]) % 256);
+    }
+}
+
+void    exit_main(char **cmd, t_context *context)
+{
+
+    if (!is_valid_number(cmd[1]))
+    {
+        print_numeric_error(context, cmd[1]);
         cleanup_and_exit(context, 255);
     }
-    
     if (cmd[2] != NULL)
-    {
-        print_too_many_args(is_parent);
-        context->exit_status = 1;
-        return; // シェルを終了させないらしい
-    }
-    final_exit_code = (int)(exit_code % 256);
-    if (final_exit_code < 0)
-        final_exit_code += 256;
+        print_too_many_args(context); // ここexitしないでOK？
+    else
+        exit (ft_atoi(cmd[1]) % 256);
+}
 
+void    exit_builtin(t_parser *parser, t_context *context, bool is_parent)
+{
+    char    **cmd;
+    char    **new_cmd;
+
+    cmd = parser->cmd;
     if (is_parent)
         ft_puterr("exit\n");
-
-    cleanup_and_exit(context, final_exit_code);
+    if (cmd[1] == NULL || !ft_strncmp("--", cmd[1], 2))
+        cleanup_and_exit(context, context->exit_status);
+    if (ft_strchr(cmd[1], ' '))
+    {
+        new_cmd = ft_split(cmd[1], ' ');
+        if (new_cmd == NULL)
+            exit(1);
+        if (new_cmd[0] == NULL || new_cmd[1] != NULL)
+            exit_main(cmd, context);
+        else
+            exit_space(cmd, new_cmd, context);
+    }
+    else
+        exit_main(cmd, context);
 }
