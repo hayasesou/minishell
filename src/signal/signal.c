@@ -47,7 +47,7 @@ void set_heredoc_signal_handler()
     sa.sa_flags = SA_SIGINFO;
     sa.sa_handler = SIG_IGN;
     sigaction(SIGQUIT, &sa, NULL);
-    sa.sa_handler = SIG_DFL;
+    sa.sa_handler = heredoc_signal_handler;
     sigaction(SIGINT, &sa, NULL);
 }
 

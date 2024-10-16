@@ -38,6 +38,5 @@ void    heredoc_signal_handler(int signum)
     {
         g_signal = 1;
         ft_printf("\n");
-        // exit(1);
     }
 }

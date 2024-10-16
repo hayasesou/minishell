@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void ft_puterr(char *str)
+void ft_putstr_fd(char *str, int fd)
 {
-    write(2, str, ft_strlen(str));
+    write(fd, str, ft_strlen(str));
 }
 
 bool overflow_check(long num, int num2, int flag)

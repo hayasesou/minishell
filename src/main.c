@@ -117,11 +117,10 @@ void	main_loop(t_context *ctx, char *line)
 
 int	main(int ac, char **av, char **envp)
 {
-	int		status;
-	char	*line;
+	int			status;
+	char		*line;
 	t_context	*ctx;
 
-	// rl_outstream = stderr; //なんで設定したっけ、stdoutじゃなくていいの？
 	status = 0;
 	ctx = minishell_init(ac, av, envp);
 	if (ctx == NULL)
