@@ -5,17 +5,26 @@ void ft_puterr(char *str)
     write(2, str, ft_strlen(str));
 }
 
-bool is_overflow(const char *str)
+static bool overflow_check(long num, int num2, int flag)
 {
-    size_t	len;
-	size_t	num;
+    if ((num * flag > LONG_MAX / 10) || (num * flag == LONG_MAX / 10 && num2 > LONG_MAX % 10))
+        return (true);
+    if ((num * flag < LONG_MIN / 10) || (num * flag == LONG_MIN / 10 && num2 > -1 * (LONG_MIN % 10)))
+        return (true);
+    return (false);
+}
+
+bool is_overflow(char *str)
+{
+	long	num;
 	int		flag;
 
-	len = ft_strlen(str);
-	if (len > 19) // 緩いかも
-		return (false);
 	num = 0;
 	flag = 1;
+    while (*str == ' ')
+    {
+        str++;
+    }
 	if (*str == '+' || *str == '-')
 	{
 		if (*str == '-')
@@ -24,12 +33,12 @@ bool is_overflow(const char *str)
 	}
 	while (ft_isdigit(*str))
 	{
+        if (overflow_check(num, *str - '0', flag))
+            return (true);
 		num = (num * 10) + (*str - '0');
 		str++;
 	}
-	if ((num > LONG_MAX && flag == 1) || (num - 1 > LONG_MAX && flag == -1))
-		return (false);
-	return (true);
+    return (false);
 }
 
 bool is_valid_number(const char *str)
@@ -113,7 +122,7 @@ void    exit_space(char **cmd, char **new_cmd, t_context *context)
 void    exit_main(char **cmd, t_context *context)
 {
 
-    if (!is_valid_number(cmd[1]))
+    if (!is_valid_number(cmd[1]) || is_overflow(cmd[1]))
     {
         print_numeric_error(context, cmd[1]);
         cleanup_and_exit(context, 255);
