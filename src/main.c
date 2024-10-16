@@ -121,7 +121,7 @@ int	main(int ac, char **av, char **envp)
 	char	*line;
 	t_context	*ctx;
 
-	rl_outstream = stderr;
+	// rl_outstream = stderr; //なんで設定したっけ、stdoutじゃなくていいの？
 	status = 0;
 	ctx = minishell_init(ac, av, envp);
 	if (ctx == NULL)
