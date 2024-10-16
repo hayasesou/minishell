@@ -12,7 +12,7 @@ bool is_overflow(const char *str)
 	int		flag;
 
 	len = ft_strlen(str);
-	if (len > 20)
+	if (len > 19) // 緩いかも
 		return (false);
 	num = 0;
 	flag = 1;
