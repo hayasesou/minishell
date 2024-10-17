@@ -44,6 +44,7 @@ t_token	*token_init(t_context *ctx)
 	}
 	head->data = NULL;
 	head->type = TK_EMPTY;
+    head->space_before = false;
 	head->next = head;
 	head->prev = head;
 	ctx->token_head = head;

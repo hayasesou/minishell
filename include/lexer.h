@@ -24,12 +24,12 @@ bool        	consume_blank(char **line_ptr, char *line);
 void            word(char **line_ptr, char *line, t_token *token, bool space_before);
 
 // operator
-void            operator(char **line_ptr, char *line, t_token *token);
+void	operator(char **line_ptr, char *line, t_token *token, t_context *ctx);
 char	        *select_op(char *line);
 t_token_type	select_op_type(char *op);
 
 // quote
-void            quote(char **line_ptr, char *line, t_token *token, bool space_before);
+void            quote(char **line_ptr, char *line, t_token *token, t_context *ctx);
 
 // token
 t_token         *token_node_create(char *data, t_token_type type);

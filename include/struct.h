@@ -45,6 +45,7 @@ typedef struct s_expantion_info
 typedef struct s_token {
 	char			*data;
 	t_token_type	type;
+	bool			space_before;
 	t_token			*next;
 	t_token			*prev;
 
@@ -104,7 +105,7 @@ typedef struct s_context {
 	t_parser    *parser_head;
 	t_env	    *env_head;
 	int		    exit_status;
-	bool	    sys_error; // 一応
+	bool	    sys_error;
 }	t_context;
 
 #endif

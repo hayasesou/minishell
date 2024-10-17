@@ -56,7 +56,7 @@ t_token_type select_op_type(char *op)
     return TK_EMPTY;
 }
 
-void	operator(char **line_ptr, char *line, t_token *token)
+void	operator(char **line_ptr, char *line, t_token *token, t_context *ctx)
 {
 	char			*op;
 	t_token_type	type;
@@ -67,7 +67,7 @@ void	operator(char **line_ptr, char *line, t_token *token)
 		type = select_op_type(op);	
 	}
 	else
-		err_exit(line, "operatorが有効じゃありません", 0) ; // error変更した方がいい
+        system_error(line, "operatorが有効じゃありません", ctx); // 日本語後で訂正する
 	token_node_add(token, token_node_create(op, type));
 	*line_ptr += strlen(op);
     free(op);

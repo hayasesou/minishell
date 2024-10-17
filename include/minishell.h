@@ -30,7 +30,7 @@
 //exit_status
 # define NORMAL_EXIT 0
 # define NORMAL_ERROR 1
-# define ERROR_TOKENIZE 258
+# define SYNTAX_ERROR 258
 # define COMMAND_NOT_FOUND 127
 # define PERMISSION_DENIED 126
 # define IS_DIR 126
@@ -38,13 +38,9 @@
 extern bool   syntax_error;
 extern int    g_signal;
 
-void	todo(const char *msg) __attribute__((noreturn));
-
 // error
-void	fatal_error(const char *msg) __attribute__((noreturn));
-void	assert_error(const char *msg) __attribute__((noreturn));
-void	err_exit(const char *location, const char *msg, int status) __attribute__((noreturn));
-void	tokenize_error(const char *location, char **rest, char *line);
+
+void	system_error(char *location, char *msg, t_context *ctx);
 
 // env
 t_env	*node_new_set(t_env *env_node, char *str);

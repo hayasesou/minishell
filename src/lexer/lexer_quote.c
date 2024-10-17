@@ -15,7 +15,7 @@ static t_token_type determine_token_type(char quote_char, bool space_before) {
         return space_before ? TK_SPACE_DOUBLE_QUOTE : TK_DOUBLE_QUOTE;
 }
 
-void quote(char **line_ptr, char *line, t_token *token, bool space_before)
+void quote(char **line_ptr, char *line, t_token *token, t_context *ctx)
 {
     char            quote_char;
     char            *start;
@@ -40,5 +40,5 @@ void quote(char **line_ptr, char *line, t_token *token, bool space_before)
         *line_ptr = line + 1;
     }
     else
-        err_exit(start - 1, "Unclosed quote", 1);
+        system_error(start - 1, "Unclosed quote", ctx);
 }
