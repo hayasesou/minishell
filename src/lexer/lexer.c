@@ -27,7 +27,7 @@ void	check_token_operation(t_context *ctx)
 void lexer(t_context *ctx, char *line)
 {
     t_token *token;
-    bool space_before;
+    bool    space_before;
     t_token *token_head;
 
     token = token_init(ctx);
@@ -53,13 +53,11 @@ void lexer(t_context *ctx, char *line)
             quote(&line, line, token, space_before);
             space_before = false;
         }
-        else if (is_word(*line))
+        else
         {
             word(&line, line, token, space_before);
             space_before = false;
         }
-        else
-            tokenize_error("Unexpected Token", &line, line);
         if (token->next)
             token = token->next;
     }
@@ -68,7 +66,4 @@ void lexer(t_context *ctx, char *line)
 	if (ctx->token_head == NULL)
 		return ;
     expansion(token_head,  ctx);
-//    printf("\n----------- lexer start-------------\n");
-//    print_lexer(token_head);
-//    printf("----------- lexer end --------------\n\n");
 }
