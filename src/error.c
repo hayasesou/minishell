@@ -35,12 +35,8 @@ void	todo(const char *msg)
 
 void	tokenize_error(const char *location, char **rest, char *line)
 {
-	syntax_error = true;
 	dprintf(STDERR_FILENO, "minishell: syntax error near %s\n", location);
 	while (*line)
 		line++;
 	*rest = line;
 }
-
-
-

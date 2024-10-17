@@ -36,7 +36,6 @@
 # define PERMISSION_DENIED 126
 # define IS_DIR 126
 
-extern bool   syntax_error;
 extern int    g_signal;
 
 void	todo(const char *msg) __attribute__((noreturn));
