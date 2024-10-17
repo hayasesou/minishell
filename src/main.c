@@ -35,9 +35,11 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 		return ;
 	if(is_minishell_builtin(parser->cmd[0]))
 	{
+		set_signal_parent_handler();
 		process_heredoc(parser, context, &status);
 		builtin_redirect(parser, context, &status);
-		exec_minishell_builtin(parser, context, parser->cmd[0]);
+		exec_minishell_builtin(parser, context, parser->cmd[0], true);
+		set_signal_handler();
 	}
 	else
 	{
@@ -49,7 +51,7 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 			process_heredoc(parser, context, &status);
 			redirect(parser, context, &status);
 			setup_heredoc_fd(parser);
-			exec_cmd(parser, context);
+			exec_cmd(parser, context, false);
 		}
 		else
 		{
@@ -82,7 +84,6 @@ void main_exec(char *line, t_context *ctx)
 	parser(ctx);
 	free_token(&ctx->token_head);
 	ctx->token_head = NULL;
-	// print_parser(ctx->parser_head);
 	if (ctx->parser_head == NULL)
 		return ;
 	if(check_pipe(ctx->parser_head))
@@ -116,11 +117,10 @@ void	main_loop(t_context *ctx, char *line)
 
 int	main(int ac, char **av, char **envp)
 {
-	int		status;
-	char	*line;
+	int			status;
+	char		*line;
 	t_context	*ctx;
 
-	rl_outstream = stderr;
 	status = 0;
 	ctx = minishell_init(ac, av, envp);
 	if (ctx == NULL)

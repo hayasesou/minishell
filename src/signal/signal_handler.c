@@ -32,12 +32,11 @@ void signal_parent_handler(int signum)
     }
 }
 
-void    heredoc_signal_parent_handler(int signum)
+void    heredoc_signal_handler(int signum)
 {
     if (signum == SIGINT)
     {
         g_signal = 1;
         ft_printf("\n");
-        exit(1);
     }
 }

@@ -30,6 +30,7 @@
 //exit_status
 # define NORMAL_EXIT 0
 # define NORMAL_ERROR 1
+# define NUMERIC_ERROR 255
 # define ERROR_TOKENIZE 258
 # define COMMAND_NOT_FOUND 127
 # define PERMISSION_DENIED 126
@@ -68,11 +69,10 @@ void    signal_init(t_context *ctx);
 void    set_signal_handler();
 void	set_signal_parent_handler();
 void    set_signal_child_handler();
-void    set_heredoc_signal_parent_handler();
-void    set_heredoc_signal_child_handler();
+void    set_heredoc_signal_handler();
 void	signal_handler(int signum);
 void    signal_parent_handler(int signum);
-void	heredoc_signal_parent_handler(int signum);
+void	heredoc_signal_handler(int signum);
 
 // free
 void    free_token(t_token **head);
@@ -81,6 +81,7 @@ void    free_parser(t_parser **head);
 void    free_env_node(t_env *node);
 void    free_env(t_env *head);
 void    free_all(t_context *ctx);
+void    free_cmd(char **cmd);
 
 // main
 void	main_loop(t_context *ctx, char *line);

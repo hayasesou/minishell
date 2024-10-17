@@ -98,6 +98,11 @@ typedef struct s_env {
 	t_env	*prev;
 }	t_env;
 
+typedef enum	e_process_type {
+	PARENT,
+	CHILD
+}	t_process_type;
+
 typedef struct s_context {
 	// 構造体の総まとめをこの構造体にまとめる
 	t_token     *token_head;
