@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 19:46:04 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 22:35:02 by hakobaya         ###   ########.fr       */
+/*   Created: 2024/10/18 22:39:25 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:53:22 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redirect_type	get_redirect_type(t_token_type type)
+void	free_env_node(t_env *node)
 {
-	if (type == TK_REDIR_IN)
-		return (IN_FILE);
-	else if (type == TK_REDIR_OUT)
-		return (OUT_FILE);
-	else if (type == TK_REDIR_APPEND)
-		return (APPEND);
-	else if (type == TK_REDIR_HEREDOC)
-		return (HEREDOC);
-	else
-		return (UNKNOWN);
+	if (node == NULL)
+		return ;
+	free(node->env_name);
+	node->env_name = NULL;
+	free(node->env_val);
+	node->env_val = NULL;
+	free(node);
+	node = NULL;
 }
 
-void	free_command(char **cmd)
+void	free_env(t_env *head)
 {
-	int	i;
+	t_env	*cur;
+	t_env	*next;
 
-	if (!cmd)
+	cur = head->next;
+	if (head == NULL)
 		return ;
-	i = 0;
-	while (cmd[i])
+	while (cur != head)
 	{
-		free(cmd[i]);
-		i++;
+		next = cur->next;
+		free_env_node(cur);
+		cur = next;
 	}
-	free(cmd);
+	free_env_node(head);
 }

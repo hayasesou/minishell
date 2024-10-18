@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_builtin.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 00:34:30 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:35:02 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	env_builtin(t_parser *parser, t_context *context)
@@ -6,7 +18,8 @@ void	env_builtin(t_parser *parser, t_context *context)
 
 	if (parser->cmd[1] != NULL)
 	{
-		ft_printf("minishell: env: %s: No such file or directory\n", parser->cmd[1]);
+		ft_printf("minishell: env: %s: No such file or directory\n",
+			parser->cmd[1]);
 		context->exit_status = NORMAL_ERROR;
 		exit(EXIT_FAILURE);
 	}

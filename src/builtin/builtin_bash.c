@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_bash.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 00:32:12 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:32:13 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 #define PROGRAM_NAME "./minishell"
 
-static	void	exec_command(t_parser *parser,
-	t_context *context, char *cmd_path)
+static void	exec_command(t_parser *parser, t_context *context, char *cmd_path)
 {
 	char	*shell_level;
 	char	**env_list;
@@ -11,8 +22,8 @@ static	void	exec_command(t_parser *parser,
 	if (ft_strncmp(parser->cmd[0], PROGRAM_NAME, ft_strlen(PROGRAM_NAME)) == 0)
 	{
 		shell_level = get_env_value("SHLVL", context->env_head);
-		set_env_value("SHLVL",
-			ft_itoa(ft_atoi(shell_level) + 1), context->env_head, context);
+		set_env_value("SHLVL", ft_itoa(ft_atoi(shell_level) + 1),
+			context->env_head, context);
 		free(shell_level);
 	}
 	env_list = make_env_list(context->env_head, context);
@@ -25,8 +36,8 @@ static	void	exec_command(t_parser *parser,
 	exit(NORMAL_ERROR);
 }
 
-static	void	check_file_and_execute(t_parser *parser,
-	t_context *context, char *cmd_path)
+static void	check_file_and_execute(t_parser *parser, t_context *context,
+		char *cmd_path)
 {
 	if (access(cmd_path, F_OK) == 0 && cmd_path[ft_strlen(cmd_path) - 1] != '/')
 	{
@@ -44,8 +55,8 @@ static	void	check_file_and_execute(t_parser *parser,
 }
 
 // "path" + "/" + "cmd"
-//e.g.) "/usr/bin" + "/" + "ls"
-static	char	*make_cmd_path(char *path, int start, int i, t_parser *parser)
+// e.g.) "/usr/bin" + "/" + "ls"
+static char	*make_cmd_path(char *path, int start, int i, t_parser *parser)
 {
 	char	*stash_dir1;
 	char	*stash_dir2;
@@ -65,8 +76,7 @@ static	char	*make_cmd_path(char *path, int start, int i, t_parser *parser)
 	return (cmd_path);
 }
 
-static	bool	check_file_type(t_parser *parser,
-	t_context *context, char **path)
+static bool	check_file_type(t_parser *parser, t_context *context, char **path)
 {
 	struct stat	st;
 
@@ -94,13 +104,13 @@ static	bool	check_file_type(t_parser *parser,
 	return (false);
 }
 
-//imginable input of t_parsaer->cmd[0]: ls or usr/bin/ls or usr/bin  or ./a.out
+// imginable input of t_parsaer->cmd[0]: ls or usr/bin/ls or usr/bin  or ./a.out
 void	bash_builtin(t_parser *parser, t_context *context)
 {
-	char		*path;
-	int			i;
-	int			start;
-	char		*cmd_path;
+	char	*path;
+	int		i;
+	int		start;
+	char	*cmd_path;
 
 	start = 0;
 	i = 0;
