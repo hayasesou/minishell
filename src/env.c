@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:39:38 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 03:16:53 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 03:47:02 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_env	*node_new(char *str)
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (env_node == NULL)
 		return (NULL);
-	if (strlen(str) == 0)
+	if (ft_strlen(str) == 0)
 	{
 		env_node->env_name = NULL;
 		env_node->env_val = NULL;
