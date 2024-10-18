@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 19:48:11 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 00:39:44 by hakobaya         ###   ########.fr       */
+/*   Created: 2024/10/19 00:52:19 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:52:56 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,37 +46,6 @@ void	free_file(t_file *head)
 			free(tmp->filename);
 		free(tmp);
 	}
-}
-
-void	free_parser(t_parser **head_ref)
-{
-	t_parser	*tmp;
-	t_parser	*delete;
-	int			i;
-
-	if (*head_ref == NULL)
-		return ;
-	tmp = *head_ref;
-	while (tmp != NULL)
-	{
-		i = 0;
-		if (tmp->cmd != NULL)
-		{
-			while (tmp->cmd[i] != NULL)
-				free(tmp->cmd[i++]);
-			free(tmp->cmd);
-			tmp->cmd = NULL;
-		}
-		if (tmp->file != NULL)
-		{
-			free_file(tmp->file);
-			tmp->file = NULL;
-		}
-		delete = tmp;
-		tmp = tmp->next;
-		free(delete);
-	}
-	*head_ref = NULL;
 }
 
 void	free_all(t_context *ctx)
