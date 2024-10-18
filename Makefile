@@ -26,10 +26,12 @@ LEXER_FILES = 	lexer.c \
 				lexer_operator.c \
 				lexer_error.c \
 				lexer_bool.c \
+				lexer_check.c \
 				expansion.c \
 				expansion_utils.c \
 				expansion_env.c \
-				expansion_bool.c
+				expansion_bool.c \
+				lexer_print_token.c
 
 PARSER_FILES =	parser_main.c \
 				parser_utils.c \

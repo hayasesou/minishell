@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:09:06 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 21:09:07 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 23:35:39 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool			is_single_quote_closed(char *line);
 bool			is_double_quote_closed(char *line);
 
 // word
-bool			consume_blank(char **line_ptr, char *line);
+bool			consume_blank(char **line_ptr, t_token *token);
 void			word(char **line_ptr, char *line, t_token *token,
 					bool space_before);
 
@@ -68,6 +68,10 @@ bool			is_env_name_char(char c);
 bool			is_charset(char c, const char *charset);
 bool			is_double_quote_expansion(t_token_type type);
 bool			is_word_expansion(t_token_type type);
+
+// check
+void			check_token_operation(t_context *ctx);
+
 
 // error
 void			syntax_error(char *msg, t_context *ctx);
