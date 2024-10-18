@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:04:23 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 21:05:51 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:15:54 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef enum e_token_type
 	TK_REDIR_APPEND,
 	TK_REDIR_HEREDOC,
 	TK_EMPTY,
+	TK_ERROR,
 	TK_EOF
 }						t_token_type;
 
@@ -56,6 +57,7 @@ typedef struct s_token
 {
 	char				*data;
 	t_token_type		type;
+	bool				space_before;
 	t_token				*next;
 	t_token				*prev;
 
@@ -113,11 +115,11 @@ typedef struct s_env
 	t_env				*prev;
 }						t_env;
 
-typedef enum e_process_type
+typedef struct tmp_fd
 {
-	PARENT,
-	CHILD
-}						t_process_type;
+	int					tmp_input_fd;
+	int					tmp_output_fd;
+}						t_tmp_fd;
 
 typedef struct s_context
 {

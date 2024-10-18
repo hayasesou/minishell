@@ -3,7 +3,7 @@ CC = cc
 C_FLAGS = -Wall -Wextra -Werror -fPIE
 I_FLAGS = -Iinclude/ -Ilibft/ -Iprintf/
 H_FLAGS = -lreadline -lft -lftprintf
-L_FLAGS = -Llibft -Lprintf #-lft
+L_FLAGS = -Llibft -Lprintf
 
 LIBFT = libft/libft.a
 PRINTF = printf/libftprintf.a
@@ -19,6 +19,63 @@ BUILTINDIR = ./src/builtin
 SIGNALDIR = ./src/signal
 OBJDIR = ./obj
 
+LEXER_FILES = 	lexer.c \
+				lexer_word.c \
+				lexer_token.c \
+				lexer_quote.c \
+				lexer_operator.c \
+				lexer_error.c \
+				lexer_bool.c \
+				lexer_check.c \
+				expansion.c \
+				expansion_utils.c \
+				expansion_env.c \
+				expansion_bool.c
+
+PARSER_FILES =	parser_main.c \
+				parser_utils.c \
+				parser_command.c \
+				parser_bool.c \
+
+REDIRECT_FILES = heredoc_expansion.c \
+					heredoc_expansion_utils.c \
+					heredoc_utils.c \
+					heredoc.c \
+					pipe_error.c \
+					pipe_heredoc.c \
+					pipe_struct_init.c \
+					pipe_utils.c \
+					pipe.c \
+					no_pipe.c \
+					redirect_error.c \
+					redirect_input.c \
+					redirect_output.c \
+					redirect_utils.c \
+					redirect_builtin.c \
+					redirect.c
+
+SIGNAL_FILES = signal.c \
+				signal_handler.c
+
+BUILTIN_FILES =	builtin_bash.c \
+				builtin_minishell.c \
+				cd_builtin.c \
+				echo_builtin.c \
+				env_builtin.c \
+				exec_main.c \
+				export_builtin.c \
+				export_builtin_utils.c \
+				pwd_builtin.c \
+				unset_builtin.c
+
+FILES =	main.c \
+		env.c \
+		env_utils.c \
+		free_env.c \
+		free_all.c \
+		free_parser.c \
+		error.c
+
 SRCS =	$(addprefix $(SRCDIR)/,$(FILES))\
 		$(addprefix $(LEXERDIR)/, $(LEXER_FILES))\
 		$(addprefix $(PARSERDIR)/, $(PARSER_FILES)) \
@@ -32,13 +89,6 @@ OBJS = $(addprefix $(OBJDIR)/, $(FILES:.c=.o)) \
 	   $(addprefix $(OBJDIR)/, $(REDIRECT_FILES:.c=.o)) \
 	   $(addprefix $(OBJDIR)/, $(BUILTIN_FILES:.c=.o)) \
 	   $(addprefix $(OBJDIR)/, $(SIGNAL_FILES:.c=.o))
-
-FILES = main.c env.c error.c env_utils.c free_all.c free_utils.c
-LEXER_FILES = $(notdir $(wildcard $(LEXERDIR)/*.c))
-PARSER_FILES =	$(notdir $(wildcard $(PARSERDIR)/*.c))
-REDIRECT_FILES = $(notdir $(wildcard $(REDIRECTDIR)/*.c))
-BUILTIN_FILES = $(notdir $(wildcard $(BUILTINDIR)/*.c))
-SIGNAL_FILES = $(notdir $(wildcard $(SIGNALDIR)/*.c))
 
 all: $(NAME)
 

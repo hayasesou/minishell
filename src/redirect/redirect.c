@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/18 23:11:56 by hayase            #+#    #+#             */
+/*   Updated: 2024/10/19 00:37:58 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	output_process(t_file *file,
@@ -46,35 +58,6 @@ void	redirect(t_parser *parser, t_context *context, int *redirect_status)
 			output_process(file, context, redirect_status, &tmp_output_fd);
 		else if (is_input(file))
 			input_process(file, context, redirect_status, &tmp_input_fd);
-		else
-			exception_process(context, redirect_status);
-		file = file->next;
-	}
-	if (tmp_output_fd != -1)
-		dup2_fd(tmp_output_fd, STDOUT_FILENO, context);
-	if (tmp_input_fd != -1)
-		dup2_fd(tmp_input_fd, STDIN_FILENO, context);
-}
-
-void	builtin_redirect(t_parser *parser,
-	t_context *context, int *redirect_status)
-{
-	int		tmp_input_fd;
-	int		tmp_output_fd;
-	t_file	*file;
-
-	file = parser->file;
-	tmp_input_fd = -1;
-	tmp_output_fd = -1;
-	while (file != NULL)
-	{
-		if (is_output(file))
-			output_process(file, context, redirect_status, &tmp_output_fd);
-		else if (is_input(file))
-		{
-			if (tmp_input_fd != -1)
-				close_fd(tmp_input_fd, context);
-		}
 		else
 			exception_process(context, redirect_status);
 		file = file->next;

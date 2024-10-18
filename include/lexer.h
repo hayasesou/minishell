@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 21:00:51 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 21:00:59 by hakobaya         ###   ########.fr       */
+/*   Created: 2024/10/18 21:09:06 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 01:17:36 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,19 @@ bool			is_single_quote_closed(char *line);
 bool			is_double_quote_closed(char *line);
 
 // word
-bool			consume_blank(char **line_ptr, char *line);
+bool			consume_blank(char **line_ptr, t_token *token);
 void			word(char **line_ptr, char *line, t_token *token,
 					bool space_before);
 
 // operator
-void			operator(char **line_ptr, char *line, t_token *token);
+void			operator(char **line_ptr, char *line, t_token *token,
+					t_context *ctx);
 char			*select_op(char *line);
 t_token_type	select_op_type(char *op);
 
 // quote
 void			quote(char **line_ptr, char *line, t_token *token,
-					bool space_before);
+					t_context *ctx);
 
 // token
 t_token			*token_node_create(char *data, t_token_type type);
@@ -67,6 +68,15 @@ bool			is_env_name_char(char c);
 bool			is_charset(char c, const char *charset);
 bool			is_double_quote_expansion(t_token_type type);
 bool			is_word_expansion(t_token_type type);
+
+// check
+void			check_token_operation(t_context *ctx);
+
+// error
+void			syntax_error(char *msg, t_context *ctx);
+void			syntax_error_operation(char *msg, t_context *ctx);
+void			syntax_error_unexpected_token(char *unexpected_token,
+					t_context *ctx);
 
 // main
 void			lexer(t_context *ctx, char *line);

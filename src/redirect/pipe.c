@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 00:37:23 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:37:24 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdlib.h>
 #include <unistd.h>
 
-
-static	void	child_process(t_parser *tmp_parser,
-	t_pipex *pipe_x, t_context *context, int *status)
+static void	child_process(t_parser *tmp_parser, t_pipex *pipe_x,
+		t_context *context, int *status)
 {
 	if (tmp_parser->prev != NULL)
 		prev_pipe(pipe_x, pipe_x->current_cmd_num);
@@ -15,8 +26,7 @@ static	void	child_process(t_parser *tmp_parser,
 	exec_cmd(tmp_parser, context, false);
 }
 
-
-static	void	wait_child_and_close_pipe(t_parser *parser, t_pipex *pipe_x)
+static void	wait_child_and_close_pipe(t_parser *parser, t_pipex *pipe_x)
 {
 	int	i;
 
@@ -56,7 +66,7 @@ void	minishell_pipe(t_parser *parser_head, t_context *context)
 			set_signal_child_handler();
 			child_process(tmp_parser, &pipe_x, context, &status);
 		}
-        if (pipe_x.current_cmd_num > 0)
+		if (pipe_x.current_cmd_num > 0)
 			close_pipe_fd(&pipe_x);
 		close_heredoc_fds(tmp_parser);
 		pipe_x.current_cmd_num++;

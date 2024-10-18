@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd_builtin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 00:35:08 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:35:09 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static	bool	cd_valid_args(t_parser *parser, t_context *context)
+static bool	cd_valid_args(t_parser *parser, t_context *context)
 {
 	int	args_count;
 
@@ -16,15 +28,15 @@ static	bool	cd_valid_args(t_parser *parser, t_context *context)
 	return (true);
 }
 
-static	char	*make_new_dir(t_parser *parser, t_context *context)
+static char	*make_new_dir(t_parser *parser, t_context *context)
 {
 	char	*new_dir;
 
-	if (ft_strncmp(parser->cmd[SPECIFIED_DIR],
-			"~", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
+	if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "~",
+			ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
 		new_dir = get_env_value("HOME", context->env_head);
-	else if (ft_strncmp(parser->cmd[SPECIFIED_DIR],
-			"-", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
+	else if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "-",
+			ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
 		new_dir = get_env_value("OLDPWD", context->env_head);
 	else
 		new_dir = ft_strdup(parser->cmd[SPECIFIED_DIR]);
@@ -34,8 +46,8 @@ static	char	*make_new_dir(t_parser *parser, t_context *context)
 		ft_printf("minishell: cd: OLDPWD not set\n");
 		return (NULL);
 	}
-	if (ft_strncmp(parser->cmd[SPECIFIED_DIR],
-			"-", ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
+	if (ft_strncmp(parser->cmd[SPECIFIED_DIR], "-",
+			ft_strlen(parser->cmd[SPECIFIED_DIR])) == 0)
 		ft_printf("%s\n", new_dir);
 	return (new_dir);
 }

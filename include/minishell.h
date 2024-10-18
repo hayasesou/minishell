@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/18 21:09:04 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 01:13:14 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -8,7 +20,6 @@
 # include "libft.h"
 # include "parser.h"
 # include "redirect.h"
-# include "struct.h"
 # include <errno.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -26,25 +37,18 @@
 # define SUCCESS 1
 # define LAST_CMD_PID 0
 # define SPECIFIED_DIR 1
-// exit_status
 # define NORMAL_EXIT 0
 # define NORMAL_ERROR 1
-# define NUMERIC_ERROR 255
-# define ERROR_TOKENIZE 258
+# define SYNTAX_ERROR 258
 # define COMMAND_NOT_FOUND 127
 # define PERMISSION_DENIED 126
 # define IS_DIR 126
 
 extern int	g_signal;
 
-void		todo(const char *msg) __attribute__((noreturn));
-
 // error
-void		fatal_error(const char *msg) __attribute__((noreturn));
-void		assert_error(const char *msg) __attribute__((noreturn));
-void		err_exit(const char *location, const char *msg,
-				int status) __attribute__((noreturn));
-void		tokenize_error(const char *location, char **rest, char *line);
+void		syntax_error(char *msg, t_context *ctx);
+void		fatal_error(char *msg);
 
 // env
 t_env		*node_new_set(t_env *env_node, char *str);

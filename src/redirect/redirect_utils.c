@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 00:37:55 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:37:56 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	close_fd(int fd, t_context *context)
@@ -17,4 +29,22 @@ void	dup2_fd(int old_fd, int new_fd, t_context *context)
 		fatal_error("dup2 error");
 	}
 	close_fd(old_fd, context);
+}
+
+int	backup_fd(int fd)
+{
+	int	backup_fd;
+
+	backup_fd = dup(fd);
+	if (backup_fd == -1)
+		fatal_error("dup error");
+	return (backup_fd);
+}
+
+void	restore_fd(int backup_fd, int fd)
+{
+	if (dup2(backup_fd, fd) == -1)
+		fatal_error("dup2 error");
+	if (close(backup_fd) == -1)
+		fatal_error("close error");
 }
