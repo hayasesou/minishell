@@ -8,26 +8,27 @@ void	fatal_error(char *msg)
 	exit(1);
 }
 
+bool is_token_op(t_token *token)
+{
+    if (token->type == TK_PIPE
+            || token->type == TK_REDIR_IN
+            || token->type == TK_REDIR_OUT
+            || token->type == TK_REDIR_APPEND
+            || token->type == TK_REDIR_HEREDOC)
+        return (true);
+    return (false);
+}
+
 void check_token_operation(t_context *ctx)
 {
     t_token *current;
 
-    current = ctx->token_head->next; // ヘッダの次から開始
+    current = ctx->token_head->next;
     while (current->type != TK_EOF)
     {
-        // 現在のトークンが演算子の場合
-        if (current->type == TK_PIPE
-            || current->type == TK_REDIR_IN
-            || current->type == TK_REDIR_OUT
-            || current->type == TK_REDIR_APPEND
-            || current->type == TK_REDIR_HEREDOC)
+        if (is_token_op(current))
         {
-            // 次のトークンが存在し、かつ演算子の場合
-            if (current->next->type == TK_PIPE
-                || current->next->type == TK_REDIR_IN
-                || current->next->type == TK_REDIR_OUT
-                || current->next->type == TK_REDIR_APPEND
-                || current->next->type == TK_REDIR_HEREDOC)
+            if (is_token_op(current->next))
             {
                 ft_printf("minishell: syntax error near unexpected token\n");
 				free_token(&ctx->token_head);
@@ -36,7 +37,6 @@ void check_token_operation(t_context *ctx)
                 ctx->sys_error = true;
                 return ;
             }
-            // 最後が演算子で終わる場合
             else if (current->next->type == TK_EOF)
             {
                 ft_printf("minishell: syntax error near unexpected token 'newline'\n");
@@ -50,7 +50,6 @@ void check_token_operation(t_context *ctx)
         current = current->next;
     }
 }
-
 
 // void	check_token_operation(t_context *ctx)
 // {
@@ -137,49 +136,5 @@ void lexer(t_context *ctx, char *line)
 	check_token_operation(ctx);
 	if (ctx->token_head == NULL)
 		return ;
-    // print_lexer(token_head);
     expansion(token_head,  ctx);
 }
-
-// void lexer(t_context *ctx, char *line)
-// {
-//     t_token *token;
-//     t_token *token_head;
-
-//     token = token_init(ctx);
-//     token_head = token;
-//     while (*line && is_blank(*line))
-//         line++;
-//     while (*line)
-//     {
-//         if (is_blank(*line))
-//         {
-//             token->space_before = true;
-//             line++;
-//             continue;
-//         }
-//         else if (is_operator(*line) || is_quote(*line))
-//         {
-//             operator(&line, line, token);
-//             space_before = false;
-//         }
-//         else if (is_quote(*line))
-//         {
-//             quote(&line, line, token, space_before);
-//             space_before = false;
-//         }
-//         else
-//         {
-//             word(&line, line, token, space_before);
-//             space_before = false;
-//         }
-//         if (token->next)
-//             token = token->next;
-//     }
-//     token_node_add(token, token_node_create("", TK_EOF));
-// 	check_token_operation(ctx);
-// 	if (ctx->token_head == NULL)
-// 		return ;
-//     lexer_print_token(token_head);
-//     expansion(token_head,  ctx);
-// }
