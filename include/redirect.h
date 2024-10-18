@@ -57,6 +57,8 @@ char *make_heredoc_newline(char *line, size_t *i, t_context *context, int *hered
 //redirect_utils.c
 void close_fd(int fd, t_context *context);
 void dup2_fd(int old_fd, int new_fd, t_context *context);
+int backup_fd(int fd);
+void restore_fd(int backup_fd, int fd);
 
 //redirect.c
 void redirect(t_parser *parser, t_context *context, int *redirect_status);

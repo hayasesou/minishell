@@ -62,7 +62,11 @@ void	builtin_redirect(t_parser *parser,
 	int		tmp_input_fd;
 	int		tmp_output_fd;
 	t_file	*file;
+	int		stdin_backup_fd;
+	int		stdout_backup_fd;
 
+	stdin_backup_fd = backup_fd(STDIN_FILENO);
+	stdout_backup_fd = backup_fd(STDOUT_FILENO);
 	file = parser->file;
 	tmp_input_fd = -1;
 	tmp_output_fd = -1;
@@ -83,4 +87,7 @@ void	builtin_redirect(t_parser *parser,
 		dup2_fd(tmp_output_fd, STDOUT_FILENO, context);
 	if (tmp_input_fd != -1)
 		dup2_fd(tmp_input_fd, STDIN_FILENO, context);
+	exec_minishell_builtin(parser, context, parser->cmd[0]);
+	restore_fd(stdin_backup_fd, STDIN_FILENO);
+	restore_fd(stdout_backup_fd, STDOUT_FILENO);
 }
