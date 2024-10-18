@@ -30,8 +30,7 @@ LEXER_FILES = 	lexer.c \
 				expansion.c \
 				expansion_utils.c \
 				expansion_env.c \
-				expansion_bool.c \
-				lexer_print_token.c
+				expansion_bool.c
 
 PARSER_FILES =	parser_main.c \
 				parser_utils.c \
@@ -47,10 +46,12 @@ REDIRECT_FILES = heredoc_expansion.c \
 					pipe_struct_init.c \
 					pipe_utils.c \
 					pipe.c \
+					no_pipe.c \
 					redirect_error.c \
 					redirect_input.c \
 					redirect_output.c \
 					redirect_utils.c \
+					redirect_builtin.c \
 					redirect.c
 
 SIGNAL_FILES = signal.c \

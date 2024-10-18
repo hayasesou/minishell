@@ -117,16 +117,17 @@ typedef struct s_env
 
 typedef struct tmp_fd
 {
-	int		tmp_input_fd;
-	int		tmp_output_fd;
-}	t_tmp_fd;
+	int					tmp_input_fd;
+	int					tmp_output_fd;
+}						t_tmp_fd;
 
-typedef struct s_context {
-	t_token     *token_head;
-	t_parser    *parser_head;
-	t_env	    *env_head;
-	int		    exit_status;
-	bool	    sys_error;
-}	t_context;
+typedef struct s_context
+{
+	t_token				*token_head;
+	t_parser			*parser_head;
+	t_env				*env_head;
+	int					exit_status;
+	bool				sys_error;
+}						t_context;
 
 #endif

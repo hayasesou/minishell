@@ -72,7 +72,6 @@ bool			is_word_expansion(t_token_type type);
 // check
 void			check_token_operation(t_context *ctx);
 
-
 // error
 void			syntax_error(char *msg, t_context *ctx);
 void			syntax_error_operation(char *msg, t_context *ctx);

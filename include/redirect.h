@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 00:28:29 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:28:30 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef REDIRECT_H
 # define REDIRECT_H
 
@@ -18,10 +30,9 @@ typedef struct s_heredoc
 
 typedef struct s_pipex
 {
-	pid_t *pids;        // array of pid. the count of pid is equal to cmd count
-	int **pipe_fd;     
-		// array of pipe_fd. the count of pipe_fd is equal to cmd count - 1
-	pid_t last_cmd_pid; // bash is execute multiple command by parallel. so, we only need to wait the last command pid
+	pid_t	*pids;
+	int		**pipe_fd;
+	pid_t	last_cmd_pid;
 	int		stdin_fd;
 	int		stdout_fd;
 	int		current_cmd_num;
@@ -65,8 +76,15 @@ int			backup_fd(int fd);
 void		restore_fd(int backup_fd, int fd);
 
 // redirect.c
+void		output_process(t_file *file, t_context *context,
+				int *redirect_status, int *tmp_output_fd);
+void		input_process(t_file *file, t_context *context,
+				int *redirect_status, int *tmp_input_fd);
+void		exception_process(t_context *context, int *redirect_status);
 void		redirect(t_parser *parser, t_context *context,
 				int *redirect_status);
+
+// redirec_builtin.c
 void		builtin_redirect(t_parser *parser, t_context *context,
 				int *redirect_status);
 
@@ -95,7 +113,7 @@ int			fork_check(t_context *context, int *status);
 // pipe.c
 void		minishell_pipe(t_parser *parser_head, t_context *context);
 
-//no_pipe.c
-void minishell_no_pipe(t_parser *parser_head, t_context *context);
+// no_pipe.c
+void		minishell_no_pipe(t_parser *parser_head, t_context *context);
 
 #endif
