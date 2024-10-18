@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+void	fatal_error(char *msg)
+{
+    ft_putstr_fd("Fatal Error: ", 2);
+    ft_putstr_fd(msg, 2);
+    ft_putstr_fd("\n", 2);
+	exit(1);
+}
+
 void	check_token_operation(t_context *ctx)
 {
 	t_token	*current;
@@ -15,7 +23,7 @@ void	check_token_operation(t_context *ctx)
 			&& current->next->type == TK_EOF)
 		{
 			free_token(&ctx->token_head);
-			ft_printf("syntax error near unexpected token `newline'\n");
+			ft_printf("syntax error near unexpected token `newline'\n"); //　これいるの？
 			ctx->exit_status = 2;
 			ctx->token_head = NULL;
 			return ;
@@ -38,14 +46,13 @@ void    system_check(char *line, t_context *ctx, t_token *token)
     }
 }
 
-void	system_error(char *location, char *msg, t_context *ctx)
+void	syntax_error(char *msg, t_context *ctx)
 {
-    ft_putstr_fd("minishell: ", 2);
-    ft_putstr_fd(location, 2);
-    ft_putstr_fd(": ", 2);
+    ft_putstr_fd("minishell: syntax error: ", 2);
     ft_putstr_fd(msg, 2);
     ft_putstr_fd("\n", 2);
     ctx->sys_error = true;
+    ctx->exit_status = SYNTAX_ERROR;
 }
 
 void lexer(t_context *ctx, char *line)
@@ -75,7 +82,6 @@ void lexer(t_context *ctx, char *line)
         if (ctx->sys_error == true)
         {
             free_token(&ctx->token_head);
-            ft_printf("syntax error near unexpected token `newline'\n");
             ctx->exit_status = SYNTAX_ERROR;
             ctx->token_head = NULL;
             return ;
@@ -87,7 +93,7 @@ void lexer(t_context *ctx, char *line)
 	check_token_operation(ctx);
 	if (ctx->token_head == NULL)
 		return ;
-    print_lexer(token_head);
+    // print_lexer(token_head);
     expansion(token_head,  ctx);
 }
 

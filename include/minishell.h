@@ -35,12 +35,11 @@
 # define PERMISSION_DENIED 126
 # define IS_DIR 126
 
-extern bool   syntax_error;
 extern int    g_signal;
 
 // error
-
-void	system_error(char *location, char *msg, t_context *ctx);
+void	syntax_error(char *msg, t_context *ctx);
+void	fatal_error(char *msg);
 
 // env
 t_env	*node_new_set(t_env *env_node, char *str);

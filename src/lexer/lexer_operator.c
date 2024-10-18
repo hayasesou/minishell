@@ -67,7 +67,7 @@ void	operator(char **line_ptr, char *line, t_token *token, t_context *ctx)
 		type = select_op_type(op);	
 	}
 	else
-        system_error(line, "operatorが有効じゃありません", ctx); // 日本語後で訂正する
+        syntax_error("syntax error near unexpected token ", ctx); // エラーメッセージなんて書こう
 	token_node_add(token, token_node_create(op, type));
 	*line_ptr += strlen(op);
     free(op);

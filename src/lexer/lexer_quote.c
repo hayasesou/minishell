@@ -34,11 +34,11 @@ void quote(char **line_ptr, char *line, t_token *token, t_context *ctx)
         quoted_str = extract_quoted_str(start, length);
         if (!quoted_str)
             fatal_error("quote: ft_strdup error");
-        type = determine_token_type(quote_char, space_before);
+        type = determine_token_type(quote_char, token->space_before);
         token_node_add(token, token_node_create(quoted_str, type));
         free(quoted_str);
         *line_ptr = line + 1;
     }
     else
-        system_error(start - 1, "Unclosed quote", ctx);
+        syntax_error("quote is not closed.", ctx);
 }
