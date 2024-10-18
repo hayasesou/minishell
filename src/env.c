@@ -1,24 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 00:39:38 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:39:39 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char *find_first_equal(char *str)
-{	
+char	*find_first_equal(char *str)
+{
 	if (str == NULL)
 		return (NULL);
-	while(*str)
+	while (*str)
 	{
-		if(*str == '=')
+		if (*str == '=')
 			return (str);
 		str++;
 	}
 	return (NULL);
 }
 
-char *ft_strndup(char *str, size_t n)
+char	*ft_strndup(char *str, size_t n)
 {
-	char *new_str;
+	char	*new_str;
 
 	new_str = (char *)malloc(sizeof(char) * (n + 1));
-	if(new_str == NULL)
+	if (new_str == NULL)
 		return (NULL);
 	ft_strlcpy(new_str, str, n + 1);
 	return (new_str);
@@ -26,24 +38,24 @@ char *ft_strndup(char *str, size_t n)
 
 t_env	*node_new_set(t_env *env_node, char *str)
 {
-	char *equal_pos;
-	size_t env_name_len;
+	char	*equal_pos;
+	size_t	env_name_len;
 
 	equal_pos = find_first_equal(str);
-	if(equal_pos == NULL)
+	if (equal_pos == NULL)
 	{
 		env_node->env_name = ft_strdup(str);
-		if(env_node->env_name == NULL)
+		if (env_node->env_name == NULL)
 			return (NULL);
 		env_node->env_val = NULL;
 		return (env_node);
 	}
 	env_name_len = (equal_pos - str) / sizeof(char);
 	env_node->env_name = ft_strndup(str, env_name_len);
-	if(env_node->env_name == NULL)
+	if (env_node->env_name == NULL)
 		return (NULL);
 	env_node->env_val = ft_strdup(equal_pos + 1);
-	if(env_node->env_val == NULL)
+	if (env_node->env_val == NULL)
 	{
 		free(env_node->env_name);
 		return (NULL);

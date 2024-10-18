@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_builtin_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 00:35:29 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 00:35:30 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	no_arg_export(t_env *env_head)
@@ -9,8 +21,8 @@ void	no_arg_export(t_env *env_head)
 	env_tmp = env_head->next;
 	while (env_tmp != env_head)
 	{
-		if (ft_strncmp(env_tmp->env_name,
-				"OLDPWD", ft_strlen(env_tmp->env_name)) == 0)
+		if (ft_strncmp(env_tmp->env_name, "OLDPWD",
+				ft_strlen(env_tmp->env_name)) == 0)
 			is_exit_oldpwd = true;
 		ft_printf("declare -x %s", env_tmp->env_name);
 		if (env_tmp->env_val != NULL)
@@ -23,7 +35,7 @@ void	no_arg_export(t_env *env_head)
 		ft_printf("declare -x OLDPWD\n");
 }
 
-//expected input: <env_name> , <env_name>= , <env_name>=<env_value>
+// expected input: <env_name> , <env_name>= , <env_name>=<env_value>
 void	arg_export(t_env *env_head, char *arg, t_context *context)
 {
 	char	*first_equal;
