@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:09:04 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 04:00:28 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 04:39:53 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "struct.h"
 # include "builtin.h"
-# include "error.h"
 # include "ft_printf.h"
 # include "lexer.h"
 # include "libft.h"

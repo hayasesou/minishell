@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:34:19 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 19:34:20 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 04:31:17 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ t_token	*token_node_create(char *data, t_token_type type)
 {
 	t_token	*new_token;
 
-	new_token = (t_token *)calloc(1, sizeof(t_token));
+	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (new_token == NULL)
-		fatal_error("tokenize: add token calloc error");
+		fatal_error("tokenize: add token ft_calloc error");
 	if (data != NULL)
 	{
 		new_token->data = ft_strdup(data);
@@ -48,10 +48,10 @@ t_token	*token_init(t_context *ctx)
 {
 	t_token	*head;
 
-	head = calloc(1, sizeof(t_token));
+	head = ft_calloc(1, sizeof(t_token));
 	if (!head)
 	{
-		perror("calloc error in tokenize : token_init ");
+		perror("ft_calloc error in tokenize : token_init ");
 		exit(1);
 	}
 	head->data = NULL;
