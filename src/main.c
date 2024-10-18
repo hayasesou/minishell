@@ -26,25 +26,24 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 	return (ctx);
 }
 
-void minishell_no_pipe(t_parser *parser, t_context *context)
+void	minishell_no_pipe(t_parser *parser, t_context *context)
 {
-	int status;
-	int pid;
-	
-	if(parser->cmd == NULL)
+	int	status;
+	int	pid;
+
+	if (parser->cmd == NULL)
 		return ;
-	if(is_minishell_builtin(parser->cmd[0]))
+	if (is_minishell_builtin(parser->cmd[0]))
 	{
 		process_heredoc(parser, context, &status);
 		builtin_redirect(parser, context, &status);
-
 		// exec_minishell_builtin(parser, context, parser->cmd[0]);
 	}
 	else
 	{
 		set_signal_parent_handler();
 		pid = fork();
-		if(pid == 0)
+		if (pid == 0)
 		{
 			set_signal_child_handler();
 			process_heredoc(parser, context, &status);
@@ -61,15 +60,14 @@ void minishell_no_pipe(t_parser *parser, t_context *context)
 	}
 }
 
-
-bool check_pipe(t_parser *parser)
+bool	check_pipe(t_parser *parser)
 {
-	if(parser->next == NULL)
+	if (parser->next == NULL)
 		return (false);
 	return (true);
 }
 
-void main_exec(char *line, t_context *ctx)
+void	main_exec(char *line, t_context *ctx)
 {
 	ctx->sys_error = false;
 	if (g_signal == 1 || g_signal == SIGINT)
@@ -86,7 +84,7 @@ void main_exec(char *line, t_context *ctx)
 	ctx->token_head = NULL;
 	if (ctx->parser_head == NULL)
 		return ;
-	if(check_pipe(ctx->parser_head))
+	if (check_pipe(ctx->parser_head))
 		minishell_pipe(ctx->parser_head, ctx);
 	else
 		minishell_no_pipe(ctx->parser_head, ctx);
@@ -114,11 +112,10 @@ void	main_loop(t_context *ctx, char *line)
 	}
 }
 
-
 int	main(int ac, char **av, char **envp)
 {
-	int		status;
-	char	*line;
+	int			status;
+	char		*line;
 	t_context	*ctx;
 
 	rl_outstream = stderr;
