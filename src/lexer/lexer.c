@@ -32,20 +32,6 @@ void	check_token_operation(t_context *ctx)
 	}
 }
 
-void    system_check(char *line, t_context *ctx, t_token *token)
-{
-    if (is_operator(*line))
-    {
-        operator(&line, line, token, ctx);       
-        token->space_before = false;
-    }
-    else
-    {
-        quote(&line, line, token, ctx);
-        token->space_before = false;
-    }
-}
-
 void	syntax_error(char *msg, t_context *ctx)
 {
     ft_putstr_fd("minishell: syntax error: ", 2);
@@ -53,6 +39,20 @@ void	syntax_error(char *msg, t_context *ctx)
     ft_putstr_fd("\n", 2);
     ctx->sys_error = true;
     ctx->exit_status = SYNTAX_ERROR;
+}
+
+void    system_check(char **line, t_context *ctx, t_token *token)
+{
+    if (is_operator(**line))
+    {
+        operator(line, *line, token, ctx);       
+        token->space_before = false;
+    }
+    else
+    {
+        quote(line, *line, token, ctx);
+        token->space_before = false;
+    }
 }
 
 void lexer(t_context *ctx, char *line)
@@ -73,7 +73,7 @@ void lexer(t_context *ctx, char *line)
             continue;
         }
         else if (is_operator(*line) || is_quote(*line))
-            system_check(line, ctx, token);
+            system_check(&line, ctx, token);
         else
         {
             word(&line, line, token, token->space_before);
