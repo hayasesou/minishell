@@ -61,7 +61,12 @@ int backup_fd(int fd);
 void restore_fd(int backup_fd, int fd);
 
 //redirect.c
+void output_process(t_file *file, t_context *context, int *redirect_status, int *tmp_output_fd);
+void input_process(t_file *file, t_context *context, int *redirect_status, int *tmp_input_fd);
+void exception_process(t_context *context, int *redirect_status);
 void redirect(t_parser *parser, t_context *context, int *redirect_status);
+
+//redirec_builtin.c
 void builtin_redirect(t_parser *parser, t_context *context, int *redirect_status);
 
 //pipe_utils.c

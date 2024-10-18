@@ -99,6 +99,13 @@ typedef struct s_env {
 	t_env	*prev;
 }	t_env;
 
+typedef struct tmp_fd
+{
+	int		tmp_input_fd;
+	int		tmp_output_fd;
+}	t_tmp_fd;
+
+
 typedef struct s_context {
 	// 構造体の総まとめをこの構造体にまとめる
 	t_token     *token_head;
