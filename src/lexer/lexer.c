@@ -29,7 +29,9 @@ void check_token_operation(t_context *ctx)
                 || current->next->type == TK_REDIR_APPEND
                 || current->next->type == TK_REDIR_HEREDOC)
             {
-                ft_printf("minishell: syntax error near unexpected token '%s'\n", current->next->data);
+                ft_printf("minishell: syntax error near unexpected token\n");
+				free_token(&ctx->token_head);
+				ctx->token_head = NULL;
                 ctx->exit_status = SYNTAX_ERROR;
                 ctx->sys_error = true;
                 return ;
@@ -38,6 +40,8 @@ void check_token_operation(t_context *ctx)
             else if (current->next->type == TK_EOF)
             {
                 ft_printf("minishell: syntax error near unexpected token 'newline'\n");
+				free_token(&ctx->token_head);
+				ctx->token_head = NULL;
                 ctx->exit_status = SYNTAX_ERROR;
                 ctx->sys_error = true;
                 return ;
