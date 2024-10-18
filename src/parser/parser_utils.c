@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:46:04 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 19:46:06 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:35:02 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,19 @@ t_redirect_type	get_redirect_type(t_token_type type)
 		return (HEREDOC);
 	else
 		return (UNKNOWN);
+}
+
+void	free_command(char **cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return ;
+	i = 0;
+	while (cmd[i])
+	{
+		free(cmd[i]);
+		i++;
+	}
+	free(cmd);
 }

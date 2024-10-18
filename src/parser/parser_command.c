@@ -6,26 +6,11 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:32 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 22:19:30 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:35:28 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_command(char **cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	i = 0;
-	while (cmd[i])
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd);
-}
 
 static char	**duplicate_commands(char **cmd, int count)
 {
