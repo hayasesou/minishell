@@ -33,7 +33,7 @@ OBJS = $(addprefix $(OBJDIR)/, $(FILES:.c=.o)) \
 	   $(addprefix $(OBJDIR)/, $(BUILTIN_FILES:.c=.o)) \
 	   $(addprefix $(OBJDIR)/, $(SIGNAL_FILES:.c=.o))
 
-FILES = main.c env.c env_utils.c free_all.c
+FILES = main.c env.c env_utils.c free_all.c error.c
 LEXER_FILES = $(notdir $(wildcard $(LEXERDIR)/*.c))
 PARSER_FILES =	$(notdir $(wildcard $(PARSERDIR)/*.c))
 REDIRECT_FILES = $(notdir $(wildcard $(REDIRECTDIR)/*.c))

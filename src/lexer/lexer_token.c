@@ -14,7 +14,7 @@ t_token *token_node_create(char *data, t_token_type type)
             fatal_error("tokenize: add token ft_strdup error");
     }
     else
-        new_token->data = ft_strdup("");  // NULL の代わりに空文字列を設定
+        new_token->data = ft_strdup("");
     new_token->type = type;
     new_token->next = NULL;
     new_token->prev = NULL;
@@ -40,7 +40,7 @@ t_token	*token_init(t_context *ctx)
 	if (!head)
 	{
 		perror("calloc error in tokenize : token_init ");
-		exit (1); // 後でちゃんとしたエラーに修正
+		exit (1);
 	}
 	head->data = NULL;
 	head->type = TK_EMPTY;

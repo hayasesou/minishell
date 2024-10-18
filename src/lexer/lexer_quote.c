@@ -1,13 +1,11 @@
 #include "minishell.h"
 
-// クォート内の文字列を抽出する関数
 static char *extract_quoted_str(char *start, int length) {
     if (length > 0)
         return ft_strndup(start, length);
     return ft_strdup("");
 }
 
-// クォート文字とスペースの有無に基づいてトークンタイプを決定する関数
 static t_token_type determine_token_type(char quote_char, bool space_before) {
     if (quote_char == '\'')
         return space_before ? TK_SPACE_SINGLE_QUOTE : TK_SINGLE_QUOTE;

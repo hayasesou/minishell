@@ -55,6 +55,11 @@ bool            is_charset(char c, const char *charset);
 bool            is_double_quote_expansion(t_token_type type);
 bool            is_word_expansion(t_token_type type);
 
+// error
+void			syntax_error(char *msg, t_context *ctx);
+void			syntax_error_operation(char *msg, t_context *ctx);
+void			syntax_error_unexpected_token(char *unexpected_token, t_context *ctx);
+
 // main
 void        	lexer(t_context *ctx, char *line);
 void	        print_lexer(t_token *token_head);
