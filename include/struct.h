@@ -30,6 +30,7 @@ typedef enum e_token_type {
     TK_REDIR_APPEND,
     TK_REDIR_HEREDOC,
 	TK_EMPTY,
+	TK_ERROR,
     TK_EOF
 } t_token_type;
 
