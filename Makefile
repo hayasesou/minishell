@@ -74,6 +74,7 @@ BUILTIN_FILES =	builtin_bash.c \
 FILES =	main.c \
 		env.c \
 		env_utils.c \
+		env_utils2.c \
 		free_all.c \
 		free_parser.c \
 		free_utils.c \
