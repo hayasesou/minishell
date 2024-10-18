@@ -8,29 +8,69 @@ void	fatal_error(char *msg)
 	exit(1);
 }
 
-void	check_token_operation(t_context *ctx)
+void check_token_operation(t_context *ctx)
 {
-	t_token	*current;
+    t_token *current;
 
-	current = ctx->token_head;
-	while (current->type != TK_EOF)
-	{
-		if ((current->type == TK_REDIR_IN
-				|| current->type == TK_REDIR_OUT
-				|| current->type == TK_REDIR_APPEND
-				|| current->type == TK_REDIR_HEREDOC
-				|| current->type == TK_PIPE)
-			&& current->next->type == TK_EOF)
-		{
-			free_token(&ctx->token_head);
-			ft_printf("syntax error near unexpected token `newline'\n"); //　これいるの？
-			ctx->exit_status = 2;
-			ctx->token_head = NULL;
-			return ;
-		}
-		current = current->next;
-	}
+    current = ctx->token_head->next; // ヘッダの次から開始
+    while (current->type != TK_EOF)
+    {
+        // 現在のトークンが演算子の場合
+        if (current->type == TK_PIPE
+            || current->type == TK_REDIR_IN
+            || current->type == TK_REDIR_OUT
+            || current->type == TK_REDIR_APPEND
+            || current->type == TK_REDIR_HEREDOC)
+        {
+            // 次のトークンが存在し、かつ演算子の場合
+            if (current->next->type == TK_PIPE
+                || current->next->type == TK_REDIR_IN
+                || current->next->type == TK_REDIR_OUT
+                || current->next->type == TK_REDIR_APPEND
+                || current->next->type == TK_REDIR_HEREDOC)
+            {
+                ft_printf("minishell: syntax error near unexpected token '%s'\n", current->next->data);
+                ctx->exit_status = SYNTAX_ERROR;
+                ctx->sys_error = true;
+                return ;
+            }
+            // 最後が演算子で終わる場合
+            else if (current->next->type == TK_EOF)
+            {
+                ft_printf("minishell: syntax error near unexpected token 'newline'\n");
+                ctx->exit_status = SYNTAX_ERROR;
+                ctx->sys_error = true;
+                return ;
+            }
+        }
+        current = current->next;
+    }
 }
+
+
+// void	check_token_operation(t_context *ctx)
+// {
+// 	t_token	*current;
+
+// 	current = ctx->token_head;
+// 	while (current->type != TK_EOF)
+// 	{
+// 		if ((current->type == TK_REDIR_IN
+// 				|| current->type == TK_REDIR_OUT
+// 				|| current->type == TK_REDIR_APPEND
+// 				|| current->type == TK_REDIR_HEREDOC
+// 				|| current->type == TK_PIPE)
+// 			&& current->next->type == TK_EOF)
+// 		{
+// 			free_token(&ctx->token_head);
+// 			ft_printf("syntax error near unexpected token `newline'\n"); //　これいるの？
+// 			ctx->exit_status = 2;
+// 			ctx->token_head = NULL;
+// 			return ;
+// 		}
+// 		current = current->next;
+// 	}
+// }
 
 void	syntax_error(char *msg, t_context *ctx)
 {
