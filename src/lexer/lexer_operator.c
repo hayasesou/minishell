@@ -56,15 +56,6 @@ t_token_type select_op_type(char *op)
     return TK_EMPTY;
 }
 
-void syntax_error_unexpected_token(char *unexpected_token, t_context *ctx)
-{
-    ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
-    ft_putstr_fd(unexpected_token, 2);
-    ft_putstr_fd("'\n", 2);
-    ctx->sys_error = true;
-    ctx->exit_status = SYNTAX_ERROR;
-}
-
 void	operator(char **line_ptr, char *line, t_token *token, t_context *ctx)
 {
 	char			*op;
@@ -78,9 +69,10 @@ void	operator(char **line_ptr, char *line, t_token *token, t_context *ctx)
 	else
     {
         op = ft_strdup(*line_ptr);
+        type = TK_ERROR;
         syntax_error_unexpected_token(op, ctx);
     }
 	token_node_add(token, token_node_create(op, type));
-	*line_ptr += strlen(op);
+    *line_ptr += strlen(op);
     free(op);
 }
