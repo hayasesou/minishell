@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:09:04 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 03:55:03 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 04:00:28 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ t_env		*node_new(char *str);
 void		node_add(t_env *head, t_env *new);
 t_env		*env_head_init(void);
 t_env		*env_init(char **envp);
+char		**make_env_list(t_env *env_head, t_context *context);
+char		*env_join(char *env_name, char *env_value, t_context *context);
 
 // env_utils.c
 char		**make_env_list(t_env *env_head, t_context *context);

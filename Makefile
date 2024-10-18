@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-#C_FLAGS = -Wall -Wextra -Werror -fPIE
+C_FLAGS = -Wall -Wextra -Werror -fPIE
 I_FLAGS = -Iinclude/ -Ilibft/ -Iprintf/
 H_FLAGS = -lreadline -lft -lftprintf
 L_FLAGS = -Llibft -Lprintf
@@ -75,6 +75,7 @@ FILES =	main.c \
 		env.c \
 		env_utils.c \
 		env_utils2.c \
+		env_list.c \
 		free_all.c \
 		free_parser.c \
 		free_utils.c \
