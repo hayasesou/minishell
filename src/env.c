@@ -6,35 +6,11 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:39:38 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 00:39:39 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 03:47:02 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*find_first_equal(char *str)
-{
-	if (str == NULL)
-		return (NULL);
-	while (*str)
-	{
-		if (*str == '=')
-			return (str);
-		str++;
-	}
-	return (NULL);
-}
-
-char	*ft_strndup(char *str, size_t n)
-{
-	char	*new_str;
-
-	new_str = (char *)malloc(sizeof(char) * (n + 1));
-	if (new_str == NULL)
-		return (NULL);
-	ft_strlcpy(new_str, str, n + 1);
-	return (new_str);
-}
 
 t_env	*node_new_set(t_env *env_node, char *str)
 {
@@ -70,7 +46,7 @@ t_env	*node_new(char *str)
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (env_node == NULL)
 		return (NULL);
-	if (strlen(str) == 0)
+	if (ft_strlen(str) == 0)
 	{
 		env_node->env_name = NULL;
 		env_node->env_val = NULL;

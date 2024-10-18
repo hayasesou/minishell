@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 23:19:54 by hayase            #+#    #+#             */
-/*   Updated: 2024/10/19 00:39:48 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 03:54:59 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	main_loop(t_context *ctx, char *line)
 		line = readline("\033[1;33mminishell$\033[0m ");
 		if (line == NULL)
 			break ;
-		if (strlen(line) == 0)
+		if (ft_strlen(line) == 0)
 		{
 			free(line);
 			continue ;
