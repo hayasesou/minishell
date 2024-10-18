@@ -23,7 +23,7 @@ static void	child_process(t_parser *tmp_parser, t_pipex *pipe_x,
 		next_pipe(pipe_x, pipe_x->current_cmd_num);
 	redirect(tmp_parser, context, status);
 	setup_heredoc_fd(tmp_parser);
-	exec_cmd(tmp_parser, context);
+	exec_cmd(tmp_parser, context, false);
 }
 
 static void	wait_child_and_close_pipe(t_parser *parser, t_pipex *pipe_x)
@@ -56,7 +56,7 @@ void	minishell_pipe(t_parser *parser_head, t_context *context)
 	process_heredoc(tmp_parser, context, &status);
 	while (tmp_parser != NULL)
 	{
-		set_heredoc_signal_parent_handler();
+		set_heredoc_signal_handler();
 		if (tmp_parser->next != NULL)
 			pipe_check(&pipe_x, context, &status, pipe_x.current_cmd_num);
 		pipe_x.pids[pipe_x.current_cmd_num] = fork_check(context, &status);

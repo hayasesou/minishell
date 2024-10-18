@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 static	int	heredoc_readline(char **line,
 	t_heredoc *heredoc, t_context *context, int *heredoc_status)
 {
@@ -44,7 +43,7 @@ int	heredoc(t_file *file, t_context *context, int *heredoc_status)
 	t_heredoc	heredoc;
 	char		*line;
 
-	set_heredoc_signal_parent_handler();
+	set_heredoc_signal_handler();
 	heredoc.deliminater = file->filename;
 	create_tmpfile(&heredoc, context, heredoc_status);
 	while (1)
@@ -52,6 +51,7 @@ int	heredoc(t_file *file, t_context *context, int *heredoc_status)
 		if (heredoc_readline(&line, &heredoc, context, heredoc_status) == 1)
 			break ;
 	}
+	set_signal_handler();
 	close(heredoc.tmpfile_fd);
 	heredoc.tmpfile_fd = open(heredoc.tmpfile, O_RDONLY);
 	free(heredoc.tmpfile);
@@ -91,7 +91,7 @@ int	quote_heredoc(t_file *file, t_context *context, int *heredoc_status)
 	t_heredoc	heredoc;
 	char		*line;
 
-	set_heredoc_signal_parent_handler();
+	set_heredoc_signal_handler();
 	heredoc.deliminater = file->filename;
 	create_tmpfile(&heredoc, context, heredoc_status);
 	while (1)

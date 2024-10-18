@@ -38,8 +38,7 @@ bool	is_minishell_builtin(char *cmd)
 	return (false);
 }
 
-// todo: implement self_builtin
-void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd)
+void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd, bool is_parent)
 {
 	if (ft_strncmp(cmd, "echo", ft_strlen("echo")) == 0
 		&& (ft_strlen(cmd) == ft_strlen("echo")))
@@ -61,5 +60,5 @@ void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd)
 		env_builtin(parser, context);
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit")) == 0
 		&& (ft_strlen(cmd) == ft_strlen("exit")))
-		return ;
+		exit_builtin(parser, context, is_parent);
 }

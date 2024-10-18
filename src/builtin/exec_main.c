@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	exec_cmd(t_parser *parser, t_context *context)
+void	exec_cmd(t_parser *parser, t_context *context, bool is_parent)
 {
 	if (parser->cmd == NULL)
 	{
@@ -22,7 +22,7 @@ void	exec_cmd(t_parser *parser, t_context *context)
 	}
 	if (is_minishell_builtin(parser->cmd[0]) == true)
 	{
-		exec_minishell_builtin(parser, context, parser->cmd[0]);
+		exec_minishell_builtin(parser, context, parser->cmd[0], is_parent);
 		exit(EXIT_SUCCESS);
 	}
 	else
