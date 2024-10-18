@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror -fPIE
+#C_FLAGS = -Wall -Wextra -Werror -fPIE
 I_FLAGS = -Iinclude/ -Ilibft/ -Iprintf/
 H_FLAGS = -lreadline -lft -lftprintf
 L_FLAGS = -Llibft -Lprintf
