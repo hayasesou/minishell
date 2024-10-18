@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:08:56 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 21:12:30 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 23:50:55 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,18 @@ typedef struct s_env
 	t_env				*prev;
 }						t_env;
 
-typedef struct s_context
+typedef struct tmp_fd
 {
-	t_token				*token_head;
-	t_parser			*parser_head;
-	t_env				*env_head;
-	int					exit_status;
-	bool				sys_error;
-}						t_context;
+	int		tmp_input_fd;
+	int		tmp_output_fd;
+}	t_tmp_fd;
+
+typedef struct s_context {
+	t_token     *token_head;
+	t_parser    *parser_head;
+	t_env	    *env_head;
+	int		    exit_status;
+	bool	    sys_error;
+}	t_context;
 
 #endif

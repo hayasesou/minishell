@@ -95,4 +95,7 @@ int			fork_check(t_context *context, int *status);
 // pipe.c
 void		minishell_pipe(t_parser *parser_head, t_context *context);
 
+//no_pipe.c
+void minishell_no_pipe(t_parser *parser_head, t_context *context);
+
 #endif

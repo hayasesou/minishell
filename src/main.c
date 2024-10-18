@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/18 23:19:54 by hayase            #+#    #+#             */
+/*   Updated: 2024/10/18 23:52:18 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	g_signal = 0;
@@ -24,40 +36,6 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 	ctx->parser_head = NULL;
 	ctx->sys_error = false;
 	return (ctx);
-}
-
-void	minishell_no_pipe(t_parser *parser, t_context *context)
-{
-	int	status;
-	int	pid;
-
-	if (parser->cmd == NULL)
-		return ;
-	if (is_minishell_builtin(parser->cmd[0]))
-	{
-		process_heredoc(parser, context, &status);
-		builtin_redirect(parser, context, &status);
-		// exec_minishell_builtin(parser, context, parser->cmd[0]);
-	}
-	else
-	{
-		set_signal_parent_handler();
-		pid = fork();
-		if (pid == 0)
-		{
-			set_signal_child_handler();
-			process_heredoc(parser, context, &status);
-			redirect(parser, context, &status);
-			setup_heredoc_fd(parser);
-			exec_cmd(parser, context);
-		}
-		else
-		{
-			waitpid(pid, &status, 0);
-			context->exit_status = WEXITSTATUS(status);
-			set_signal_handler();
-		}
-	}
 }
 
 bool	check_pipe(t_parser *parser)
