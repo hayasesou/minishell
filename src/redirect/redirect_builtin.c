@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 23:12:17 by hayase            #+#    #+#             */
-/*   Updated: 2024/10/19 00:21:07 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:21:07 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	builtin_redirect(t_parser *parser,
 		dup2_fd(tmp_fd.tmp_output_fd, STDOUT_FILENO, context);
 	if (tmp_fd.tmp_input_fd != -1)
 		dup2_fd(tmp_fd.tmp_input_fd, STDIN_FILENO, context);
-	exec_minishell_builtin(parser, context, parser->cmd[0]);
+	exec_minishell_builtin(parser, context, parser->cmd[0], true);
 	restore_fd(stdin_backup_fd, STDIN_FILENO);
 	restore_fd(stdout_backup_fd, STDOUT_FILENO);
 }

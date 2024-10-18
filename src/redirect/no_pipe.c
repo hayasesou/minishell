@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 23:18:38 by hayase            #+#    #+#             */
-/*   Updated: 2024/10/19 00:37:06 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:19:31 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	child_no_pipe_process(t_parser *parser, t_context *context, int *status)
 	process_heredoc(parser, context, status);
 	redirect(parser, context, status);
 	setup_heredoc_fd(parser);
-	exec_cmd(parser, context);
+	exec_cmd(parser, context, true);
 }
 
 void	minishell_no_pipe(t_parser *parser, t_context *context)

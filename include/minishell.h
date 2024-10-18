@@ -6,13 +6,14 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:09:04 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 01:13:14 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:26:10 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "struct.h"
 # include "builtin.h"
 # include "error.h"
 # include "ft_printf.h"
@@ -39,6 +40,7 @@
 # define SPECIFIED_DIR 1
 # define NORMAL_EXIT 0
 # define NORMAL_ERROR 1
+# define NUMERIC_ERROR 255
 # define SYNTAX_ERROR 258
 # define COMMAND_NOT_FOUND 127
 # define PERMISSION_DENIED 126

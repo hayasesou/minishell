@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:46:29 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 19:46:30 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:21:25 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	signal_parent_handler(int signum)
 	}
 }
 
-void	heredoc_signal_parent_handler(int signum)
+void	heredoc_signal_handler(int signum)
 {
 	if (signum == SIGINT)
 	{

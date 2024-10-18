@@ -66,7 +66,9 @@ BUILTIN_FILES =	builtin_bash.c \
 				export_builtin.c \
 				export_builtin_utils.c \
 				pwd_builtin.c \
-				unset_builtin.c
+				unset_builtin.c \
+				exit_builtin.c \
+				exit_builtin_utils.c
 
 FILES =	main.c \
 		env.c \

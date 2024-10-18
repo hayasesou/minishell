@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:47:02 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 19:47:36 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:25:45 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	set_signal_child_handler(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-void	set_heredoc_signal_parent_handler(void)
+void	set_heredoc_signal_handler(void)
 {
 	struct sigaction	sa;
 
@@ -58,7 +58,7 @@ void	set_heredoc_signal_parent_handler(void)
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-	sa.sa_handler = heredoc_signal_parent_handler;
+	sa.sa_handler = heredoc_signal_handler;
 	sigaction(SIGINT, &sa, NULL);
 }
 
