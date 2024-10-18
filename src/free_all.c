@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:48:11 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 19:48:12 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:40:20 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,35 +77,6 @@ void	free_parser(t_parser **head_ref)
 		free(delete);
 	}
 	*head_ref = NULL;
-}
-
-void	free_env_node(t_env *node)
-{
-	if (node == NULL)
-		return ;
-	free(node->env_name);
-	node->env_name = NULL;
-	free(node->env_val);
-	node->env_val = NULL;
-	free(node);
-	node = NULL;
-}
-
-void	free_env(t_env *head)
-{
-	t_env	*cur;
-	t_env	*next;
-
-	cur = head->next;
-	if (head == NULL)
-		return ;
-	while (cur != head)
-	{
-		next = cur->next;
-		free_env_node(cur);
-		cur = next;
-	}
-	free_env_node(head);
 }
 
 void	free_all(t_context *ctx)
