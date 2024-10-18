@@ -73,6 +73,7 @@ FILES =	main.c \
 		env_utils.c \
 		free_env.c \
 		free_all.c \
+		free_parser.c \
 		error.c
 
 SRCS =	$(addprefix $(SRCDIR)/,$(FILES))\
