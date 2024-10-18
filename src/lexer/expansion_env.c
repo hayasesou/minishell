@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:40:49 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 19:41:31 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 03:08:58 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static char	*get_env_variable_value(char *data, size_t *i, t_context *ctx)
 	env_value = get_env_value(env_name, ctx->env_head);
 	if (!env_value)
 		env_value = ft_strdup("");
-	else
-		env_value = ft_strdup(env_value);
 	if (!env_value)
 		fatal_error("Expansion: ft_substr failed");
 	free(env_name);
