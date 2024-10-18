@@ -6,26 +6,11 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 23:30:49 by hayase            #+#    #+#             */
-/*   Updated: 2024/10/19 00:53:53 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 02:26:09 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_cmd(char **cmd)
-{
-	int	i;
-
-	if (cmd == NULL)
-		return ;
-	i = 0;
-	while (cmd[i] != NULL)
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd);
-}
 
 void	free_parser_node(t_parser *node)
 {
