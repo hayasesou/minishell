@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hayase <hayase@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/18 23:19:54 by hayase            #+#    #+#             */
+/*   Updated: 2024/10/18 23:19:59 by hayase           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	g_signal = 0;
@@ -26,50 +38,14 @@ t_context	*minishell_init(int ac, char **av, char **envp)
 	return (ctx);
 }
 
-void minishell_no_pipe(t_parser *parser, t_context *context)
+bool	check_pipe(t_parser *parser)
 {
-	int status;
-	int pid;
-	
-	if(parser->cmd == NULL)
-		return ;
-	if(is_minishell_builtin(parser->cmd[0]))
-	{
-		process_heredoc(parser, context, &status);
-		builtin_redirect(parser, context, &status);
-
-		// exec_minishell_builtin(parser, context, parser->cmd[0]);
-	}
-	else
-	{
-		set_signal_parent_handler();
-		pid = fork();
-		if(pid == 0)
-		{
-			set_signal_child_handler();
-			process_heredoc(parser, context, &status);
-			redirect(parser, context, &status);
-			setup_heredoc_fd(parser);
-			exec_cmd(parser, context);
-		}
-		else
-		{
-			waitpid(pid, &status, 0);
-			context->exit_status = WEXITSTATUS(status);
-			set_signal_handler();
-		}
-	}
-}
-
-
-bool check_pipe(t_parser *parser)
-{
-	if(parser->next == NULL)
+	if (parser->next == NULL)
 		return (false);
 	return (true);
 }
 
-void main_exec(char *line, t_context *ctx)
+void	main_exec(char *line, t_context *ctx)
 {
 	ctx->sys_error = false;
 	if (g_signal == 1 || g_signal == SIGINT)
@@ -86,7 +62,7 @@ void main_exec(char *line, t_context *ctx)
 	ctx->token_head = NULL;
 	if (ctx->parser_head == NULL)
 		return ;
-	if(check_pipe(ctx->parser_head))
+	if (check_pipe(ctx->parser_head))
 		minishell_pipe(ctx->parser_head, ctx);
 	else
 		minishell_no_pipe(ctx->parser_head, ctx);
@@ -114,11 +90,10 @@ void	main_loop(t_context *ctx, char *line)
 	}
 }
 
-
 int	main(int ac, char **av, char **envp)
 {
-	int		status;
-	char	*line;
+	int			status;
+	char		*line;
 	t_context	*ctx;
 
 	rl_outstream = stderr;
