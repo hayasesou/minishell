@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hayase <hayase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 01:47:22 by hayase            #+#    #+#             */
-/*   Updated: 2024/10/19 01:48:01 by hayase           ###   ########.fr       */
+/*   Created: 2024/10/19 01:44:59 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 02:14:03 by hayase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	ft_putstr_fd(char *str, int fd)
 	write(fd, str, ft_strlen(str));
 }
 
-bool	overflow_check(long num, int num2, int flag)
+bool	overflow_check(long n, int n2, int flag)
 {
-	if ((num * flag > LONG_MAX / 10) || (num * flag == LONG_MAX / 10
-			&& num2 > LONG_MAX % 10))
+	if ((n * flag > LONG_MAX / 10) || (n * flag == LONG_MAX / 10
+			&& n2 > LONG_MAX % 10))
 		return (true);
-	if ((num * flag < LONG_MIN / 10) || (num * flag == LONG_MIN / 10
-			&& num2 > -1 * (LONG_MIN % 10)))
+	if ((n * flag < LONG_MIN / 10) || (n * flag == LONG_MIN / 10 && n2 > -1
+			* (LONG_MIN % 10)))
 		return (true);
 	return (false);
 }
