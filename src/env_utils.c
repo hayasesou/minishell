@@ -114,7 +114,8 @@ char	*get_env_value(char *env_name, t_env *env_head)
 void	set_env_value(char *env_name, char *new_env_value, t_env *env_head,
 		t_context *context)
 {
-	t_env   *env_tmp;
+	t_env	*env_tmp;
+	t_env	*new_env_node;
 
 	env_tmp = env_head->next;
 	while (env_tmp != env_head)
@@ -134,9 +135,6 @@ void	set_env_value(char *env_name, char *new_env_value, t_env *env_head,
 		}
 		env_tmp = env_tmp->next;
 	}
-
-	t_env *new_env_node;
-
 	new_env_node = node_new(env_name);
 	if (new_env_node == NULL)
 	{

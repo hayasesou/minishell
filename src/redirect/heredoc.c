@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hayase <hayase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:37:02 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 00:37:03 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:50:04 by hayase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 static	int	heredoc_readline(char **line,
 	t_heredoc *heredoc, t_context *context, int *heredoc_status)
 {

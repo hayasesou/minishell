@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_bash.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hayase <hayase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:32:12 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 00:32:13 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 02:11:01 by hayase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,7 @@ void	bash_builtin(t_parser *parser, t_context *context)
 	int		start;
 	char	*cmd_path;
 
-	start = 0;
-	i = 0;
+	initialize_value(&i, &start);
 	if (check_file_type(parser, context, &path) == true)
 	{
 		free(path);

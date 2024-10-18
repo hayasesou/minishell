@@ -38,7 +38,8 @@ bool	is_minishell_builtin(char *cmd)
 	return (false);
 }
 
-void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd, bool is_parent)
+void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd,
+		bool is_parent)
 {
 	if (ft_strncmp(cmd, "echo", ft_strlen("echo")) == 0
 		&& (ft_strlen(cmd) == ft_strlen("echo")))

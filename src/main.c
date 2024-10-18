@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	g_signal = 0;
+int			g_signal = 0;
 
 t_context	*minishell_init(int ac, char **av, char **envp)
 {

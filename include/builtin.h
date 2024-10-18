@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hayase <hayase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:09:10 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 01:23:50 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 02:09:49 by hayase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,8 @@ bool	overflow_check(long num, int num2, int flag);
 bool	is_overflow(char *str);
 bool	is_valid_number(const char *str);
 void	cleanup_and_exit(t_context *context, int exit_status);
+
+// builtin_bash_utils.c
+void	initialize_value(int *i, int *start);
 
 #endif

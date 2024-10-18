@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void    free_cmd(char **cmd)
+void	free_cmd(char **cmd)
 {
-    size_t	i;
+	size_t	i;
 
 	i = 0;
 	if (cmd == NULL)
@@ -17,7 +17,7 @@ void    free_cmd(char **cmd)
 	cmd = NULL;
 }
 
-void    free_env_node(t_env *node)
+void	free_env_node(t_env *node)
 {
 	if (node == NULL)
 		return ;
@@ -29,19 +29,19 @@ void    free_env_node(t_env *node)
 	node = NULL;
 }
 
-void    free_env(t_env *head)
+void	free_env(t_env *head)
 {
-    t_env	*cur;
-    t_env	*next;
+	t_env	*cur;
+	t_env	*next;
 
 	cur = head->next;
-    if (head == NULL)
-        return;
-    while (cur != head)
-    {
-        next = cur->next;
-        free_env_node(cur);
-        cur = next;
-    }
-    free_env_node(head);
+	if (head == NULL)
+		return ;
+	while (cur != head)
+	{
+		next = cur->next;
+		free_env_node(cur);
+		cur = next;
+	}
+	free_env_node(head);
 }
