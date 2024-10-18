@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:32 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 21:26:07 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:19:30 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,46 +27,49 @@ void	free_command(char **cmd)
 	free(cmd);
 }
 
-char	**new_cmd_init(t_parser *cur_arg)
+static char	**duplicate_commands(char **cmd, int count)
 {
-	int	i;
 	char	**new_cmd;
+	int		i;
 
-	i = 0;
-	while (cur_arg->cmd && cur_arg->cmd[i])
-		i++;
-	new_cmd = (char **)malloc(sizeof(char *) * (i + 2));
-	if (new_cmd == NULL)
+	new_cmd = (char **)malloc(sizeof(char *) * (count + 2));
+	if (!new_cmd)
 		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		new_cmd[i] = ft_strdup(cmd[i]);
+		if (!new_cmd[i])
+		{
+			while (--i >= 0)
+				free(new_cmd[i]);
+			free(new_cmd);
+			return (NULL);
+		}
+		i++;
+	}
+	new_cmd[i] = NULL;
 	return (new_cmd);
 }
 
 int	add_command(t_parser *cur_arg, char *cmd_str)
 {
+	int		count;
 	char	**new_cmd;
-	int		i;
 
-	new_cmd = new_cmd_init(cur_arg);
-	if (new_cmd == NULL)
+	count = 0;
+	while (cur_arg->cmd && cur_arg->cmd[count])
+		count++;
+	new_cmd = duplicate_commands(cur_arg->cmd, count);
+	if (!new_cmd)
 		return (0);
-	i = 0;
-	while (cur_arg->cmd && cur_arg->cmd[i])
-	{
-		new_cmd[i] = ft_strdup(cur_arg->cmd[i]);
-		if (!new_cmd[i])
-		{
-			free_command(new_cmd);
-			return (0);
-		}
-		i++;
-	}
-	new_cmd[i] = ft_strdup(cmd_str);
-	if (!new_cmd[i])
+	new_cmd[count] = ft_strdup(cmd_str);
+	if (!new_cmd[count])
 	{
 		free_command(new_cmd);
 		return (0);
 	}
-	new_cmd[i + 1] = NULL;
+	new_cmd[count + 1] = NULL;
 	free_command(cur_arg->cmd);
 	cur_arg->cmd = new_cmd;
 	return (1);
