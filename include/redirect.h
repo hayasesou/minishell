@@ -21,8 +21,7 @@ typedef struct s_pipex
 	pid_t *pids;        // array of pid. the count of pid is equal to cmd count
 	int **pipe_fd;     
 		// array of pipe_fd. the count of pipe_fd is equal to cmd count - 1
-	pid_t last_cmd_pid; // bash is execute multiple command by parallel. so,
-		we only need to wait the last command pid
+	pid_t last_cmd_pid; // bash is execute multiple command by parallel. so, we only need to wait the last command pid
 	int		stdin_fd;
 	int		stdout_fd;
 	int		current_cmd_num;

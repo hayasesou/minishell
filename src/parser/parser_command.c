@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:44:32 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 19:45:09 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:26:07 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,26 @@ void	free_command(char **cmd)
 	free(cmd);
 }
 
-int	add_command(t_parser *cur_arg, char *cmd_str)
+char	**new_cmd_init(t_parser *cur_arg)
 {
+	int	i;
 	char	**new_cmd;
-	int		i;
 
 	i = 0;
 	while (cur_arg->cmd && cur_arg->cmd[i])
 		i++;
 	new_cmd = (char **)malloc(sizeof(char *) * (i + 2));
+	if (new_cmd == NULL)
+		return (NULL);
+	return (new_cmd);
+}
+
+int	add_command(t_parser *cur_arg, char *cmd_str)
+{
+	char	**new_cmd;
+	int		i;
+
+	new_cmd = new_cmd_init(cur_arg);
 	if (new_cmd == NULL)
 		return (0);
 	i = 0;

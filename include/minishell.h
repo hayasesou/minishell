@@ -6,13 +6,14 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:09:04 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 21:10:48 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:35:30 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "struct.h"
 # include "builtin.h"
 # include "error.h"
 # include "ft_printf.h"
@@ -20,7 +21,6 @@
 # include "libft.h"
 # include "parser.h"
 # include "redirect.h"
-# include "struct.h"
 # include <errno.h>
 # include <limits.h>
 # include <readline/history.h>
