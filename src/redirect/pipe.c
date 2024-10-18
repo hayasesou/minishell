@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hayase <hayase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:37:23 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 00:37:24 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 03:40:05 by hayase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ static void	wait_child_and_close_pipe(t_parser *parser, t_pipex *pipe_x)
 	free_pipex(parser, pipe_x);
 }
 
+void	set_and_child_process(t_parser *tmp_parser, t_pipex *pipe_x,
+		t_context *context, int *status)
+{
+	set_signal_child_handler();
+	child_process(tmp_parser, pipe_x, context, status);
+}
+
 // Implementation of the minishell_pipe function
 void	minishell_pipe(t_parser *parser_head, t_context *context)
 {
@@ -62,10 +69,7 @@ void	minishell_pipe(t_parser *parser_head, t_context *context)
 		pipe_x.pids[pipe_x.current_cmd_num] = fork_check(context, &status);
 		pipe_x.last_cmd_pid = pipe_x.pids[pipe_x.current_cmd_num];
 		if (pipe_x.pids[pipe_x.current_cmd_num] == 0)
-		{
-			set_signal_child_handler();
-			child_process(tmp_parser, &pipe_x, context, &status);
-		}
+			set_and_child_process(tmp_parser, &pipe_x, context, &status);
 		if (pipe_x.current_cmd_num > 0)
 			close_pipe_fd(&pipe_x);
 		close_heredoc_fds(tmp_parser);
