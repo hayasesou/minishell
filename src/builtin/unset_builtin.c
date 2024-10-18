@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hayase <hayase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:35:39 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 00:35:40 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 05:49:56 by hayase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	unset_builtin(t_parser *parser, t_context *context)
 			&& ft_strlen(parser->cmd[1]) == ft_strlen(env_tmp->env_name))
 		{
 			env_prev->next = env_tmp->next;
+			env_tmp->next->prev = env_prev;
 			free(env_tmp->env_name);
 			free(env_tmp->env_val);
 			free(env_tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_bash.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hayase <hayase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:32:12 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 03:52:28 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 05:52:52 by hayase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static char	*make_cmd_path(char *path, int start, int i, t_parser *parser)
 	char	*stash_dir2;
 	char	*cmd_path;
 
+	if (i == start)
+		i = ft_strlen(path);
 	stash_dir1 = ft_substr(path, start, i - start);
 	if (stash_dir1 == NULL)
 		return (NULL);
@@ -122,7 +124,7 @@ void	bash_builtin(t_parser *parser, t_context *context)
 		return ;
 	while (path[i] != '\0')
 	{
-		if (path[i] == ':')
+		if (path[i] == ':' || ft_strchr(path, ':') == NULL)
 		{
 			cmd_path = make_cmd_path(path, start, i, parser);
 			check_file_and_execute(parser, context, cmd_path);
