@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:35:49 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/19 00:35:50 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:53:00 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ bool	is_minishell_builtin(char *cmd)
 	return (false);
 }
 
-void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd, bool is_parent)
+void	exec_minishell_builtin(t_parser *parser, t_context *context, char *cmd,
+		bool is_parent)
 {
 	if (ft_strncmp(cmd, "echo", ft_strlen("echo")) == 0
 		&& (ft_strlen(cmd) == ft_strlen("echo")))
