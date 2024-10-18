@@ -6,7 +6,7 @@
 /*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:38:53 by hakobaya          #+#    #+#             */
-/*   Updated: 2024/10/18 19:38:54 by hakobaya         ###   ########.fr       */
+/*   Updated: 2024/10/18 20:13:39 by hakobaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	expand_string(t_token *token, t_context *ctx)
 		if (token->data[i] == '$')
 		{
 			if (!is_env_name_char(token->data[i + 1]) && token->data[i
-				+ 1] != '$' && token->data[i + 1] != '?')
+					+ 1] != '$' && token->data[i + 1] != '?')
 				i++;
 			else if (!is_heredoc_expansion(token))
 				expansion_env(token->data, token, &i, ctx);
@@ -44,7 +44,7 @@ static void	expand_value(t_token *token, t_context *ctx)
 		if (token->data[i] == '$')
 		{
 			if (!is_env_name_char(token->data[i + 1]) && token->data[i
-				+ 1] != '$' && token->data[i + 1] != '?')
+					+ 1] != '$' && token->data[i + 1] != '?')
 				i++;
 			else if (!is_heredoc_expansion(token))
 				expansion_env(token->data, token, &i, ctx);
