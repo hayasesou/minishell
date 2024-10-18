@@ -1,30 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_builtin_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakobaya <hakobaya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 01:44:59 by hakobaya          #+#    #+#             */
+/*   Updated: 2024/10/19 01:48:07 by hakobaya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void ft_putstr_fd(char *str, int fd)
+void	ft_putstr_fd(char *str, int fd)
 {
-    write(fd, str, ft_strlen(str));
+	write(fd, str, ft_strlen(str));
 }
 
-bool overflow_check(long num, int num2, int flag)
+bool	overflow_check(long n, int n2, int flag)
 {
-    if ((num * flag > LONG_MAX / 10) || (num * flag == LONG_MAX / 10 && num2 > LONG_MAX % 10))
-        return (true);
-    if ((num * flag < LONG_MIN / 10) || (num * flag == LONG_MIN / 10 && num2 > -1 * (LONG_MIN % 10)))
-        return (true);
-    return (false);
+	if ((n * flag > LONG_MAX / 10) || (n * flag == LONG_MAX / 10
+			&& n2 > LONG_MAX % 10))
+		return (true);
+	if ((n * flag < LONG_MIN / 10) || (n * flag == LONG_MIN / 10 && n2 > -1
+			* (LONG_MIN % 10)))
+		return (true);
+	return (false);
 }
 
-bool is_overflow(char *str)
+bool	is_overflow(char *str)
 {
 	long	num;
 	int		flag;
 
 	num = 0;
 	flag = 1;
-    while (*str == ' ')
-    {
-        str++;
-    }
+	while (*str == ' ')
+	{
+		str++;
+	}
 	if (*str == '+' || *str == '-')
 	{
 		if (*str == '-')
@@ -33,39 +47,39 @@ bool is_overflow(char *str)
 	}
 	while (ft_isdigit(*str))
 	{
-        if (overflow_check(num, *str - '0', flag))
-            return (true);
+		if (overflow_check(num, *str - '0', flag))
+			return (true);
 		num = (num * 10) + (*str - '0');
 		str++;
 	}
-    return (false);
+	return (false);
 }
 
-bool is_valid_number(const char *str)
+bool	is_valid_number(const char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (str == NULL)
-        return (false);
-    if (str[i] == '\0')
-        return (false);
-    if (str[i] == '+' || str[i] == '-')
-        i++;
-    while (str[i])
-    {
-        if (!ft_isdigit(str[i]))
-            return (false);
-        i++;
-    }
-    if (str[i] == '\0')
-        return (true);
-    else
-        return (false);
+	i = 0;
+	if (str == NULL)
+		return (false);
+	if (str[i] == '\0')
+		return (false);
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (false);
+		i++;
+	}
+	if (str[i] == '\0')
+		return (true);
+	else
+		return (false);
 }
 
 void	cleanup_and_exit(t_context *context, int exit_status)
 {
-    free_all(context);
-    exit(exit_status);
+	free_all(context);
+	exit(exit_status);
 }
